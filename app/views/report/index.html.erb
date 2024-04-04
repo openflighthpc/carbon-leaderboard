@@ -1,0 +1,43 @@
+<h1>Carbon Leaderboard</h1>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+td {
+	text-align: center;
+}
+</style>
+
+<table style="width:100%" align="right">
+  <tr>
+    <th rowspan=2>User ID</th>
+    <th rowspan=2>CPUs</th>
+    <th rowspan=2>RAM</th>
+    <th colspan=4>Carbon Usage</th>
+    <th rowspan=2>Timestamp</th>
+  </tr>
+  <tr>
+    <th >Minimum</th>
+    <th >Half-Use</th>
+    <th >Maximum</th>
+    <th >Current</th>
+  </tr>
+	<% @reports.each do |report| %>
+	  <tr>
+			<td>
+			  <a href="/leaderboard/<%= User.find(report.user_id).name %>">
+			    <%= User.find(report.user_id).name %>
+			  </a>
+			</td>
+			<td><%= report.cpus %></td>
+			<td><%= report.ram %></td>
+			<td><%= report.min %></td>
+			<td><%= report.half %></td>
+			<td><%= report.max %></td>
+			<td><%= report.avg %></td>
+			<td><%= report.created_at %></td>
+		</tr>
+	<% end %>
+</table>
+

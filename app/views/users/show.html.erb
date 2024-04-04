@@ -1,0 +1,23 @@
+<h1>Carbon Leaderboard</h1>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+td {
+	text-align: center;
+}
+</style>
+
+<table style="width:100%" align="right">
+  <tr>
+    <th>User ID</th>
+    <th>Username</th>
+  </tr>
+	<% @users.each do |user| %>
+	  <tr>
+	    <td><%= user.user_id %></td>
+			<td><%= user.name %></td>
+		</tr>
+	<% end %>
+</table>
