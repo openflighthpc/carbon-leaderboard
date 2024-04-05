@@ -33,16 +33,20 @@ class ReportController < ApplicationController
     end
 
     report = Report.new(user_id: user.user_id,
+                        platform: data['platform'],
                         cpus: data['cpus'],
-                        ram: data['ram'],
+                        cores_per_cpu: data['cores_per_cpu'],
+                        ram_units: data['ram_units'],
+                        ram_capacity_per_unit: data['ram_capacity_per_unit'],
                         min: data['min'],
                         half: data['half'],
                         max: data['max'],
-                        avg: data['avg']
+                        current: data['current'],
+                        location: data['location']
                        )
     report.save
 
-    render json: "Report saved successfully: Average carbon usage of #{data['avg']}kgCO2eq for #{user.name}"
+    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq for #{user.name}"
   end
 end
 

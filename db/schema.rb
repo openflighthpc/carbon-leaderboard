@@ -14,12 +14,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_154515) do
   create_table "reports", force: :cascade do |t|
     t.string "user_id"
     t.integer "cpus"
-    t.float "ram"
+    t.integer "cores_per_cpu"
+    t.float "ram_units"
+    t.float "ram_capacity_per_unit"
     t.float "min"
     t.float "half"
     t.float "max"
-    t.float "avg"
+    t.float "current"
     t.datetime "time"
+    t.string "platform"
+    t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_reports_on_user_id"

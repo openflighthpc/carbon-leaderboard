@@ -12,16 +12,22 @@ td {
 <table style="width:100%" align="right">
   <tr>
     <th rowspan=2>User ID</th>
-    <th rowspan=2>CPUs</th>
-    <th rowspan=2>RAM</th>
-    <th colspan=4>Carbon Usage</th>
+    <th colspan=2>CPU</th>
+    <th colspan=2>RAM</th>
+    <th colspan=4>Carbon Usage (kgCO2eq)</th>
     <th rowspan=2>Timestamp</th>
+    <th rowspan=2>Platform</th>
+    <th rowspan=2>Location</th>
   </tr>
   <tr>
-    <th >Minimum</th>
-    <th >Half-Use</th>
-    <th >Maximum</th>
-    <th >Current</th>
+    <th>Units</th>
+    <th>Cores Per Unit</th>
+    <th>Units</th>
+    <th>Capacity Per Unit</th>
+    <th>Minimum</th>
+    <th>Half-Use</th>
+    <th>Maximum</th>
+    <th>Current</th>
   </tr>
 	<% @reports.each do |report| %>
 	  <tr>
@@ -31,12 +37,16 @@ td {
 			  </a>
 			</td>
 			<td><%= report.cpus %></td>
-			<td><%= report.ram %></td>
+			<td><%= report.cores_per_cpu %></td>
+			<td><%= report.ram_units %></td>
+			<td><%= "#{report.ram_capacity_per_unit} GB" %></td>
 			<td><%= report.min %></td>
 			<td><%= report.half %></td>
 			<td><%= report.max %></td>
-			<td><%= report.avg %></td>
+			<td><%= report.current %></td>
 			<td><%= report.created_at %></td>
+			<td><%= report.platform %></td>
+			<td><%= report.location %></td>
 		</tr>
 	<% end %>
 </table>
