@@ -1,6 +1,9 @@
 class ReportController < ApplicationController
   protect_from_forgery with: :null_session
 
+  def home
+  end
+
   def index
     @reports = Report.all
   end

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "report#index"
+  root "report#home"
 
   get "/leaderboard", to: "report#index"
   get "/leaderboard/:name", to: "report#show"
