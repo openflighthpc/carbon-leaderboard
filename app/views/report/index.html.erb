@@ -14,7 +14,7 @@ td {
     <th rowspan=2>User ID</th>
     <th colspan=2>CPU</th>
     <th colspan=2>RAM</th>
-    <th colspan=4>Carbon Usage (kgCO2eq)</th>
+    <th colspan=6>Carbon Usage (kgCO2eq)</th>
     <th rowspan=2>Timestamp</th>
     <th rowspan=2>Platform</th>
     <th rowspan=2>Location</th>
@@ -28,25 +28,29 @@ td {
     <th>Half-Use</th>
     <th>Maximum</th>
     <th>Current</th>
+    <th>Current per core</th>
+    <th>Current per GB ram</th>
   </tr>
-	<% @reports.each do |report| %>
+	<% @reports.each do |r| %>
 	  <tr>
 			<td>
-			  <a href="/leaderboard/<%= User.find(report.user_id).name %>">
-			    <%= User.find(report.user_id).name %>
+			  <a href="/leaderboard/<%= User.find(r.user_id).name %>">
+			    <%= User.find(r.user_id).name %>
 			  </a>
 			</td>
-			<td><%= report.cpus %></td>
-			<td><%= report.cores_per_cpu %></td>
-			<td><%= report.ram_units %></td>
-			<td><%= "#{report.ram_capacity_per_unit} GB" %></td>
-			<td><%= report.min %></td>
-			<td><%= report.half %></td>
-			<td><%= report.max %></td>
-			<td><%= report.current %></td>
-			<td><%= report.created_at %></td>
-			<td><%= report.platform %></td>
-			<td><%= report.location %></td>
+			<td><%= r.cpus %></td>
+			<td><%= r.cores_per_cpu %></td>
+			<td><%= r.ram_units %></td>
+			<td><%= "#{r.ram_capacity_per_unit} GB" %></td>
+			<td><%= r.min %></td>
+			<td><%= r.half %></td>
+			<td><%= r.max %></td>
+			<td><%= r.current %></td>
+                        <td><%= r.current / (r.cpus * r.cores_per_cpu) %></td>
+                        <td><%= r.current / (r.ram_units * r.ram_capacity_per_unit) %></td>
+			<td><%= r.created_at %></td>
+			<td><%= r.platform %></td>
+			<td><%= r.location %></td>
 		</tr>
 	<% end %>
 </table>
