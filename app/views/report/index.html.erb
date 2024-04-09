@@ -5,7 +5,7 @@ table, th, td {
   border:1px solid black;
 }
 td {
-	text-align: center;
+  text-align: center;
 }
 </style>
 
@@ -15,7 +15,11 @@ td {
     <th colspan=2>CPU</th>
     <th colspan=2>RAM</th>
     <th colspan=6>Carbon Usage (kgCO2eq)</th>
-    <th rowspan=2>Timestamp</th>
+    <th rowspan=2>
+      <form action="/leaderboard/time">
+        <input type="submit" value="Timestamp" />
+      </form>
+    </th>
     <th rowspan=2>Platform</th>
     <th rowspan=2>Location</th>
   </tr>
@@ -28,29 +32,37 @@ td {
     <th>Half-Use</th>
     <th>Maximum</th>
     <th>Current</th>
-    <th>Current per core</th>
-    <th>Current per GB ram</th>
+    <th>
+      <form action="/leaderboard/per_core">
+        <input type="submit" value="Current per core" />
+      </form>
+    </th>
+    <th>
+      <form action="/leaderboard/per_ram">
+        <input type="submit" value="Current per GB RAM" />
+      </form>
+    </th>
   </tr>
-	<% @reports.each do |r| %>
-	  <tr>
-			<td>
-			  <a href="/leaderboard/<%= User.find(r.user_id).name %>">
-			    <%= User.find(r.user_id).name %>
-			  </a>
-			</td>
-			<td><%= r.cpus %></td>
-			<td><%= r.cores_per_cpu %></td>
-			<td><%= r.ram_units %></td>
-			<td><%= "#{r.ram_capacity_per_unit} GB" %></td>
-			<td><%= r.min %></td>
-			<td><%= r.half %></td>
-			<td><%= r.max %></td>
-			<td><%= r.current %></td>
-      <td><%= r.current / (r.cpus * r.cores_per_cpu) %></td>
-      <td><%= r.current / (r.ram_units * r.ram_capacity_per_unit) %></td>
-			<td><%= r.created_at %></td>
-			<td><%= r.platform %></td>
-			<td><%= r.location %></td>
-		</tr>
-	<% end %>
+  <% @reports.each do |r| %>
+    <tr>
+      <td>
+        <a href="/user/<%= User.find(r.user_id).name %>">
+          <%= User.find(r.user_id).name %>
+        </a>
+      </td>
+      <td><%= r.cpus %></td>
+      <td><%= r.cores_per_cpu %></td>
+      <td><%= r.ram_units %></td>
+      <td><%= "#{r.ram_capacity_per_unit} GB" %></td>
+      <td><%= r.min %></td>
+      <td><%= r.half %></td>
+      <td><%= r.max %></td>
+      <td><%= r.current %></td>
+      <td><%= signif((r.current / (r.cpus * r.cores_per_cpu)), 3) %></td>
+      <td><%= signif((r.current / (r.ram_units * r.ram_capacity_per_unit)), 3) %></td>
+      <td><%= r.created_at %></td>
+      <td><%= r.platform %></td>
+      <td><%= r.location %></td>
+    </tr>
+  <% end %>
 </table>
