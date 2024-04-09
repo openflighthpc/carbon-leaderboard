@@ -10,7 +10,6 @@ class CreateReports < ActiveRecord::Migration[7.1]
       t.float :half
       t.float :max
       t.float :current
-      t.datetime :time
       t.string :platform
       t.string :location
 

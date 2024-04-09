@@ -9,7 +9,7 @@ td {
 }
 </style>
 
-<table style="width:100%" align="right">
+<table style="width:100%">
   <tr>
     <th rowspan=2>User ID</th>
     <th colspan=2>CPU</th>
@@ -46,12 +46,11 @@ td {
 			<td><%= r.half %></td>
 			<td><%= r.max %></td>
 			<td><%= r.current %></td>
-                        <td><%= r.current / (r.cpus * r.cores_per_cpu) %></td>
-                        <td><%= r.current / (r.ram_units * r.ram_capacity_per_unit) %></td>
+      <td><%= r.current / (r.cpus * r.cores_per_cpu) %></td>
+      <td><%= r.current / (r.ram_units * r.ram_capacity_per_unit) %></td>
 			<td><%= r.created_at %></td>
 			<td><%= r.platform %></td>
 			<td><%= r.location %></td>
 		</tr>
 	<% end %>
 </table>
-
