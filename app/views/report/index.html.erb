@@ -11,7 +11,7 @@ td {
 
 <table style="width:100%">
   <tr>
-    <th rowspan=2>User ID</th>
+    <th rowspan=2>User Name</th>
     <th colspan=2>CPU</th>
     <th colspan=2>RAM</th>
     <th colspan=6>Carbon Usage (kgCO2eq)</th>
@@ -46,8 +46,8 @@ td {
   <% @reports.each do |r| %>
     <tr>
       <td>
-        <a href="/user/<%= User.find(r.user_id).name %>">
-          <%= User.find(r.user_id).name %>
+        <a href="/user/<%= username(r.user_id) %>">
+          <%= username(r.user_id) %>
         </a>
       </td>
       <td><%= r.cpus %></td>

@@ -1,9 +1,6 @@
 class ReportController < ApplicationController
   protect_from_forgery with: :null_session
 
-  def home
-  end
-
   def index
     case params[:sort_column]
     when 'per_core'
@@ -18,30 +15,34 @@ class ReportController < ApplicationController
   end
 
   def show
-    @user = User.find_by(name: params[:name])
-    @reports = Report.where("user_id = '#{@user.user_id}'")
+    @user = User.find_by(username: params[:name])
+    if @user
+      @reports = Report.where("user_id = '#{@user&.id}'")
+    else
+      @reports = Report.where("user_id IS ?", nil)
+    end
   end
 
   def add_record
+    auth = authorize_request
+    if auth[:errors]
+      render json: "Authorization token invalid: #{auth[:errors]}"
+      return
+    end
+    
     data = JSON.parse(request.body.read)
 
-    user = User.find_by(user_id: data['user_id'])
-    if !user
-      colours = %w(red orange yellow green blue indigo violet pink purple grey)
-      animals = %w(dog cat chicken duck otter lion tiger fish snake dragon)
+    user = User.find_by(id: auth[:user])
 
-      name = "#{colours[rand(10)]}_#{animals[rand(10)]}#{rand(100)}"
-      while User.find_by(name: name)
-        name = "#{colours[rand(10)]}_#{animals[rand(10)]}#{rand(100)}"
-      end
-
-      user = User.new(user_id: data['user_id'],
-                      name: name
-                     )
-      user.save
+    device = Device.find_by(device_id: data['user_id'])
+    if !device
+      device = Device.new(device_id: data['user_id'],
+                          user_id: user&.id
+                         )
+      device.save
     end
 
-    report = Report.new(user_id: user.user_id,
+    report = Report.new(user_id: user&.id,
                         platform: data['platform'],
                         cpus: data['cpus'],
                         cores_per_cpu: data['cores_per_cpu'],
@@ -55,7 +56,7 @@ class ReportController < ApplicationController
                        )
     report.save
 
-    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq for #{user.name}"
+    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{user ? user.username : 'anonymous user'}."
   end
 end
 

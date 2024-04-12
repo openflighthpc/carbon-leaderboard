@@ -1,4 +1,4 @@
-<h1>Carbon Leaderboard</h1>
+<h1>Recorded Devices</h1>
 
 <style>
 table, th, td {
@@ -11,13 +11,13 @@ td {
 
 <table style="width:100%" align="right">
   <tr>
-    <th>User ID</th>
-    <th>Username</th>
+    <th>Device UUID</th>
+    <th>Owner</th>
   </tr>
-	<% @users.each do |user| %>
+	<% @devices.each do |device| %>
 	  <tr>
-	    <td><%= user.user_id %></td>
-			<td><%= user.name %></td>
+	    <td><%= device.device_uuid %></td>
+			<td><%= device.name %></td>
 		</tr>
 	<% end %>
 </table>

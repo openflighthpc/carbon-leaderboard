@@ -1,4 +1,6 @@
-<h1><%= "Data for #{@user.name}" %></h1>
+<h1><%= "Data for #{username(@user&.id)}" %></h1>
+
+<%= "Auth token is #{@user.auth_token}" if @user%>
 
 <style>
 table, th, td {

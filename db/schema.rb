@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_27_154515) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_153502) do
+  create_table "devices", id: false, force: :cascade do |t|
+    t.string "device_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_devices_on_user_id"
+  end
+
   create_table "reports", force: :cascade do |t|
-    t.string "user_id"
+    t.integer "user_id"
     t.integer "cpus"
     t.integer "cores_per_cpu"
     t.float "ram_units"
@@ -21,7 +29,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_154515) do
     t.float "half"
     t.float "max"
     t.float "current"
-    t.datetime "time"
     t.string "platform"
     t.string "location"
     t.datetime "created_at", null: false
@@ -29,11 +36,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_27_154515) do
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
-  create_table "users", id: false, force: :cascade do |t|
-    t.string "user_id"
-    t.string "name"
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "username", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "auth_token"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end
