@@ -5,7 +5,7 @@ This tool receives, stores and showcases user carbon data.
 ## Initial Setup
 
 - Ensure Ruby (3.2.2) and Bundler are installed on your device
-- Ensure Sqlite is installed on your device (`sqlite3 --version`)
+- Ensure SQLite is installed on your device (`sqlite3 --version`)
 - Run `bundle install`
 - Run `bin/rails db:migrate`
 
