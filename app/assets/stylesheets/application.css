@@ -14,6 +14,7 @@
  *= require_self
  */
 :root {
+    --default-text-color: #404040;
     --color-main: #2794d8;
 
     --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
@@ -71,6 +72,7 @@ body {
     bottom: 0;
     overflow-y: scroll;
     font-family: 'Lexend';
+    color: var(--default-text-color);
 }
 
 #nav-bar {
