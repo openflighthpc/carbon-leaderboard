@@ -20,8 +20,12 @@
   --gradient-matrix: linear-gradient(to right, #00D12E, #AADB12, #F0CC3D, #F39C1D, #F5720A);
 }
 
+@font-face {
+  font-family: 'Lexend';
+  src: url("/assets/lexend.ttf");
+}
 
- @media screen and (max-device-width: 2879px) {
+@media screen and (max-device-width: 2879px) {
 
   :root {
 
@@ -64,6 +68,7 @@ body {
   right: 0;
   bottom: 0;
   overflow-y: scroll;
+  font-family: 'Lexend';
 }
 
 #nav-bar {
@@ -82,6 +87,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
+  image-rendering: crisp-edges;
   background-image: url(/assets/logo.png);
   background-position: calc(12 * var(--fpx)) center;
   background-size: auto calc(60 * var(--fpx));
