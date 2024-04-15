@@ -18,6 +18,8 @@
 
     --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
     --gradient-matrix: linear-gradient(to right, #00D12E, #AADB12, #F0CC3D, #F39C1D, #F5720A);
+
+    --navbar-height: 5rem;
 }
 
 @font-face {
@@ -77,11 +79,11 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    border: solid black 1px;
+    height: var(--navbar-height);
 }
 
 #nav-bar .logo {
-    height: 4rem;
+    height: 100%;
 }
 
 #dynamic-bg {
@@ -91,4 +93,8 @@ body {
     width: 100%;
     height: 60%;
     filter: blur(calc(120 * var(--fpx))) saturate(3.6);
+}
+
+#main {
+    margin-top: var(--navbar-height);
 }
