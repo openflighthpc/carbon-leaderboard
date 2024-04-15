@@ -82,6 +82,10 @@ body {
     left: 0;
     right: 0;
     height: var(--navbar-height);
+
+    display: flex;
+    justify-content: space-between;
+
     background-image: linear-gradient(white, rgba(255, 255, 255, 0.71));
     border: 1px solid rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
@@ -90,6 +94,12 @@ body {
 
 #nav-bar .logo {
     height: 100%;
+}
+
+#nav-bar .powered {
+    display: flex;
+    justify-content: end;
+    width: 13rem;
 }
 
 #dynamic-bg {
