@@ -88,7 +88,7 @@ body {
   right: 0;
   bottom: 0;
   image-rendering: crisp-edges;
-  background-image: url(/assets/logo.png);
+  background-image: url(/assets/logo.svg);
   background-position: calc(12 * var(--fpx)) center;
   background-size: auto calc(60 * var(--fpx));
   background-repeat: no-repeat;
