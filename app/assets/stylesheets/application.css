@@ -14,10 +14,10 @@
  *= require_self
  */
 :root {
-  --color-main: #2794d8;
+    --color-main: #2794d8;
 
-  --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
-  --gradient-matrix: linear-gradient(to right, #00D12E, #AADB12, #F0CC3D, #F39C1D, #F5720A);
+    --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
+    --gradient-matrix: linear-gradient(to right, #00D12E, #AADB12, #F0CC3D, #F39C1D, #F5720A);
 }
 
 @font-face {
@@ -27,78 +27,68 @@
 
 @media screen and (max-device-width: 2879px) {
 
-  :root {
+    :root {
 
-      --fpx: 1px;
+        --fpx: 1px;
 
-  }
+    }
 
 }
 
 @media screen and (min-device-width: 2880px) and (max-device-width: 3839px) {
 
-  :root {
+    :root {
 
-      --fpx: 1.1px;
+        --fpx: 1.1px;
 
-  }
+    }
 
 }
 
 @media screen and (min-device-width: 3840px) {
 
-  :root {
+    :root {
 
-      --fpx: 1.2px;
+        --fpx: 1.2px;
 
-  }
+    }
 
 }
 
 body, div {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: scroll;
-  font-family: 'Lexend';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    font-family: 'Lexend';
 }
 
 #nav-bar {
-  position: fixed;
-  padding: calc(12 * var(--fpx));
-  top: 0;
-  left: 0;
-  right: 0;
-  height: calc(84 * var(--fpx));
+    position: fixed;
+    padding: 0.5rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: solid black 1px;
 }
 
-#nav-bar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  image-rendering: crisp-edges;
-  background-image: url(/assets/logo.svg);
-  background-position: calc(12 * var(--fpx)) center;
-  background-size: auto calc(60 * var(--fpx));
-  background-repeat: no-repeat;
+#nav-bar .logo {
+    height: 4rem;
 }
 
- #dynamic-bg {
-  position: fixed;
-  top: 40%;
-  left: 0;
-  width: 100%;
-  height: 60%;
-  filter: blur(calc(120 * var(--fpx))) saturate(3.6);
- }
+#dynamic-bg {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    filter: blur(calc(120 * var(--fpx))) saturate(3.6);
+}
