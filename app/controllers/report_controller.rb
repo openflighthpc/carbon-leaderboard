@@ -58,5 +58,9 @@ class ReportController < ApplicationController
 
     render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{user ? user.username : 'anonymous user'}."
   end
+
+  def raw_data
+    render json: Report.all
+  end
 end
 
