@@ -2,16 +2,16 @@ class ReportController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
-    case params[:sort_column]
-    when 'per_core'
-      @reports = Report.all.order(Arel.sql('current * cpus * cores_per_cpu'))
-    when 'per_ram'
-      @reports = Report.all.order(Arel.sql('current * ram_units * ram_capacity_per_unit'))
-    when 'time'
-      @reports = Report.all.order(:created_at)
-    else
-      @reports = Report.all
-    end
+    # case params[:sort_column]
+    # when 'per_core'
+    #   @reports = Report.all.order(Arel.sql('current * cpus * cores_per_cpu'))
+    # when 'per_ram'
+    #   @reports = Report.all.order(Arel.sql('current * ram_units * ram_capacity_per_unit'))
+    # when 'time'
+    #   @reports = Report.all.order(:created_at)
+    # else
+    #   @reports = Report.all
+    # end
   end
 
   def show
@@ -58,7 +58,28 @@ class ReportController < ApplicationController
   end
 
   def raw_data
-    render json: Report.all
+    reports = Report.order(:max)
+    response = {}.tap do |res|
+      res[:headers] = ['Owner', 'Location', 'No. cores', 'RAM(GB)', 'Equivalent CO2 emissions per core at full load (kgCO2eq/h)']
+      rank = 1
+      res[:reports] = reports
+      .group_by(&:max)
+      .values.flat_map do |rep_group|
+        current_rank = rank
+        rank += rep_group.size
+        rep_group.map do |rep|
+          {}.tap do |new_rep|
+            new_rep[:rank] = current_rank
+            new_rep[:owner] = User.where('id = ?', rep[:user_id]).pluck(:username).first
+            new_rep[:location] = rep[:location]
+            new_rep[:core_number] = rep[:cpus] * rep[:cores_per_cpu]
+            new_rep[:ram] = rep[:ram_units] * rep[:ram_capacity_per_unit]
+            new_rep[:max_emission] = rep[:max]
+          end
+        end
+      end
+    end
+    render json: response
   end
 end
 
