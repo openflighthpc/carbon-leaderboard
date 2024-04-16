@@ -8,7 +8,11 @@ class ApplicationController < ActionController::Base
 
   def authorize_request
     header = request.headers['Authorization']
-    header = header.split(' ').last if header
+    if header
+      header = header.split(' ').last
+    else
+      return { user: nil, errors: nil }
+    end
     begin
       decoded = JsonWebToken.decode(header)
       user = User.find(decoded[:user_id])

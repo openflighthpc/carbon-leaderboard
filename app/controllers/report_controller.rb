@@ -29,11 +29,9 @@ class ReportController < ApplicationController
       render json: "Authorization token invalid: #{auth[:errors]}"
       return
     end
-    
+
     data = JSON.parse(request.body.read)
-
-    user = User.find_by(id: auth[:user])
-
+    user = auth[:user]
     device = Device.find_by(device_id: data['user_id'])
     if !device
       device = Device.new(device_id: data['user_id'],
