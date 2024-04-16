@@ -22,7 +22,14 @@
 
   <div class="top-right">
     <% if user_signed_in? %>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn' %>
+      <div class="dropdown account">
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= current_user.username %>
+        </button>
+        <ul class="dropdown-menu">
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn dropdown-item" %>
+        </ul>
+      </div>
     <% else %>
       <!-- Button trigger modal -->
       <%= button_to "Log in", new_user_session_path, class: 'btn' %>

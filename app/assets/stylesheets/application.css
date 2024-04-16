@@ -113,7 +113,7 @@ body {
     justify-content: end;
 }
 
-#nav-bar .powered .logo {
+#nav-bar .powered .logo, #nav-bar .account.dropdown .logo {
     padding: 0.2rem;
 }
 
