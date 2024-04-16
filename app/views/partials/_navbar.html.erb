@@ -1,10 +1,20 @@
 <div id="nav-bar">
   <%= image_tag "logo.svg", class: "logo", title: 'OpenFlightHPC Carbon Leaderboard' %>
-  <a
-    class="powered"
-    href="https://alces-flight.com/"
-    target="_blank"
-  >
-    <%= image_tag "poweredby.svg", class: "logo" %>
-  </a>
+
+  <div class="top-right">
+    <% if user_signed_in? %>
+      <span><%= current_user.username %></span>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <!-- Button trigger modal -->
+      <%= button_to "Log in", new_user_session_path %>
+    <% end %>
+    <a
+      class="powered"
+      href="https://alces-flight.com/"
+      target="_blank"
+    >
+      <%= image_tag "poweredby.svg", class: "logo" %>
+    </a>
+  </div>
 </div>
