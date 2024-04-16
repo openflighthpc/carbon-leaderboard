@@ -98,7 +98,7 @@ body {
     box-sizing: border-box;
 }
 
-#nav-bar .top-right {
+#nav-bar .top-right, #nav-bar .links {
     display: flex;
     align-items: center;
     gap: 2rem;
