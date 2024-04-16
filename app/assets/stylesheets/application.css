@@ -95,6 +95,7 @@ body {
 
 #nav-bar .logo {
     height: calc(var(--navbar-height) - 2 * var(--navbar-padding));
+    box-sizing: border-box;
 }
 
 #nav-bar .top-right {
@@ -106,6 +107,10 @@ body {
 #nav-bar .powered {
     display: flex;
     justify-content: end;
+}
+
+#nav-bar .powered .logo {
+    padding: 0.2rem;
 }
 
 #dynamic-bg {
