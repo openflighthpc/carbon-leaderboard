@@ -16,17 +16,16 @@
         <%= link_to "Server leaderboard", leaderboard_path, class: "dropdown-item" %>
       </ul>
     </div>
-    <%= button_to "Servers", show_devices_path, class: 'btn' %>
+    <%= button_to "Servers", show_devices_path, method: :get, class: 'btn' %>
   </div>
   </div>
 
   <div class="top-right">
     <% if user_signed_in? %>
-      <span><%= current_user.username %></span>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: 'btn' %>
     <% else %>
       <!-- Button trigger modal -->
-      <%= button_to "Log in", new_user_session_path %>
+      <%= button_to "Log in", new_user_session_path, class: 'btn' %>
     <% end %>
     <a
       class="powered"
