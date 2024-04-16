@@ -98,10 +98,14 @@ body {
     box-sizing: border-box;
 }
 
-#nav-bar .top-right, #nav-bar .links {
+#nav-bar .top-right, #nav-bar .links, #nav-bar .top-left {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+#nav-bar .links {
+    gap: 1rem;
 }
 
 #nav-bar .powered {

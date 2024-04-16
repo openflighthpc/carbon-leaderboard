@@ -1,4 +1,5 @@
 <div id="nav-bar">
+  <div class="top-left">
   <a
     href="<%= root_path %>"
     title="OpenFlightHPC Carbon Leaderboard"
@@ -6,7 +7,7 @@
     <%= image_tag "logo.svg", class: "logo" %>
   </a>
 
-  <ul class="links">
+  <div class="links">
     <div class="dropdown">
       <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         Leaderboards
@@ -15,7 +16,9 @@
         <%= link_to "Server leaderboard", leaderboard_path, class: "dropdown-item" %>
       </ul>
     </div>
-  </ul>
+    <%= button_to "Servers", show_devices_path, class: 'btn' %>
+  </div>
+  </div>
 
   <div class="top-right">
     <% if user_signed_in? %>
