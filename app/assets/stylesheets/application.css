@@ -73,7 +73,23 @@ body {
     bottom: 0;
     overflow-y: scroll;
     font-family: 'Lexend';
+    font-weight: 300;
     color: var(--default-text-color);
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 3rem;
+}
+
+.flex-column-centred {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    padding: 4rem 3rem;
 }
 
 #nav-bar {
@@ -152,4 +168,47 @@ body {
 
 #main {
     margin-top: var(--navbar-height);
+}
+
+.login.card {
+    min-width: 40rem;
+}
+
+.login.card form {
+    width: 80%;
+}
+
+.grid-field {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.grid-field label {
+    justify-self: end;
+}
+
+.grid-field input {
+    padding: 0.5rem;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.7rem;
+    position: relative;
+    top: -1px;
+}
+
+.login-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.login-links a {
+    text-decoration: none;
 }
