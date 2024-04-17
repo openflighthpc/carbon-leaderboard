@@ -37,7 +37,8 @@ class ReportController < ApplicationController
                         half: data['half'],
                         max: data['max'],
                         current: data['current'],
-                        location: data['location']
+                        location: data['location'],
+                        tags: []
                        )
     report.save
 
