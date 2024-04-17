@@ -190,7 +190,7 @@ a {
 }
 
 .login.card {
-    min-width: 40rem;
+    width: 40rem;
 }
 
 .login.card form {
