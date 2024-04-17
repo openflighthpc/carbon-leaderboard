@@ -78,6 +78,14 @@ body {
     color: var(--default-text-color);
 }
 
+h1, h2 {
+    font-weight: bolder;
+    background-color: var(--color-main);
+    background: var(--gradient-blue-green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 h2 {
     margin-top: 0;
     margin-bottom: 3rem;
