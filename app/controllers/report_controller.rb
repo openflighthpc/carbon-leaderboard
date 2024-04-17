@@ -60,7 +60,14 @@ class ReportController < ApplicationController
   def raw_data
     reports = Report.order(:max)
     response = {}.tap do |res|
-      res[:headers] = ['Owner', 'Location', 'No. cores', 'RAM(GB)', 'Equivalent CO2 emissions per core at full load (kgCO2eq/h)']
+      res[:header] = {}.tap do |h|
+        h[:user] = 'User'
+        h[:platform] = 'Platform'
+        h[:location] = 'Location'
+        h[:core_number] = 'NO. cores'
+        h[:ram] = 'RAM(GB)'
+        h[:main] = 'Equivalent CO2 emissions per core at full load (kgCO2eq/h)'
+      end
       rank = 1
       res[:reports] = reports
       .group_by(&:max)
@@ -70,11 +77,12 @@ class ReportController < ApplicationController
         rep_group.map do |rep|
           {}.tap do |new_rep|
             new_rep[:rank] = current_rank
-            new_rep[:owner] = User.where('id = ?', rep[:user_id]).pluck(:username).first
+            new_rep[:user] = User.where('id = ?', rep[:user_id]).pluck(:username).first
+            new_rep[:platform] = rep[:platform]
             new_rep[:location] = rep[:location]
             new_rep[:core_number] = rep[:cpus] * rep[:cores_per_cpu]
             new_rep[:ram] = rep[:ram_units] * rep[:ram_capacity_per_unit]
-            new_rep[:max_emission] = rep[:max]
+            new_rep[:main] = rep[:max]
           end
         end
       end
