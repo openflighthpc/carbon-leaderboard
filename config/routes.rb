@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get "/user/:name", to: "report#show"
   get "/show-devices", to: "device#show"
   post "/add-record", to: "report#add_record"
+  post "/add-tag/:report", to: "report#add_tag"
+  post "/delete-tag/:report", to: "report#delete_tag"
 end

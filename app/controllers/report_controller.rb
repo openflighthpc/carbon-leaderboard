@@ -78,5 +78,13 @@ class ReportController < ApplicationController
     end
     render json: response
   end
+
+  def add_tag
+    Report.find(params[:report]).add_tag(request.body.read)
+  end
+
+  def delete_tag
+    Report.find(params[:report]).delete_tag(request.body.read)
+  end
 end
 
