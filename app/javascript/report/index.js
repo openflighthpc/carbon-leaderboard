@@ -1,4 +1,4 @@
-document.addEventListener('turbo:load', async () => {
+$(document).ready(async () => {
   // add report
   // await fetch(new Request(
   //   '/add-record',
