@@ -4,9 +4,6 @@ $(document).ready(async () => {
   //   '/add-record',
   //   {
   //     method: 'POST',
-  //     headers: {
-  //       'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3MTMzNTYxOTl9._CN5ysusF_6DNn4tuJLBXH105IyoXPd2n7ozMcSdMnM'
-  //     },
   //     body: JSON.stringify({
   //       'platform': 'Some University',
   //       'cpus': 1,
