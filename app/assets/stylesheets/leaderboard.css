@@ -48,16 +48,24 @@
   width: calc(150 * var(--fpx));
 }
 
+.user-column{
+  width: calc(150 * var(--fpx));
+}
+
 .owner-column{
   width: calc(240 * var(--fpx));
 }
 
-.location-column{
+.platform-column{
   width: calc(150 * var(--fpx));
 }
 
-.coreno-column{
-  width: calc(84 * var(--fpx));
+.location-column{
+  width: calc(120 * var(--fpx));
+}
+
+.core-number-column{
+  width: calc(108 * var(--fpx));
 }
 
 .value-column {
