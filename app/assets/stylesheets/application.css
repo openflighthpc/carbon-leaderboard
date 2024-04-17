@@ -15,6 +15,7 @@
  */
 :root {
     --default-text-color: #404040;
+    --muted-text-color: #586674;
     --color-main: #2794d8;
 
     --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
@@ -98,6 +99,10 @@ a {
     color: var(--color-main);
 }
 
+.muted-text {
+    color: var(--muted-text-color);
+}
+
 #nav-bar {
     position: fixed;
     padding: var(--navbar-padding);
@@ -114,7 +119,7 @@ a {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 
-    color: #586674;
+    color: var(--muted-text-color);
     z-index: 2;
 }
 
@@ -128,7 +133,7 @@ a {
 }
 
 #nav-bar .btn:not(:hover) {
-    color: #586674;
+    color: var(--muted-text-color);
 }
 
 #nav-bar .dropdown-item:active {
@@ -186,14 +191,8 @@ a {
 
 .grid-field {
     display: grid;
-    grid-template-columns: 5rem 1fr;
-    align-items: center;
-    gap: 2rem;
+    grid-template-rows: 3fr 4fr;
     margin-bottom: 2rem;
-}
-
-.grid-field label {
-    justify-self: end;
 }
 
 .grid-field input {
@@ -231,4 +230,8 @@ input[type="checkbox"] {
 
 .login-links a {
     text-decoration: none;
+}
+
+.submit-button {
+    margin-top: 3rem;
 }
