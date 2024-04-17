@@ -1,0 +1,64 @@
+#nav-bar {
+    position: fixed;
+    padding: var(--navbar-padding);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--navbar-height);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    background-image: linear-gradient(white, rgba(255, 255, 255, 0.71));
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    color: var(--muted-text-color);
+    z-index: 2;
+}
+
+#nav-bar .logo {
+    height: calc(var(--navbar-height) - 2 * var(--navbar-padding));
+    box-sizing: border-box;
+}
+
+#nav-bar .btn {
+    border: none;
+}
+
+#nav-bar .btn:not(:hover) {
+    color: var(--muted-text-color);
+}
+
+#nav-bar .dropdown-item:active {
+    background-color: var(--color-main);
+}
+
+#nav-bar .section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+#nav-bar .top-left.section {
+    gap: 0.7rem;
+    font-weight: 750;
+}
+
+#nav-bar .centre.section {
+    justify-content: center;
+}
+
+#nav-bar .top-right.section {
+    justify-content: end;
+}
+
+#nav-bar .powered {
+    display: flex;
+    justify-content: end;
+}
+
+#nav-bar .powered .logo, #nav-bar .account.dropdown .logo {
+    padding: 0.2rem;
+}
