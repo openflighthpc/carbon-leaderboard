@@ -27,6 +27,7 @@
 
 @font-face {
   font-family: 'Lexend';
+  font-weight: 300 800;
   src: url("lexend.ttf");
 }
 
@@ -79,7 +80,7 @@ body {
 }
 
 h1, h2 {
-    font-weight: bolder;
+    font-weight: 800;
     background-color: var(--color-main);
     background: var(--gradient-blue-green);
     -webkit-background-clip: text;
@@ -156,7 +157,7 @@ a {
 
 #nav-bar .top-left.section {
     gap: 0.7rem;
-    font-weight: bold;
+    font-weight: 750;
 }
 
 #nav-bar .centre.section {
