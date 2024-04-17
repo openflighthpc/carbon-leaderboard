@@ -16,6 +16,7 @@
 :root {
     --default-text-color: #404040;
     --color-main: #2794d8;
+    --color-section: #ffffffa0;
 
     --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
     --gradient-matrix: linear-gradient(to right, #00D12E, #AADB12, #F0CC3D, #F39C1D, #F5720A);
@@ -66,6 +67,7 @@ body, div {
 }
 
 body {
+<<<<<<< HEAD
     position: absolute;
     top: 0;
     left: 0;
@@ -74,6 +76,15 @@ body {
     overflow-y: scroll;
     font-family: 'Lexend';
     color: var(--default-text-color);
+=======
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  font-family: 'Lexend';
+>>>>>>> fc70866 (leaderboard effects)
 }
 
 #nav-bar {
@@ -101,6 +112,7 @@ body {
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 #nav-bar .btn {
     border: none;
 }
@@ -154,3 +166,14 @@ body {
 #main {
     margin-top: var(--navbar-height);
 }
+=======
+ #dynamic-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(calc(240 * var(--fpx))) saturate(3.6);
+  z-index: -1;
+ }
+>>>>>>> fc70866 (leaderboard effects)

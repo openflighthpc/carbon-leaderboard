@@ -1,6 +1,6 @@
 document.addEventListener('turbo:load', async () => {
   // add report
-  // console.log(await fetch(new Request(
+  // await fetch(new Request(
   //   '/add-record',
   //   {
   //     method: 'POST',
@@ -15,12 +15,12 @@ document.addEventListener('turbo:load', async () => {
   //       'ram_capacity_per_unit': 16,
   //       'min': 30,
   //       'half': 40,
-  //       'max': 65,
+  //       'max': 67,
   //       'current': 32,
   //       'location': 'US'
   //     })
   //   }
-  // )));
+  // ));
 
   const leaderboardResponse = await fetch(
     '/leaderboard/raw-data',
@@ -40,15 +40,24 @@ document.addEventListener('turbo:load', async () => {
     for (const column of columns) {
       barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${report[column]}</div>`;
     }
-    $('#leaderboard-wrapper').append(`
-      <div class="leaderboard-row leaderboard-item">
+    $('.leaderboard-content-wrapper').append(`
+      <div class="leaderboard-item-wrapper rank-${report.rank < 4 ? report.rank : 'other'}">
         <div class="leaderboard-item glare"></div>
         <div class="leaderboard-item rank-column">${report.rank}</div>
         <div class="leaderboard-item bar-column">
           <div class="leaderboard-item bar-data">${barHTML}</div>
         </div>
-        <div class="leaderboard-item value-column">${report.main}</div>
+        <div class="value-column">${report.main}</div>
       </div>
     `);
   }
+
+  $('#leaderboard-wrapper .leaderboard-content-wrapper').on('mousemove', (e) => {
+    const leaderboardDimensions = $('#leaderboard-wrapper .leaderboard-header-wrapper').get(0).getBoundingClientRect();
+    const glareTranslateX = e.clientX - leaderboardDimensions.left;
+
+    for (const glareDom of document.getElementsByClassName('leaderboard-item glare')) {
+        glareDom.style.transform = `translateX(${glareTranslateX}px)`;
+    }
+  });
 });
