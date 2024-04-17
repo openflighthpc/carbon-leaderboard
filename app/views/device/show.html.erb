@@ -16,8 +16,8 @@ td {
   </tr>
 	<% @devices.each do |device| %>
 	  <tr>
-	    <td><%= device.device_uuid %></td>
-			<td><%= device.name %></td>
+	    <td><%= device.device_id %></td>
+			<td><%= username(device.user_id) %></td>
 		</tr>
 	<% end %>
 </table>
