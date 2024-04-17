@@ -109,6 +109,10 @@ body {
     color: #586674;
 }
 
+#nav-bar .dropdown-item:active {
+    background-color: var(--color-main);
+}
+
 #nav-bar .section {
     flex-grow: 1;
     display: flex;
