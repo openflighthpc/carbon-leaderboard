@@ -1,11 +1,4 @@
-<h1>Welcome to Flight Carbon</h1>
+<h1 id="welcome">Making HPC Greener</h1>
 
-<% if user_signed_in? %> 
- <div> Welcome <%= current_user.username %> </div> 
-  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
-<% else %>
-  <%= button_to "Sign in", new_user_session_path %> 
-<% end %>
-
-<h2><a href="/leaderboard">Click here to go to the leaderboard</a><h2>
-<h2><a href="/show-devices">Click here to view the list of recorded devices</a><h2>
+<canvas id="dynamic-bg"></canvas>
+<script type="text/javascript" src="assets/index.js"></script>

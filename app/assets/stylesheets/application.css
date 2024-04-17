@@ -13,3 +13,144 @@
  *= require_tree .
  *= require_self
  */
+:root {
+    --default-text-color: #404040;
+    --color-main: #2794d8;
+
+    --gradient-blue-green: linear-gradient(to right, var(--color-main), #00D12E);
+    --gradient-matrix: linear-gradient(to right, #00D12E, #AADB12, #F0CC3D, #F39C1D, #F5720A);
+
+    --navbar-height: 5rem;
+    --navbar-padding: 0.5rem;
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: url("lexend.ttf");
+}
+
+@media screen and (max-device-width: 2879px) {
+
+    :root {
+
+        --fpx: 1px;
+
+    }
+
+}
+
+@media screen and (min-device-width: 2880px) and (max-device-width: 3839px) {
+
+    :root {
+
+        --fpx: 1.1px;
+
+    }
+
+}
+
+@media screen and (min-device-width: 3840px) {
+
+    :root {
+
+        --fpx: 1.2px;
+
+    }
+
+}
+
+body, div {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    font-family: 'Lexend';
+    color: var(--default-text-color);
+}
+
+#nav-bar {
+    position: fixed;
+    padding: var(--navbar-padding);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--navbar-height);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    background-image: linear-gradient(white, rgba(255, 255, 255, 0.71));
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    color: #586674;
+    z-index: 2;
+}
+
+#nav-bar .logo {
+    height: calc(var(--navbar-height) - 2 * var(--navbar-padding));
+    box-sizing: border-box;
+}
+
+#nav-bar .btn {
+    border: none;
+}
+
+#nav-bar .btn:not(:hover) {
+    color: #586674;
+}
+
+#nav-bar .dropdown-item:active {
+    background-color: var(--color-main);
+}
+
+#nav-bar .section {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+#nav-bar .top-left.section {
+    gap: 0.7rem;
+    font-weight: bold;
+}
+
+#nav-bar .centre.section {
+    justify-content: center;
+}
+
+#nav-bar .top-right.section {
+    justify-content: end;
+}
+
+#nav-bar .powered {
+    display: flex;
+    justify-content: end;
+}
+
+#nav-bar .powered .logo, #nav-bar .account.dropdown .logo {
+    padding: 0.2rem;
+}
+
+#dynamic-bg {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    filter: blur(calc(120 * var(--fpx))) saturate(3.6);
+}
+
+#main {
+    margin-top: var(--navbar-height);
+}

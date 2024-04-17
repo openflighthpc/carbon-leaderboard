@@ -1,0 +1,48 @@
+<div id="nav-bar">
+  <div class="top-left section">
+    <a
+      href="<%= root_path %>"
+      title="OpenFlightHPC Carbon Leaderboard"
+    >
+      <%= image_tag "logo.svg", class: "logo" %>
+    </a>
+    <div>
+      <span>OpenFlightHPC</span><br>
+      <span>Carbon leaderboard</span>
+    </div>
+  </div>
+
+  <div class="centre section">
+      <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Leaderboards
+        </button>
+        <ul class="dropdown-menu">
+          <%= link_to "Server leaderboard", leaderboard_path, class: "dropdown-item" %>
+        </ul>
+      </div>
+      <%= button_to "Servers", show_devices_path, method: :get, class: 'btn' %>
+  </div>
+
+  <div class="top-right section">
+    <% if user_signed_in? %>
+      <div class="dropdown account">
+        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= current_user.username %>
+        </button>
+        <ul class="dropdown-menu">
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn dropdown-item" %>
+        </ul>
+      </div>
+    <% else %>
+      <%= button_to "Log in", new_user_session_path, class: 'btn' %>
+    <% end %>
+    <a
+      class="powered"
+      href="https://alces-flight.com/"
+      target="_blank"
+    >
+      <%= image_tag "poweredby.svg", class: "logo" %>
+    </a>
+  </div>
+</div>
