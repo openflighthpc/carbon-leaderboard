@@ -14,7 +14,7 @@
 
   font-size: calc(18 * var(--fpx));
   text-align: left;
-  color: #404040;
+  color: var(--color-text);
 
   display: grid;
   grid-template-columns: 1fr;
@@ -129,7 +129,7 @@
 .leaderboard-item-wrapper:hover {
   background-color: #404040;
   color: #ffffff;
-  filter: drop-shadow(calc(3 * var(--fpx)) calc(3 * var(--fpx)) calc(6 * var(--fpx)) #404040);
+  filter: drop-shadow(calc(3 * var(--fpx)) calc(3 * var(--fpx)) calc(6 * var(--fpx)) var(--color-text));
   transform: scale(1.012);
   transition:
       background-color 72ms ease-out,

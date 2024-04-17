@@ -14,7 +14,7 @@
  *= require_self
  */
 :root {
-    --default-text-color: #404040;
+    --color-text: #586674;
     --color-main: #2794d8;
     --color-section: #ffffffa0;
 
@@ -67,24 +67,14 @@ body, div {
 }
 
 body {
-<<<<<<< HEAD
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-family: 'Lexend';
-    color: var(--default-text-color);
-=======
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
-  font-family: 'Lexend';
->>>>>>> fc70866 (leaderboard effects)
+    color: var(--color-text);
 }
 
 #nav-bar {
@@ -98,12 +88,10 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
-    background-image: linear-gradient(white, rgba(255, 255, 255, 0.71));
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    border-bottom: 1px solid var(--color-main);
+    backdrop-filter: blur(calc(120 * var(--fpx)));
+    -webkit-backdrop-filter: blur(calc(120 * var(--fpx)));
 
-    color: #586674;
     z-index: 2;
 }
 
@@ -112,7 +100,6 @@ body {
     box-sizing: border-box;
 }
 
-<<<<<<< HEAD
 #nav-bar .btn {
     border: none;
 }
@@ -156,24 +143,14 @@ body {
 
 #dynamic-bg {
     position: fixed;
-    top: 40%;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 60%;
-    filter: blur(calc(120 * var(--fpx))) saturate(3.6);
+    height: 100%;
+    filter: blur(calc(240 * var(--fpx))) saturate(3);
+    z-index: -1;
 }
 
 #main {
     margin-top: var(--navbar-height);
 }
-=======
- #dynamic-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  filter: blur(calc(240 * var(--fpx))) saturate(3.6);
-  z-index: -1;
- }
->>>>>>> fc70866 (leaderboard effects)
