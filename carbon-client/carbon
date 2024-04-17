@@ -424,6 +424,7 @@ case $action in
             RESPONSE=$(curl -s -X 'POST' \
             "${LEADERBOARD_URL}/add-record" \
             -H 'accept: application/json' \
+            -H "Authorization: ${AUTH_TOKEN}" \
             -H 'Content-Type: application/json' \
             -d "$PAYLOAD")
 

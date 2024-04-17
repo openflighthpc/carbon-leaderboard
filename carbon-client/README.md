@@ -28,3 +28,6 @@ The above will send carbon information to the [OpenFlight Carbon Leaderboard](ht
 
 If the connection to the Internet goes via a VPN or proxy then the location determined by the script may be incorrect. To override the automated location identified, ensure that the environment variable `LOCATION` is set to a valid [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) code.
 
+### Claiming a Device (Authenticating with Leaderboard) 
+
+When collecting system information in the leaderboard it may be desired to optionally "claim" the device that is being sent. To do so, a user account will need to be created in the leaderboard and the `JWT_TOKEN` for the user will need to be set as the environment variable `AUTH_TOKEN`. 
