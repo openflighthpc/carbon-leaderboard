@@ -84,14 +84,15 @@ body {
     right: 0;
     height: var(--navbar-height);
 
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
     background-image: linear-gradient(white, rgba(255, 255, 255, 0.71));
     border: 1px solid rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 
+    color: #586674;
     z-index: 2;
 }
 
@@ -108,14 +109,24 @@ body {
     color: #586674;
 }
 
-#nav-bar .top-right, #nav-bar .links, #nav-bar .top-left {
+#nav-bar .section {
+    flex-grow: 1;
     display: flex;
     align-items: center;
     gap: 2rem;
 }
 
-#nav-bar .links {
-    gap: 1rem;
+#nav-bar .top-left.section {
+    gap: 0.7rem;
+    font-weight: bold;
+}
+
+#nav-bar .centre.section {
+    justify-content: center;
+}
+
+#nav-bar .top-right.section {
+    justify-content: end;
 }
 
 #nav-bar .powered {
