@@ -52,7 +52,7 @@ class ReportController < ApplicationController
         h[:user] = 'User'
         h[:platform] = 'Platform'
         h[:location] = 'Location'
-        h[:core_number] = 'NO. cores'
+        h[:core_number] = 'No. cores'
         h[:ram] = 'RAM(GB)'
         h[:main] = 'Carbon emissions per core at full load (kgCO2eq/h)'
       end
