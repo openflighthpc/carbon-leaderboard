@@ -31,3 +31,7 @@ If the connection to the Internet goes via a VPN or proxy then the location dete
 ### Claiming a Device (Authenticating with Leaderboard) 
 
 When collecting system information in the leaderboard it may be desired to optionally "claim" the device that is being sent. To do so, a user account will need to be created in the leaderboard and the `JWT_TOKEN` for the user will need to be set as the environment variable `AUTH_TOKEN`. 
+
+### Silencing Output
+
+By default the script will print a one-line debug of the system specs when `send` is run. This can be silenced by setting the environment variable `QUIET` to `true`. 

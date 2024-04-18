@@ -175,6 +175,12 @@ fi
   cat $LOG_DIR/report.md
 }
 
+debug_specs() {
+    if [ -z $QUIET ] ; then 
+        echo "$UUID: $NUMCPUS x $NUMCORESPERCPU CPU, $NUMDIMMS x ${GBPERDIMM}GB RAM, GPUs: [$(echo "$GPUSINFO" |sed 's/, $//g')], Disks: [$(echo "$DISKSINFO" |sed 's/, $//g')]"
+    fi
+}
+
 #
 # Runtime Checks
 #
@@ -402,6 +408,7 @@ case $action in
         report
         ;;
     "send")
+        debug_specs
         if [ $INTERNET == "true" ] ; then 
             PAYLOAD="{
             \"device_id\": \"$UUID\",
