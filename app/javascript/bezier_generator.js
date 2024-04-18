@@ -6,11 +6,11 @@ class BezierModel{
         this.canvas.width = 450;
         this.canvas.height = 450;
         this.canvasCtx = this.canvas.getContext('2d');
-        this.canvasCtx.lineWidth = 30;
+        this.canvasCtx.lineWidth = 72;
 
         this.colors = [];
-        this.colors.push(new BezierColor(70, 160, 255));
-        this.colors.push(new BezierColor(30, 255, 180));
+        this.colors.push(new BezierColor(176, 219, 255));
+        this.colors.push(new BezierColor(172, 255, 226));
 
         this.sectionSize = 6;
         this.controlPointSize = this.sectionSize * 2;
@@ -23,7 +23,7 @@ class BezierModel{
         
         this.controlPointer = 0;
         this.controlSegmentPointer = 0;
-        this.controlSegment = 180;
+        this.controlSegment = 300;
 
         this.singlePathSegment = 60;
 

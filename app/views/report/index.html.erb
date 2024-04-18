@@ -1,68 +1,17 @@
-<h1>Carbon Leaderboard</h1>
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag 'leaderboard' %>
+<% end %>
 
-<style>
-table, th, td {
-  border:1px solid black;
-}
-td {
-  text-align: center;
-}
-</style>
+<div id="leaderboard-wrapper">
+  <div class="leaderboard-header-wrapper">
+    <div class="leaderboard-header rank-column">
+      <!-- Rank -->
+    </div>
+    <div id="leaderboard-bar-header-wrapper" class="leaderboard-header bar-column">
+    </div>
+    <div id="leaderboard-bar-value-wrapper" class="leaderboard-header value-column"></div>
+  </div>
+  <div class="leaderboard-content-wrapper"></div>
+</div>
 
-<table style="width:100%">
-  <tr>
-    <th rowspan=2>User Name</th>
-    <th colspan=2>CPU</th>
-    <th colspan=2>RAM</th>
-    <th colspan=6>Carbon Usage (kgCO2eq)</th>
-    <th rowspan=2>
-      <form action="/leaderboard/time">
-        <input type="submit" value="Timestamp" />
-      </form>
-    </th>
-    <th rowspan=2>Platform</th>
-    <th rowspan=2>Location</th>
-  </tr>
-  <tr>
-    <th>Units</th>
-    <th>Cores Per Unit</th>
-    <th>Units</th>
-    <th>Capacity Per Unit</th>
-    <th>Minimum</th>
-    <th>Half-Use</th>
-    <th>Maximum</th>
-    <th>Current</th>
-    <th>
-      <form action="/leaderboard/per_core">
-        <input type="submit" value="Current per core" />
-      </form>
-    </th>
-    <th>
-      <form action="/leaderboard/per_ram">
-        <input type="submit" value="Current per GB RAM" />
-      </form>
-    </th>
-  </tr>
-  <% @reports.each do |r| %>
-    <tr>
-      <td>
-        <a href="/user/<%= username(r.user_id) %>">
-          <%= username(r.user_id) %>
-        </a>
-      </td>
-      <td><%= r.cpus %></td>
-      <td><%= r.cores_per_cpu %></td>
-      <td><%= r.ram_units %></td>
-      <td><%= "#{r.ram_capacity_per_unit} GB" %></td>
-      <td><%= r.min %></td>
-      <td><%= r.half %></td>
-      <td><%= r.max %></td>
-      <td><%= r.current %></td>
-      <td><%= signif((r.current / (r.cpus * r.cores_per_cpu)), 3) %></td>
-      <td><%= signif((r.current / (r.ram_units * r.ram_capacity_per_unit)), 3) %></td>
-      <td><%= r.created_at %></td>
-      <td><%= r.platform %></td>
-      <td><%= r.location %></td>
-    </tr>
-  <% end %>
-</table>
+<script type="text/javascript" src="/assets/report/index.js"></script>
