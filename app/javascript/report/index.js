@@ -26,7 +26,7 @@ $(document).ready(async () => {
     }
   );
   const {max_main, header, reports} = await leaderboardResponse.json();
-  $('leaderboard-bar-value-wrapper').text(header.main);
+  $('#leaderboard-bar-value-wrapper').text(header.main);
   delete header.main;
   const columns = Object.keys(header);
   for (const column of columns){
