@@ -2,6 +2,22 @@
   <%= stylesheet_link_tag 'leaderboard' %>
 <% end %>
 
+<h1>OpenFlight Carbon Leaderboard</h1>
+<h3>Servers with the lowest CO<sub>2</sub> emissions</h3>
+
+<div class="ranking-options">
+  Ranked by:
+  <select id="efficiency-dropdown">
+    <option value="core" selected>Per core</option>
+    <option value="ram">Per GB of RAM</option>
+  </select>
+  <select id="load-dropdown">
+    <option value="min">At minimum load</option>
+    <option value="half">At half load</option>
+    <option value="full" selected>At full load</option>
+  </select>
+</div>
+
 <div id="leaderboard-wrapper">
   <div class="leaderboard-header-wrapper">
     <div class="leaderboard-header rank-column">

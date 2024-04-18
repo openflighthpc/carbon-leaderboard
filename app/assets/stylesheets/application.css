@@ -73,6 +73,7 @@ body {
 
 #main {
     margin-top: var(--navbar-height);
+    padding-inline: 20rem;
 }
 
 h1, h2 {

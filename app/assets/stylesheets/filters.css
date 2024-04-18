@@ -1,0 +1,6 @@
+.ranking-options {
+    display: flex;
+    gap: 1rem;
+    align-self: start;
+    margin-top: 3rem;
+}
