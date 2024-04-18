@@ -7,7 +7,7 @@
 action=$1
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" # Directory this script is in
-LOG_DIR="$DIR/log"
+LOG_DIR="$DIR/carbon-log"
 BOAVIZTA_URL="https://api.boavizta.openflighthpc.org"
 LEADERBOARD_URL="https://leaderboard.openflighthpc.org"
 
@@ -212,6 +212,7 @@ done
 if [ $INTERNET == "true" ] ; then
     if ! command -v jq &> /dev/null ; then 
         curl -sL https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 > $DIR/jq
+        chmod +x $DIR/jq
         PATH="$PATH:$DIR"
         JQ_DL=true
     fi
