@@ -1,18 +1,6 @@
 class ReportController < ApplicationController
   protect_from_forgery with: :null_session
 
-  def index
-    # case params[:sort_column]
-    # when 'per_core'
-    #   @reports = Report.all.order(Arel.sql('current * cpus * cores_per_cpu'))
-    # when 'per_ram'
-    #   @reports = Report.all.order(Arel.sql('current * ram_units * ram_capacity_per_unit'))
-    # when 'time'
-    #   @reports = Report.all.order(:created_at)
-    # else
-    #   @reports = Report.all
-    # end
-  end
 
   def show
     @user = User.find_by(username: params[:name])
