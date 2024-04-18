@@ -60,6 +60,7 @@ class ReportController < ApplicationController
   def raw_data
     reports = Report.order(:max)
     response = {}.tap do |res|
+      res[:max_main] = reports.last.max
       res[:header] = {}.tap do |h|
         h[:user] = 'User'
         h[:platform] = 'Platform'

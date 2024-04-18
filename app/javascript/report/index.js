@@ -25,7 +25,7 @@ $(document).ready(async () => {
       method: 'GET'
     }
   );
-  const {header, reports} = await leaderboardResponse.json();
+  const {max_main, header, reports} = await leaderboardResponse.json();
   $('leaderboard-bar-value-wrapper').text(header.main);
   delete header.main;
   const columns = Object.keys(header);
@@ -41,7 +41,7 @@ $(document).ready(async () => {
       <div class="leaderboard-item-wrapper rank-${report.rank < 4 ? report.rank : 'other'}">
         <div class="leaderboard-item glare"></div>
         <div class="leaderboard-item rank-column">${report.rank}</div>
-        <div class="leaderboard-item bar-column">
+        <div class="leaderboard-item bar-column" style="--flight-bar-scale: ${report.main / max_main}">
           <div class="leaderboard-item bar-data">${barHTML}</div>
         </div>
         <div class="value-column">${report.main}</div>

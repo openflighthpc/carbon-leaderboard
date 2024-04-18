@@ -250,6 +250,7 @@
   height: calc(6 * var(--fpx));
   border-radius: calc(3 * var(--fpx));
   transform-origin: left center;
+  transform: scaleX(var(--flight-bar-scale));
 }
 .leaderboard-item-wrapper:not(.rank-other) .bar-column::before,
 .leaderboard-item-wrapper:not(.rank-other) .bar-column::after {
