@@ -101,7 +101,9 @@ h2 {
 }
 
 a {
-    color: var(--color-main);
+    display: block;
+    text-decoration: none;
+    color: var(--color-text);
 }
 
 #dynamic-bg {

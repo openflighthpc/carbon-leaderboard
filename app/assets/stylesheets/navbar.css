@@ -13,6 +13,8 @@
     backdrop-filter: blur(calc(270 * var(--fpx)));
     -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
 
+    user-select: none;
+
     z-index: 200;
 }
 
