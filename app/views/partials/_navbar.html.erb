@@ -35,7 +35,7 @@
         </ul>
       </div>
     <% else %>
-      <%= button_to "Log in", new_user_session_path, class: 'btn' %>
+      <%= button_to "Log in", new_user_session_path, class: 'btn', method: :get %>
     <% end %>
     <a
       class="powered"
