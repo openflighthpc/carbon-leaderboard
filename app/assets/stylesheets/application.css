@@ -79,7 +79,7 @@ h1, h2 {
     font-weight: 800;
     background-color: var(--color-main);
     background: var(--gradient-blue-green);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
