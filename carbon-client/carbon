@@ -177,7 +177,7 @@ fi
 
 debug_specs() {
     if [ -z $QUIET ] ; then 
-        echo "$UUID: CPU: $NUMCPUS x $NUMCORESPERCPU, RAM: $NUMDIMMS x ${GBPERDIMM}GB, GPUs: [$(echo "$GPUSINFO" |sed 's/, $//g')], Disks: [$(echo "$DISKSINFO" |sed 's/, $//g')], Location: $LOCATION"
+        echo "$UUID: CPU: $NUMCPUS x $NUMCORESPERCPU core, RAM: $NUMDIMMS x ${GBPERDIMM}GB, GPUs: [$(echo "$GPUSINFO" |sed 's/, $//g')], Disks: [$(echo "$DISKSINFO" |sed 's/, $//g')], Location: $LOCATION"
     fi
 }
 
