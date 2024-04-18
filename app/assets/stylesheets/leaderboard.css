@@ -1,6 +1,6 @@
 /* variables */
 :root {
-  --gradient-top-three: var(--gradient-blue-green);
+  --gradient-top-three: linear-gradient(to right, #8FD3F8, #00D12E);
   --gradient-others: linear-gradient(to right, red, gold);
   --gradient-row-glare: linear-gradient(to right, #ffffff00, #ffffff40, #ffffff00);
 }
