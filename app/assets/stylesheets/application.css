@@ -104,10 +104,6 @@ a {
     color: var(--color-main);
 }
 
-.muted-text {
-    color: var(--color-text);
-}
-
 #dynamic-bg {
     position: fixed;
     top: 0;

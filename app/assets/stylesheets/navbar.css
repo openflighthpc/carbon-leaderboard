@@ -9,12 +9,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 
-    background-image: linear-gradient(white, rgba(255, 255, 255, 0.71));
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-image: linear-gradient(white, rgba(255, 255, 255, 0.3));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(calc(120 * var(--fpx)));
+    -webkit-backdrop-filter: blur(calc(120 * var(--fpx)));
 
-    color: var(--muted-text-color);
     z-index: 2;
 }
 
@@ -25,10 +24,6 @@
 
 #nav-bar .btn {
     border: none;
-}
-
-#nav-bar .btn:not(:hover) {
-    color: var(--muted-text-color);
 }
 
 #nav-bar .dropdown-item:active {
