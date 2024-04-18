@@ -1,7 +1,6 @@
 class ReportController < ApplicationController
   protect_from_forgery with: :null_session
 
-
   def show
     @user = User.find_by(username: params[:name])
     if @user
@@ -66,12 +65,12 @@ class ReportController < ApplicationController
         rep_group.map do |rep|
           {}.tap do |new_rep|
             new_rep[:rank] = current_rank
-            new_rep[:user] = User.where('id = ?', rep[:user_id]).pluck(:username).first
-            new_rep[:platform] = rep[:platform]
-            new_rep[:location] = rep[:location]
-            new_rep[:core_number] = rep[:cpus] * rep[:cores_per_cpu]
-            new_rep[:ram] = rep[:ram_units] * rep[:ram_capacity_per_unit]
-            new_rep[:main] = rep[:max]
+            new_rep[:user] = rep.pretty_owner
+            new_rep[:platform] = rep.platform
+            new_rep[:location] = rep.location
+            new_rep[:core_number] = rep.cpus * rep.cores_per_cpu
+            new_rep[:ram] = rep.ram_units * rep.ram_capacity_per_unit
+            new_rep[:main] = rep.max
           end
         end
       end

@@ -4,7 +4,6 @@ Rails.application.routes.draw do
 
   get "/leaderboard", to: "report#index"
   get "/leaderboard/raw-data", to: "report#raw_data"
-  get "/leaderboard/:sort_column", to: "report#index"
   get "/user/:name", to: "report#show"
   get "/show-devices", to: "device#show"
   post "/add-record", to: "report#add_record"
