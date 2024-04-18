@@ -456,10 +456,10 @@ case $action in
             \"current_load\": \"$percentage_15min\",
             \"location\": \"$LOCATION\",
             \"timestamp\": \"$(date)\"
-            }
+            },
             "
-            PAYLOAD_FILE="$DIR/payload.json"
-            echo "$PAYLOAD" > $PAYLOAD_FILE
+            PAYLOAD_FILE="$DIR/payload-$UUID.json"
+            echo "$PAYLOAD" >> $PAYLOAD_FILE
             echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
         fi
         ;; 

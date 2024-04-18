@@ -20,7 +20,7 @@ To send data with the script, download it and run:
 $ bash carbon send
 ```
 
-The above will send carbon information to the [OpenFlight Carbon Leaderboard](https://leaderboard.openflighthpc.org).
+The above will send carbon information to the [OpenFlight Carbon Leaderboard](https://leaderboard.openflighthpc.org). If the system is unable to reach the internet then it will create a payload file at `carbon-log/payload-${UUID}.json` which can be manually uploaded to the OpenFlight Carbon Leaderboard. 
 
 ## Sending Data (Advanced) 
 
@@ -35,3 +35,9 @@ When collecting system information in the leaderboard it may be desired to optio
 ### Silencing Output
 
 By default the script will print a one-line debug of the system specs when `send` is run. This can be silenced by setting the environment variable `QUIET` to `true`. 
+
+### Offline Data Collection (Payload File)
+
+The payload file (`carbon-log/payload-${UUID}.json`) is created by a device when it is unable to reach the leaderboard. This payload file can have 1 or more entries for the device. 
+
+As the `send` command collects the load average over the last 15 minutes for "live" carbon data, this file can be used to build up many entries over time for a single device in order to get historical estimates of the actual impact of the device at whatever load it has been at. 
