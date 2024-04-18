@@ -1,5 +1,7 @@
 class ReportController < ApplicationController
   protect_from_forgery with: :null_session
+  before_action :authorize_anonymous, :only=>[:add_record]
+  before_action :authorize_request, :only=>[:add_tag, :delete_tag] # Swap this to :except=> if it results in a smaller set of methods
 
   def show
     @user = User.find_by(username: params[:name])
@@ -11,23 +13,16 @@ class ReportController < ApplicationController
   end
 
   def add_record
-    auth = authorize_request
-    if auth[:errors]
-      render json: "Authorization token invalid: #{auth[:errors]}"
-      return
-    end
-
     data = JSON.parse(request.body.read)
-    user = auth[:user]
     device = Device.find_by(device_id: data['user_id'])
     if !device
       device = Device.new(device_id: data['user_id'],
-                          user_id: user&.id
+                          user_id: @current_user&.id
                          )
       device.save
     end
 
-    report = Report.new(user_id: user&.id,
+    report = Report.new(user_id: @current_user&.id,
                         platform: data['platform'],
                         cpus: data['cpus'],
                         cores_per_cpu: data['cores_per_cpu'],
@@ -42,7 +37,7 @@ class ReportController < ApplicationController
                        )
     report.save
 
-    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{user ? user.username : 'anonymous user'}."
+    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{@current_user ? @current_user.username : 'anonymous user'}."
   end
 
   def raw_data
@@ -80,11 +75,21 @@ class ReportController < ApplicationController
   end
 
   def add_tag
-    Report.find(params[:report]).add_tag(request.body.read)
+    report = Report.find(params[:report])
+    if report.user_id == @current_user.id
+      report.add_tag(request.body.read)
+    else
+      render json: "Error: User does not own specified report"
+    end
   end
 
   def delete_tag
-    Report.find(params[:report]).delete_tag(request.body.read)
+    report = Report.find(params[:report])
+    if report.user_id == @current_user.id
+      report.delete_tag(request.body.read)
+    else
+      render json: "Error: User does not own specified report"
+    end
   end
 end
 
