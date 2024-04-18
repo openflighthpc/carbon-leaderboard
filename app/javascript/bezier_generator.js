@@ -9,8 +9,8 @@ class BezierModel{
         this.canvasCtx.lineWidth = 72;
 
         this.colors = [];
-        this.colors.push(new BezierColor(70, 160, 255));
-        this.colors.push(new BezierColor(30, 255, 180));
+        this.colors.push(new BezierColor(176, 219, 245));
+        this.colors.push(new BezierColor(172, 252, 226));
 
         this.sectionSize = 6;
         this.controlPointSize = this.sectionSize * 2;
