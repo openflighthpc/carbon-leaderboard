@@ -134,7 +134,7 @@ RAM: $NUMDIMMS x ${GBPERDIMM}GB
 
 Disks: $(echo "$DISKSINFO" |sed 's/, $//g')
 
-GPUs" $(echo "$GPUSINFO" |sed 's/, $//g')
+GPUs: $(echo "$GPUSINFO" |sed 's/, $//g')
 
 ## Platform & Power Information
 
