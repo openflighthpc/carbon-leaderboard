@@ -54,7 +54,7 @@ class ReportController < ApplicationController
         h[:location] = 'Location'
         h[:core_number] = 'NO. cores'
         h[:ram] = 'RAM(GB)'
-        h[:main] = 'Equivalent CO2 emissions per core at full load (kgCO2eq/h)'
+        h[:main] = 'Carbon emissions per core at full load (kgCO2eq/h)'
       end
       rank = 1
       res[:reports] = reports
