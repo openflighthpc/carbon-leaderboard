@@ -28,9 +28,7 @@ class ReportController < ApplicationController
                           location: data['location'],
                           tags: []
                          )
-      puts device.errors.inspect
       device.save
-      puts device.errors.inspect
     end
 
     report = Report.new(device_id: device.uuid,

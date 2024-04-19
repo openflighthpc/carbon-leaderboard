@@ -6,7 +6,6 @@ class DeviceController < ApplicationController
   end
 
   def raw_data
-    puts "GETTING RAW DATA -------------------------"
     devices = Device.order(:max)
     response = {}.tap do |res|
       res[:max_main] = devices.last.max
@@ -37,7 +36,6 @@ class DeviceController < ApplicationController
         end
       end
     end
-    puts "GOTTEN #{response}"
     render json: response
   end
 
