@@ -1,5 +1,6 @@
 class Report < ApplicationRecord
-  serialize :tags, coder: YAML
+  belongs_to :device
+  has_one :user, through: :device
 
   def pretty_owner
     User.find_by(id: self.user_id)&.username || "Anonymous"
