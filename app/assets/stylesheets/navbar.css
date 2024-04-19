@@ -37,6 +37,7 @@
 }
 
 #nav-bar .top-right.section {
+    gap: 0.7rem;
     justify-content: end;
 }
 
@@ -81,6 +82,12 @@
     transition:
         filter 72ms ease-out,
         transform 72ms ease-out;
+}
+
+.nav-link:active {
+    filter: drop-shadow(0px 0px 0px var(--color-text));
+    transform: scale(1);
+    transition: none;
 }
 
 .dropdown-wrapper {
