@@ -14,13 +14,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_151656) do
   create_table "devices", id: false, force: :cascade do |t|
     t.string "device_id"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_devices_on_user_id"
-  end
-
-  create_table "reports", force: :cascade do |t|
-    t.integer "user_id"
     t.integer "cpus"
     t.integer "cores_per_cpu"
     t.float "ram_units"
@@ -28,13 +21,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_151656) do
     t.float "min"
     t.float "half"
     t.float "max"
-    t.float "current"
     t.string "platform"
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "tags", default: "[]"
-    t.index ["user_id"], name: "index_reports_on_user_id"
+    t.index ["user_id"], name: "index_devices_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.integer "device_id"
+    t.float "current"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_id"], name: "index_reports_on_device_id"
   end
 
   create_table "users", force: :cascade do |t|
