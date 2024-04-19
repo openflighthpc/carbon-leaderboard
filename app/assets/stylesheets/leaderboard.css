@@ -1,6 +1,6 @@
 /* variables */
 :root {
-  --gradient-top-three: linear-gradient(to right, #8FD3F8, #00D12E);
+  --gradient-top-three: var(--gradient-blue-green);
   --gradient-others: linear-gradient(to right, red, gold);
   --gradient-row-glare: linear-gradient(to right, #ffffff00, #ffffff40, #ffffff00);
 }
@@ -264,9 +264,12 @@
   background-image: var(--gradient-others);
 }
 .leaderboard-item-wrapper.rank-other .bar-column::after {
-  filter: blur(calc(3 * var(--fpx)));
+  filter: brightness(3) blur(calc(3 * var(--fpx)));
 }
 
+.leaderboard-item-wrapper:hover .bar-column::before {
+  filter: brightness(3);
+}
 
 .leaderboard-item-wrapper:not(.rank-other) .value-column{
   justify-self: center;
