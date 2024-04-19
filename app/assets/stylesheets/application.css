@@ -27,6 +27,8 @@
 
     --navbar-height: 5rem;
     --navbar-padding: 0.5rem;
+
+    font-size: calc(16 * var(--fpx));
 }
 
 @font-face {
@@ -53,7 +55,7 @@
     }
 }
 
-body, div {
+body, div, ul, a {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
