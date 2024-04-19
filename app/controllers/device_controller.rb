@@ -40,7 +40,7 @@ class DeviceController < ApplicationController
   end
 
   def add_tag
-    device = Report.find(params[:device])
+    device = Device.find(params[:device])
     if device.user_id == @current_user.id
       report.add_tag(request.body.read)
     else
@@ -49,7 +49,7 @@ class DeviceController < ApplicationController
   end
 
   def delete_tag
-    device = Report.find(params[:device])
+    device = Device.find(params[:device])
     if device.user_id == @current_user.id
       report.delete_tag(request.body.read)
     else
