@@ -28,7 +28,11 @@
   padding: calc(6 * var(--fpx));
   width: calc(1212 * var(--fpx));
   height: max-content;
-  border-bottom: 1px solid var(--color-main);
+  
+  border-radius: calc(9 * var(--fpx));
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(calc(270 * var(--fpx)));
+  -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));

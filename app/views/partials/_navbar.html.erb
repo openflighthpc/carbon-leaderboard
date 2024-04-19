@@ -12,15 +12,13 @@
     </a>
 
   <div class="centre section">
-      <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Leaderboards
-        </button>
-        <ul class="dropdown-menu">
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper">
+        Leaderboards
+        <ul class="dropdown-wrapper">
           <%= link_to "Server leaderboard", leaderboard_path, class: "dropdown-item" %>
         </ul>
       </div>
-      <%= button_to "Servers", show_devices_path, method: :get, class: 'btn' %>
+      <%= link_to "Servers", show_devices_path, method: :get, class: 'btn' %>
   </div>
 
   <div class="top-right section">
@@ -30,7 +28,7 @@
           <%= current_user.username %>
         </button>
         <ul class="dropdown-menu">
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn dropdown-item" %>
+          <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn dropdown-item" %>
         </ul>
       </div>
     <% else %>

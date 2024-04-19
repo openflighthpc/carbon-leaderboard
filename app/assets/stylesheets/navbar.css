@@ -58,3 +58,23 @@
 #nav-bar .powered .logo, #nav-bar .account.dropdown .logo {
     padding: 0.2rem;
 }
+
+.nav-link-wrapper {
+    position: relative;
+    height: calc(var(--navbar-height) - 2 * var(--navbar-padding));
+    line-height: calc(var(--navbar-height) - 2 * var(--navbar-padding));
+}
+
+.dropdown-menu.dropdown-wrapper {
+    display: block;
+    top: calc(100% + var(--navbar-padding) - 1px);
+    left: calc(50% - 96px);
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(calc(270 * var(--fpx)));
+    -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
+}
+
+.dropdown-wrapper {
+    border-radius: 0 0 calc(9 * var(--fpx)) calc(9 * var(--fpx));
+}
