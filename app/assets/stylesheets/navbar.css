@@ -80,9 +80,10 @@
 }
 
 .nav-link {
+    font-weight: 450;
     filter: drop-shadow(0px 0px 0px var(--color-text));
     transition:
-    filter 360ms ease-out,
+        filter 360ms ease-out,
         transform 360ms ease-out;
 }
 

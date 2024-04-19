@@ -13,7 +13,7 @@
 
   <div class="centre section">
       <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
-        <%= link_to "Leaderboards", leaderboard_path, class: "nav-link px-4" %>
+        <%= link_to "Leaderboards", leaderboard_path, class: "nav-link px-3" %>
         <div class="dropdown-wrapper d-flex justify-content-center">
           <ul class="dropdown-list">
             <%= link_to "Device leaderboard", leaderboard_path, class: "nav-dropdown-link px-2 glaring" %>
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
-        <%= link_to "Servers", show_devices_path, class: "nav-link" %>
+        <%= link_to "Servers", show_devices_path, class: "nav-link px-3" %>
       </div>
   </div>
 
@@ -37,7 +37,9 @@
         </ul>
       </div>
     <% else %>
-      <%= button_to "Log in", new_user_session_path, class: 'btn', method: :get %>
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
+        <%= link_to "Log in", new_user_session_path, class: "nav-link px-3" %>
+      </div>
     <% end %>
     <a
       class="powered"
