@@ -417,7 +417,8 @@ case $action in
         if [ $INTERNET == "true" ] ; then 
             PAYLOAD="{
             \"device_id\": \"$UUID\",
-            \"platform\": \"$CLOUD_PROVIDER\",
+            \"platform\": \"$PLATFORM\",
+            \"cloud_provider\": \"$CLOUD_PROVIDER\",
             \"cpus\": \"$NUMCPUS\",
             \"cores_per_cpu\": \"$NUMCORESPERCPU\",
             \"cpu_name\": \"$CPUMODEL\",
@@ -448,7 +449,8 @@ case $action in
         else
             PAYLOAD="{
             \"device_id\": \"$UUID\",
-            \"platform\": \"$CLOUD_PROVIDER\",
+            \"platform\": \"$PLATFORM\",
+            \"cloud_provider\": \"$CLOUD_PROVIDER\",
             \"cpus\": \"$NUMCPUS\",
             \"cores_per_cpu\": \"$NUMCORESPERCPU\",
             \"cpu_name\": \"$CPUMODEL\",
