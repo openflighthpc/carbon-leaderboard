@@ -55,10 +55,15 @@
     }
 }
 
-body, div, ul, a {
+body, div, ul, a, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+button {
+    border: none;
+    background-color: transparent;
 }
 
 body {
