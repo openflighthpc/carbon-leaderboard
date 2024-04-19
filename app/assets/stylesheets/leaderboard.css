@@ -250,6 +250,7 @@
   width: var(--flight-bar-length);
   height: calc(6 * var(--fpx));
   border-radius: calc(3 * var(--fpx));
+  transition: filter 360ms ease-out;
 }
 .leaderboard-item-wrapper:not(.rank-other) .bar-column::before,
 .leaderboard-item-wrapper:not(.rank-other) .bar-column::after {
@@ -264,11 +265,17 @@
   background-image: var(--gradient-others);
 }
 .leaderboard-item-wrapper.rank-other .bar-column::after {
-  filter: brightness(3) blur(calc(3 * var(--fpx)));
+  filter: blur(calc(3 * var(--fpx)));
 }
 
+
+.leaderboard-item-wrapper:hover .bar-column::after {
+  filter: brightness(2.1) blur(calc(3 * var(--fpx)));
+  transition: filter 72ms ease-out;
+}
 .leaderboard-item-wrapper:hover .bar-column::before {
-  filter: brightness(3);
+  filter: brightness(2.1);
+  transition: filter 72ms ease-out;
 }
 
 .leaderboard-item-wrapper:not(.rank-other) .value-column{
