@@ -28,13 +28,13 @@
 
   <div class="top-right section">
     <% if user_signed_in? %>
-      <div class="dropdown account">
-        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= current_user.username %>
-        </button>
-        <ul class="dropdown-menu">
-          <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "btn dropdown-item" %>
-        </ul>
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
+        <%= link_to current_user.username, "#", class: "nav-link px-3" %>
+        <div class="dropdown-wrapper d-flex justify-content-center">
+          <ul class="dropdown-list">
+            <%= link_to "Sign out", destroy_user_session_path, class: "nav-dropdown-link px-2 glaring" %>
+          </ul>
+        </div>
       </div>
     <% else %>
       <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">

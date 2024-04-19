@@ -26,10 +26,6 @@
     border: none;
 }
 
-#nav-bar .dropdown-item:active {
-    background-color: var(--color-main);
-}
-
 #nav-bar .section {
     display: flex;
     align-items: center;
@@ -51,10 +47,6 @@
 #nav-bar .powered {
     display: flex;
     justify-content: end;
-}
-
-#nav-bar .powered .logo, #nav-bar .account.dropdown .logo {
-    padding: 0.2rem;
 }
 
 .nav-link-wrapper {

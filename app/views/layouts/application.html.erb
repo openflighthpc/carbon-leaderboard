@@ -29,7 +29,7 @@
         // initialize dynamic background
         new BezierModel(document.getElementById('dynamic-bg')).draw();
 
-        // 
+        // responsive glare
         $('.glaring').on('mousemove', (e) => {
           const wrapperDimensions = e.target.getBoundingClientRect();
           const glareTranslateX = e.clientX - wrapperDimensions.left;
