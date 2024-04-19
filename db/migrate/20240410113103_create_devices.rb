@@ -1,7 +1,7 @@
 class CreateDevices < ActiveRecord::Migration[7.1]
   def change
-    create_table :devices, id: false, primary_key: :device_id do |t|
-      t.string :device_id
+    create_table :devices, id: false, primary_key: :uuid do |t|
+      t.string :uuid
       t.references :user
       t.integer :cpus
       t.integer :cores_per_cpu

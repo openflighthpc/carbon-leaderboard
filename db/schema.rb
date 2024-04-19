@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema[7.1].define(version: 2024_04_16_151656) do
   create_table "devices", id: false, force: :cascade do |t|
-    t.string "device_id"
+    t.string "uuid"
     t.integer "user_id"
     t.integer "cpus"
     t.integer "cores_per_cpu"
@@ -30,7 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_16_151656) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.integer "device_id"
+    t.string "device_id", null: false
     t.float "current"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
