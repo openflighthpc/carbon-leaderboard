@@ -10,9 +10,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    current_user.auth_token = JsonWebToken.encode(user_id: @user.id)
+    current_user.save
+  end
 
   # GET /resource/edit
   # def edit
