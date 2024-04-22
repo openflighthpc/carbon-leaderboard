@@ -41,3 +41,9 @@ By default the script will print a one-line debug of the system specs when `send
 The payload file (`carbon-log/payload-${UUID}.json`) is created by a device when it is unable to reach the leaderboard. This payload file can have 1 or more entries for the device. 
 
 As the `send` command collects the load average over the last 15 minutes for "live" carbon data, this file can be used to build up many entries over time for a single device in order to get historical estimates of the actual impact of the device at whatever load it has been at. 
+
+### Accepting Defaults 
+
+By default the script will prompt confirmation of the various system specs with the user. To prevent this from happening in the future set the environment variable `ACCEPT_DEFAULTS` to `true`. 
+
+_Note: Overrides to system specs only happen on a per-run basis so would need to be overridden each time the command is run_
