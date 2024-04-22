@@ -178,6 +178,7 @@ fi
 ask_question() {
     SPEC="$1"
     VAL="$2"
+    VALIDATION="$3"
     correct="placeholder"
     while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] ]] ; do 
         read -p "$SPEC is '$VAL', correct? (Y/N) " correct
@@ -185,17 +186,17 @@ ask_question() {
     if [[ $correct == [nN] || $correct == [nN][oO] ]] ; then
         read -p "Set $SPEC to: " newval
         if [[ ! -z $newval ]] ; then
+            case $VALIDATION  in 
+                "number")
+                    while [[ ! $newval =~ ^[0-9]+$ ]] ; do 
+                        echo "'$newval' is not an integer"
+                        read -p "Set $SPEC to: " newval
+                    done
+                ;;
+            esac
             echo "Setting $SPEC to '$newval'"
             eval $SPEC="\"$newval\""
         fi
-    fi
-}
-
-ask_questions() {
-    if [ -z $ACCEPT_DEFAULTS ] ; then
-        echo "# Validating Specifications" 
-        ask_question CPUMODEL "$CPUMODEL"
-        ask_question NUMCPUS $NUMCPUS
     fi
 }
 
@@ -282,15 +283,33 @@ NUMCPUS="$(grep '^physical id' /proc/cpuinfo |sort |uniq |wc -l)"
 NUMCORESPERCPU="$(grep -m 1 '^cpu cores' /proc/cpuinfo |sed 's/.*: //g')"
 CPUMODEL="$(grep -m 1 '^model name' /proc/cpuinfo |sed 's/.*: //g;s/ @.*//g')"
 
+if [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating CPU Specs"
+    ask_question CPUMODEL "$CPUMODEL"
+    ask_question NUMCPUS $NUMCPUS number
+    ask_question NUMCORESPERCPU $NUMCORESPERCPU number
+fi
+
 # Memory
 NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l) # This might not be useful at all on systems without ECC memory, further testing needed
 GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
+
+if [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating CPU Specs"
+    ask_question NUMDIMMS $NUMDIMMS number
+    ask_question GBPERDIMM ${GBPERDIMM}GB number
+fi
 
 # Disks
 DISKS=$(lsblk -e7 -l -d -o NAME -n)
 for disk in $DISKS ; do
     size="$(($(lsblk -b --output SIZE -n -d /dev/$disk)/1024/1024/1024))"
     disktype="$(grep -q 0 /sys/block/$disk/queue/rotational && echo "ssd" || echo "hdd")"
+    if [ -z $ACCEPT_DEFAULTS ] ; then 
+        echo "# Validating $disk Specs"
+        ask_question disktype $disktype
+        ask_question size $size number
+    fi
     DISKSJSON="{\"units\": 1, \"type\": \"$disktype\", \"capacity\": $size},$DISKSJSON"
     DISKSINFO="${size}GB $disktype, $DISKSINFO"
 done
@@ -308,6 +327,11 @@ if echo "$GPUS_RAW" |grep -qi nvidia ; then
             model=$(nvidia-smi --query-gpu=name --format=csv,noheader --id=$gpu)
             mem_mib=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits --id=$gpu)
             mem_gib=$(($mem_mib / 1024))
+            if [ -z $ACCEPT_DEFAULTS ] ; then 
+                echo "# Validating $gpu Specs"
+                ask_question model $model
+                ask_question mem_gib ${mem_gib}GB number
+            fi
             GPUSJSON="{\"units\": 1, \"name\": \"$model\", \"memory_capacity\": $mem_gib},$GPUSJSON"
             GPUSINFO="$model ${mem_gib}GB,$GPUSINFO"
         done
@@ -416,19 +440,15 @@ fi
 
 case $action in
     "min")
-        ask_questions
         echo $(get_carbon_for_load 0)
         ;;
     "half")
-        ask_questions
         echo $(get_carbon_for_load 50)
         ;;
     "full")
-        ask_questions
         echo $(get_carbon_for_load 100)
         ;;
     "current")
-        ask_questions
         echo $(get_carbon_for_load $percentage_15min)
         ;;
     "platform")
@@ -438,11 +458,9 @@ case $action in
         echo $INSTANCE_TYPE
         ;;
     "report")
-        ask_questions
         report
         ;;
     "send")
-        ask_questions
         debug_specs
         if [ $INTERNET == "true" ] ; then 
             PAYLOAD="{
