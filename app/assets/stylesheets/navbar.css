@@ -24,6 +24,7 @@
 }
 
 #nav-bar .top-left.section {
+    width: max-content;
     gap: 0.7rem;
     font-weight: 750;
 }
