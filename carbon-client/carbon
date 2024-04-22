@@ -295,7 +295,7 @@ NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || ec
 GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
-    echo "# Validating CPU Specs"
+    echo "# Validating RAM Specs"
     ask_question NUMDIMMS $NUMDIMMS number
     ask_question GBPERDIMM ${GBPERDIMM}GB number
 fi
@@ -308,7 +308,7 @@ for disk in $DISKS ; do
     if [ -z $ACCEPT_DEFAULTS ] ; then 
         echo "# Validating $disk Specs"
         ask_question disktype $disktype
-        ask_question size $size number
+        ask_question size ${size}GB number
     fi
     DISKSJSON="{\"units\": 1, \"type\": \"$disktype\", \"capacity\": $size},$DISKSJSON"
     DISKSINFO="${size}GB $disktype, $DISKSINFO"
