@@ -1,4 +1,4 @@
-<div id="nav-bar" class="px-2">
+<div id="nav-bar" class="px-2 blurred-frame">
     <a
       href="<%= root_path %>"
       title="OpenFlightHPC Carbon Leaderboard"
@@ -15,7 +15,7 @@
       <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
         <%= link_to "Leaderboards", leaderboard_path, class: "nav-link px-3" %>
         <div class="dropdown-wrapper d-flex justify-content-center">
-          <ul class="dropdown-list">
+          <ul class="dropdown-list blurred-frame white-outline">
             <%= link_to "Device leaderboard", leaderboard_path, class: "nav-dropdown-link px-2 glaring" %>
             <%= link_to "Server leaderboard", leaderboard_path, class: "nav-dropdown-link last-item px-2 glaring" %>
           </ul>

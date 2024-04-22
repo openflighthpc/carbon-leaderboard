@@ -39,7 +39,7 @@ $(document).ready(async () => {
       barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${device[column]}</div>`;
     }
     $('.leaderboard-content-wrapper').append(`
-      <div class="leaderboard-item-wrapper rank-${device.rank < 4 ? device.rank : 'other'}">
+      <div class="leaderboard-item-wrapper rank-${device.rank < 4 ? device.rank : 'other'} slanted-shape">
         <div class="leaderboard-item glare"></div>
         <div class="leaderboard-item rank-column">${device.rank}</div>
         <div class="leaderboard-item bar-column" style="--flight-bar-length: ${device.main * 100/ max_main}%">

@@ -28,11 +28,6 @@
   padding: calc(6 * var(--fpx));
   width: calc(1212 * var(--fpx));
   height: max-content;
-  
-  border-radius: calc(9 * var(--fpx));
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(calc(270 * var(--fpx)));
-  -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
@@ -112,19 +107,9 @@
 }
 .leaderboard-item-wrapper:not(.rank-other) {
   height: calc(60 * var(--fpx));
-  border-radius:
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx))
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx));
 }
 .leaderboard-item-wrapper.rank-other {
   height: calc(48 * var(--fpx));
-  border-radius:
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx))
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx));
 }
 
 .leaderboard-item-wrapper:hover {
