@@ -109,13 +109,13 @@
           calc(30 * var(--fpx))
           calc(9 * var(--fpx));
 }
-.leaderboard-item-wrapper.full-leaderboard {
+.full-leaderboard .leaderboard-item-wrapper {
   padding: calc(6 * var(--fpx));
 }
-.leaderboard-item-wrapper.full-leaderboard:not(.rank-other) {
+.full-leaderboard .leaderboard-item-wrapper:not(.rank-other) {
   height: calc(60 * var(--fpx));
 }
-.leaderboard-item-wrapper.full-leaderboard.rank-other {
+.full-leaderboard .leaderboard-item-wrapper.rank-other {
   height: calc(48 * var(--fpx));
 }
 
@@ -128,7 +128,8 @@
       background-color 72ms ease-out,
       color 72ms ease-out,
       filter 72ms ease-out,
-      transform 72ms ease-out;
+      transform 72ms ease-out,
+      border-color 72ms ease-out;
 }
 
 .leaderboard-item.glare {
@@ -153,7 +154,7 @@
   justify-content: center;
   font-size: calc(24 * var(--fpx));
 }
-.leaderboard-item-wrapper.full-leaderboard .rank-column {
+.full-leaderboard .leaderboard-item-wrapper .rank-column {
   width: calc(48 * var(--fpx));
 }
 
@@ -167,7 +168,7 @@
   color: #ffffff;
   font-weight: 400;
 }
-.leaderboard-item-wrapper.full-leaderboard:not(.rank-other) .rank-column {
+.full-leaderboard .leaderboard-item-wrapper:not(.rank-other) .rank-column {
   height: calc(48 * var(--fpx));
 }
 

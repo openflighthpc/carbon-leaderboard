@@ -17,6 +17,11 @@
     padding: 0.7rem;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    border: 1px solid white;
+}
+
+.home-leaderboard .leaderboard-item-wrapper:hover {
+    border: 0 solid #404040;
 }
 
 .home-leaderboard .leaderboard-item-wrapper .rank-column {
@@ -27,9 +32,4 @@
 
 .home-leaderboard .leaderboard-item-wrapper .top-line {
     font-size: 1.2rem;
-}
-
-.home-leaderboard .leaderboard-item-wrapper:not(:hover) {
-    border: 1px solid white;
-    transition: border 70ms ease-out;
 }
