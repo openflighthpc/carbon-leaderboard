@@ -31,7 +31,7 @@
       <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
         <%= link_to "#{['Hi', 'Hello', 'Welcome'].sample}, #{current_user.username}", "#", class: "nav-link px-3" %>
         <div class="dropdown-wrapper d-flex justify-content-center">
-          <ul class="dropdown-list">
+          <ul class="dropdown-list blurred-frame white-outline">
             <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-dropdown-link last-item px-2 glaring" %>
           </ul>
         </div>

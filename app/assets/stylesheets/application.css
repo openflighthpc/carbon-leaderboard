@@ -69,6 +69,8 @@ body, div, ul, a, button {
 button {
     border: none;
     background-color: transparent;
+    font-weight: unset;
+    color: inherit;
 }
 
 body {
