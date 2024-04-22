@@ -87,7 +87,6 @@
 
 .leaderboard-item-wrapper {
   position: relative;
-  padding: calc(6 * var(--fpx));
   background-color: #40404000;
   cursor: pointer;
   overflow: hidden;
@@ -99,14 +98,24 @@
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
+  gap: calc(16 * var(--fpx));
   grid-auto-flow: column;
   justify-items: start;
   align-items: center;
+
+  border-radius:
+          calc(30 * var(--fpx))
+          calc(9 * var(--fpx))
+          calc(30 * var(--fpx))
+          calc(9 * var(--fpx));
 }
-.leaderboard-item-wrapper:not(.rank-other) {
+.leaderboard-item-wrapper.full-leaderboard {
+  padding: calc(6 * var(--fpx));
+}
+.leaderboard-item-wrapper.full-leaderboard:not(.rank-other) {
   height: calc(60 * var(--fpx));
 }
-.leaderboard-item-wrapper.rank-other {
+.leaderboard-item-wrapper.full-leaderboard.rank-other {
   height: calc(48 * var(--fpx));
 }
 
@@ -139,13 +148,16 @@
 }
 
 .leaderboard-item-wrapper .rank-column {
-  width: calc(48 * var(--fpx));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: calc(24 * var(--fpx));
-  text-align: center;
+}
+.leaderboard-item-wrapper.full-leaderboard .rank-column {
+  width: calc(48 * var(--fpx));
 }
 
 .leaderboard-item-wrapper:not(.rank-other) .rank-column {
-  height: calc(48 * var(--fpx));
   border-radius:
       calc(24 * var(--fpx))
       calc(3 * var(--fpx))
@@ -155,8 +167,12 @@
   color: #ffffff;
   font-weight: 400;
 }
+.leaderboard-item-wrapper.full-leaderboard:not(.rank-other) .rank-column {
+  height: calc(48 * var(--fpx));
+}
+
 .leaderboard-item-wrapper.rank-1 .rank-column {
-  background-color: gold;
+  background-color: #FFD700;
 }
 .leaderboard-item-wrapper.rank-2 .rank-column {
   background-color: silver;

@@ -8,7 +8,7 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    
+
     user-select: none;
     color: var(--color-nav-text);
     z-index: 2;

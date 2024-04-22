@@ -11,3 +11,25 @@
     text-align: center;
     margin-top: 2.5rem;
 }
+
+.home-leaderboard .leaderboard-item-wrapper {
+    height: 5.2rem;
+    padding: 0.7rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.home-leaderboard .leaderboard-item-wrapper .rank-column {
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: calc(20 * var(--fpx));
+}
+
+.home-leaderboard .leaderboard-item-wrapper .top-line {
+    font-size: 1.2rem;
+}
+
+.home-leaderboard .leaderboard-item-wrapper:not(:hover) {
+    border: 1px solid white;
+    transition: border 70ms ease-out;
+}

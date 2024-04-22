@@ -1,9 +1,26 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag 'leaderboard' %>
+<% end %>
+
 <h1 id="welcome">Making HPC greener</h1>
 <p id="welcome-tagline">
   Finding the most carbon efficient HPC solutions by ranking the emissions of real servers.
 </p>
 
-<div class="cl-card flex-column-centred mt-5">
+<div class="cl-card flex-column-centred my-5">
   <h3>Top most carbon efficient servers</h3>
   <p>Ranked by estimated equivalent CO<sub>2</sub> emissions per core at full load.</p>
+
+  <div class="home-leaderboard mt-4">
+    <% (1..3).each do |rank| %>
+      <div class="leaderboard-item-wrapper rank-<%= rank %>">
+        <div class="leaderboard-item glare"></div>
+        <div class="leaderboard-item rank-column"><%= rank %></div>
+        <div>
+          <span class="top-line">instance-type</span><br>
+          <span>Alces Cloud</span>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
