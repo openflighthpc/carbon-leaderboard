@@ -5,6 +5,7 @@ $(document).ready(async () => {
   //   {
   //     method: 'POST',
   //     body: JSON.stringify({
+  //       'user_id': crypto.randomUUID(),
   //       'platform': 'Some University',
   //       'cpus': 1,
   //       'cores_per_cpu': 10,
