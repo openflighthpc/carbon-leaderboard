@@ -175,6 +175,30 @@ fi
   cat $LOG_DIR/report.md
 }
 
+ask_question() {
+    SPEC="$1"
+    VAL="$2"
+    correct="placeholder"
+    while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] ]] ; do 
+        read -p "$SPEC is '$VAL', correct? (Y/N) " correct
+    done
+    if [[ $correct == [nN] || $correct == [nN][oO] ]] ; then
+        read -p "Set $SPEC to: " newval
+        if [[ ! -z $newval ]] ; then
+            echo "Setting $SPEC to '$newval'"
+            eval $SPEC="\"$newval\""
+        fi
+    fi
+}
+
+ask_questions() {
+    if [ -z $ACCEPT_DEFAULTS ] ; then
+        echo "# Validating Specifications" 
+        ask_question CPUMODEL "$CPUMODEL"
+        ask_question NUMCPUS $NUMCPUS
+    fi
+}
+
 debug_specs() {
     if [ -z $QUIET ] ; then 
         echo "$UUID: CPU: $NUMCPUS x $NUMCORESPERCPU core, RAM: $NUMDIMMS x ${GBPERDIMM}GB, GPUs: [$(echo "$GPUSINFO" |sed 's/, $//g')], Disks: [$(echo "$DISKSINFO" |sed 's/, $//g')], Location: $LOCATION"
@@ -260,7 +284,7 @@ CPUMODEL="$(grep -m 1 '^model name' /proc/cpuinfo |sed 's/.*: //g;s/ @.*//g')"
 
 # Memory
 NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l) # This might not be useful at all on systems without ECC memory, further testing needed
-GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
+GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
 
 # Disks
 DISKS=$(lsblk -e7 -l -d -o NAME -n)
@@ -392,15 +416,19 @@ fi
 
 case $action in
     "min")
+        ask_questions
         echo $(get_carbon_for_load 0)
         ;;
     "half")
+        ask_questions
         echo $(get_carbon_for_load 50)
         ;;
     "full")
+        ask_questions
         echo $(get_carbon_for_load 100)
         ;;
     "current")
+        ask_questions
         echo $(get_carbon_for_load $percentage_15min)
         ;;
     "platform")
@@ -410,9 +438,11 @@ case $action in
         echo $INSTANCE_TYPE
         ;;
     "report")
+        ask_questions
         report
         ;;
     "send")
+        ask_questions
         debug_specs
         if [ $INTERNET == "true" ] ; then 
             PAYLOAD="{
