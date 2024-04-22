@@ -370,6 +370,10 @@ case $plat_query in
     ;;
 esac
 
+if [ -z $ACCEPT_DEFAULTS ] ; then
+    ask_question PLATFORM $PLATFORM 
+fi
+
 case "$PLATFORM" in
     "AWS")
       CLOUD_PROVIDER=aws
@@ -385,6 +389,10 @@ case "$PLATFORM" in
       INSTANCE_TYPE=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2021-02-01&format=text")
       ;;
 esac
+
+if [ ! -z $INSTANCE_TYPE ] && [ -z $ACCEPT_DEFAULTS ] ; then
+    ask_question INSTANCE_TYPE $INSTANCE_TYPE
+fi
 
 if [ $INTERNET == "true" ] ; then
     ARCHETYPES=$(curl -s -X 'GET' \
@@ -402,6 +410,7 @@ fi
 #
 # Identify Location Info 
 #
+VALID_LOCATIONS="WOR EEE ZWE ZMB ZAF YEM VNM VEN UZB URY USA UKR TZA TWN TTO TUR TUN TKM TJK THA TGO SYR SLV SEN SVK SVN SGP SWE SDN SAU RUS SCG ROU QAT PRY PRT POL PAK PHL PER PAN OMN NZL NPL NOR NLD NIC NGA NAM MOZ MYS MEX MLT MNG MMR MKD MDA MAR LBY LVA LUX LTU LKA LBN KAZ KWT KOR PRK KHM KGZ KEN JPN JOR JAM ITA ISL IRN IRQ IND ISR IRL IDN HUN HTI HRV HND HKG GTM GRC GIB GHA GEO GBR GAB FRA FIN ETH ESP ERI EGY EST ECU DZA DOM DNK DEU CZE CYP CUB CRI COL CHN CMR CHL CIV CHE COG COD CAN BLR BWA BRA BOL BRN BEN BHR BGR BEL BGD BIH AZE AUS AUT ARG AGO ANT ARM ALB ARE"
 if [ $INTERNET == "true" ] && [ -z $LOCATION ] ; then
     case $PLATFORM in
         "AWS")
@@ -421,8 +430,20 @@ if [ $INTERNET == "true" ] && [ -z $LOCATION ] ; then
             LOCATION=$(curl -s https://ipapi.co/$ip/country_code_iso3)
             ;;
     esac
+    if [ -z $ACCEPT_DEFAULTS ] ; then
+        ask_question LOCATION $LOCATION
+        if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
+            echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
+            echo "The script failed to identify location correctly due to an issue (e.g. no internet connection) and"
+            echo "the environment variable LOCATION is invalid or has not been provided."
+            echo
+            echo "Valid locations are:"
+            echo "    $VALID_LOCATIONS"
+            echo
+            ask_question LOCATION $LOCATION
+        fi
+    fi
 else 
-    VALID_LOCATIONS="WOR EEE ZWE ZMB ZAF YEM VNM VEN UZB URY USA UKR TZA TWN TTO TUR TUN TKM TJK THA TGO SYR SLV SEN SVK SVN SGP SWE SDN SAU RUS SCG ROU QAT PRY PRT POL PAK PHL PER PAN OMN NZL NPL NOR NLD NIC NGA NAM MOZ MYS MEX MLT MNG MMR MKD MDA MAR LBY LVA LUX LTU LKA LBN KAZ KWT KOR PRK KHM KGZ KEN JPN JOR JAM ITA ISL IRN IRQ IND ISR IRL IDN HUN HTI HRV HND HKG GTM GRC GIB GHA GEO GBR GAB FRA FIN ETH ESP ERI EGY EST ECU DZA DOM DNK DEU CZE CYP CUB CRI COL CHN CMR CHL CIV CHE COG COD CAN BLR BWA BRA BOL BRN BEN BHR BGR BEL BGD BIH AZE AUS AUT ARG AGO ANT ARM ALB ARE"
     if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
         echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
         echo "The script failed to identify location correctly due to an issue (e.g. no internet connection) and"
