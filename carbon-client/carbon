@@ -371,6 +371,7 @@ case $plat_query in
 esac
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating Platform"
     ask_question PLATFORM $PLATFORM 
 fi
 
@@ -391,6 +392,7 @@ case "$PLATFORM" in
 esac
 
 if [ ! -z $INSTANCE_TYPE ] && [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating Instance Type"
     ask_question INSTANCE_TYPE $INSTANCE_TYPE
 fi
 
@@ -431,6 +433,7 @@ if [ $INTERNET == "true" ] && [ -z $LOCATION ] ; then
             ;;
     esac
     if [ -z $ACCEPT_DEFAULTS ] ; then
+        echo "# Validating Location"
         ask_question LOCATION $LOCATION
         if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
             echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
