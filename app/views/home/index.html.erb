@@ -15,11 +15,11 @@
           <div class="leaderboard-item glare"></div>
           <div class="leaderboard-item rank-column"><%= rank %></div>
           <div>
-            <span class="top-line">instance-type</span><br>
-            <span>Alces Cloud</span>
+            <span class="top-line"><%= @devices[rank - 1][0].first(8) %></span><br>
+            <span><%= @devices[rank - 1][1] %></span>
           </div>
           <div></div>
-          <div><span class="flag fi fi-<%= countries[rank - 1] %> fis"></span></div>
+          <div><span class="flag fi fi-<%= @devices[rank - 1][2].downcase %> fis"></span></div>
         </div>
       <% end %>
     </div>
