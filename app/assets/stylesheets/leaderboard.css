@@ -1,6 +1,6 @@
 /* variables */
 :root {
-  --gradient-top-three: linear-gradient(to right, #8FD3F8, #00D12E);
+  --gradient-top-three: var(--gradient-blue-green);
   --gradient-others: linear-gradient(to right, red, gold);
   --gradient-row-glare: linear-gradient(to right, #ffffff00, #ffffff40, #ffffff00);
 }
@@ -28,7 +28,6 @@
   padding: calc(6 * var(--fpx));
   width: calc(1212 * var(--fpx));
   height: max-content;
-  border-bottom: 1px solid var(--color-main);
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
@@ -108,19 +107,9 @@
 }
 .leaderboard-item-wrapper:not(.rank-other) {
   height: calc(60 * var(--fpx));
-  border-radius:
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx))
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx));
 }
 .leaderboard-item-wrapper.rank-other {
   height: calc(48 * var(--fpx));
-  border-radius:
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx))
-      calc(30 * var(--fpx))
-      calc(9 * var(--fpx));
 }
 
 .leaderboard-item-wrapper:hover {
@@ -246,6 +235,7 @@
   width: var(--flight-bar-length);
   height: calc(6 * var(--fpx));
   border-radius: calc(3 * var(--fpx));
+  transition: filter 360ms ease-out;
 }
 .leaderboard-item-wrapper:not(.rank-other) .bar-column::before,
 .leaderboard-item-wrapper:not(.rank-other) .bar-column::after {
@@ -263,6 +253,15 @@
   filter: blur(calc(3 * var(--fpx)));
 }
 
+
+.leaderboard-item-wrapper:hover .bar-column::after {
+  filter: brightness(2.1) blur(calc(3 * var(--fpx)));
+  transition: filter 72ms ease-out;
+}
+.leaderboard-item-wrapper:hover .bar-column::before {
+  filter: brightness(2.1);
+  transition: filter 72ms ease-out;
+}
 
 .leaderboard-item-wrapper:not(.rank-other) .value-column{
   justify-self: center;

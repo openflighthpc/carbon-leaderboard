@@ -27,6 +27,13 @@
 
     --navbar-height: 5rem;
     --navbar-padding: 0.5rem;
+
+    font-size: calc(16 * var(--fpx));
+
+    --border-radius-large: calc(30 * var(--fpx));
+    --border-radius-normal: calc(9 * var(--fpx));
+
+    --border-white: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 @font-face {
@@ -53,10 +60,17 @@
     }
 }
 
-body, div {
+body, div, ul, a, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    font-weight: unset;
+    color: inherit;
 }
 
 body {
@@ -101,7 +115,9 @@ h2 {
 }
 
 a {
-    color: var(--color-main);
+    display: block;
+    text-decoration: none;
+    color: var(--color-text);
 }
 
 #dynamic-bg {
@@ -110,6 +126,27 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    filter: blur(calc(240 * var(--fpx))) saturate(2.1);
+    filter: blur(calc(180 * var(--fpx))) saturate(2.1);
     z-index: -1;
+}
+
+.blurred-frame {
+    backdrop-filter: blur(calc(270 * var(--fpx)));
+    -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
+}
+
+.white-outline {
+    border: var(--border-white);
+}
+
+.rounded-shape {
+    border-radius: var(--border-radius-normal);
+}
+
+.slanted-shape {
+    border-radius:
+        var(--border-radius-large)
+        var(--border-radius-normal)
+        var(--border-radius-large)
+        var(--border-radius-normal);
 }

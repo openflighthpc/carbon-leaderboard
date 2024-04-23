@@ -1,41 +1,45 @@
-<div id="nav-bar">
-  <div class="top-left section">
+<div id="nav-bar" class="px-2 blurred-frame">
     <a
       href="<%= root_path %>"
       title="OpenFlightHPC Carbon Leaderboard"
+      class="top-left section"
     >
       <%= image_tag "logo.svg", class: "logo" %>
+      <div id ="logo-text">
+        <span>OpenFlightHPC</span><br>
+        <span>Carbon leaderboard</span>
+      </div>
     </a>
-    <div>
-      <span>OpenFlightHPC</span><br>
-      <span>Carbon leaderboard</span>
-    </div>
-  </div>
 
   <div class="centre section">
-      <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Leaderboards
-        </button>
-        <ul class="dropdown-menu">
-          <%= link_to "Server leaderboard", leaderboard_path, class: "dropdown-item" %>
-        </ul>
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
+        <%= link_to "Leaderboards", leaderboard_path, class: "nav-link px-3" %>
+        <div class="dropdown-wrapper d-flex justify-content-center">
+          <ul class="dropdown-list blurred-frame white-outline">
+            <%= link_to "Device leaderboard", leaderboard_path, class: "nav-dropdown-link px-2 glaring" %>
+            <%= link_to "Server leaderboard", leaderboard_path, class: "nav-dropdown-link last-item px-2 glaring" %>
+          </ul>
+        </div>
       </div>
-      <%= button_to "Servers", show_devices_path, method: :get, class: 'btn' %>
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
+        <%= link_to "Servers", show_devices_path, class: "nav-link px-3" %>
+      </div>
   </div>
 
   <div class="top-right section">
     <% if user_signed_in? %>
-      <div class="dropdown account">
-        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <%= current_user.username %>
-        </button>
-        <ul class="dropdown-menu">
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn dropdown-item" %>
-        </ul>
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
+        <%= link_to "#{['Hi', 'Hello', 'Welcome'].sample}, #{current_user.username}", "#", class: "nav-link px-3" %>
+        <div class="dropdown-wrapper d-flex justify-content-center">
+          <ul class="dropdown-list blurred-frame white-outline">
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-dropdown-link last-item px-2 glaring" %>
+          </ul>
+        </div>
       </div>
     <% else %>
-      <%= button_to "Log in", new_user_session_path, class: 'btn', method: :get %>
+      <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
+        <%= link_to "Log in", new_user_session_path, class: "nav-link px-3" %>
+      </div>
     <% end %>
     <a
       class="powered"
