@@ -16,18 +16,13 @@ input {
     position: relative;
     padding: 0.5rem;
     border: solid 1px var(--color-main);
-    background-color: transparent;
-}
-
-input:focus {
     outline: none;
+    background: transparent;
 }
 
-input:autofill,
-input:autofill:hover,
-input:autofill:focus,
-input:autofill:active{
-    background: transparent !important;
+input:autofill {
+    background-clip: text !important;
+    background: transparent;
 }
 
 input[type="checkbox"] {
