@@ -29,6 +29,7 @@
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
+  gap: calc(16 * var(--fpx));
   grid-auto-flow: column;
 }
 

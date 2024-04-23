@@ -160,3 +160,7 @@ a {
         var(--border-radius-large)
         var(--border-radius-normal);
 }
+
+.light-text {
+    color: var(--color-nav-text);
+}
