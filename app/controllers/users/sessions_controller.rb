@@ -10,7 +10,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    super
+    self.resource = User.find_by(username: )
     current_user.auth_token = JsonWebToken.encode(user_id: @user.id)
     current_user.save
   end

@@ -12,9 +12,11 @@
     margin-bottom: 2rem;
 }
 
-.grid-field input {
+input {
+    position: relative;
     padding: 0.5rem;
     border: solid 1px var(--color-main);
+    background-color: transparent;
 }
 
 input:focus {
@@ -25,9 +27,7 @@ input:autofill,
 input:autofill:hover,
 input:autofill:focus,
 input:autofill:active{
-    background-clip: text;
-    transition: background-color 5000s ease-in-out 0s;
-    box-shadow: inset 0 0 20px 20px #2794d811;
+    background: transparent !important;
 }
 
 input[type="checkbox"] {
@@ -52,3 +52,5 @@ input[type="checkbox"] {
 .submit-button {
     margin-top: 3rem;
 }
+
+

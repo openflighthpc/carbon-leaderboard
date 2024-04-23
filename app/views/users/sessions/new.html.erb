@@ -2,15 +2,9 @@
   <h2>Log in</h2>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="field grid-field">
-      <%= f.label :username %>
-      <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
-    </div>
+    <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
 
-    <div class="field grid-field">
-      <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "current-password" %>
-    </div>
+    <%= f.password_field :password, autocomplete: "current-password" %>
 
     <div class="flex-column-centred">
       <% if devise_mapping.rememberable? %>
