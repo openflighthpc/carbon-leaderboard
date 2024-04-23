@@ -5,7 +5,7 @@
   --gradient-row-glare: linear-gradient(to right, #ffffff00, #ffffff40, #ffffff00);
 }
 
-#leaderboard-wrapper {
+.full-leaderboard.leaderboard-wrapper {
   width: 100%;
   margin-top: 4rem;
 
@@ -68,7 +68,7 @@
   text-align: center;
 }
 
-.leaderboard-content-wrapper {
+.full-leaderboard .leaderboard-content-wrapper {
   position: relative;
   padding-top: calc(6 * var(--fpx));
   padding-bottom: calc(6 * var(--fpx));

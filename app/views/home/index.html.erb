@@ -7,22 +7,26 @@
   <h3>Top most carbon efficient servers</h3>
   <p>Ranked by estimated equivalent CO<sub>2</sub> emissions per core at full load.</p>
 
-  <div class="home-leaderboard mt-4">
-    <% countries = %w(se it sc) %>
-    <% (1..3).each do |rank| %>
-      <div class="leaderboard-item-wrapper rank-<%= rank %>">
-        <div class="leaderboard-item glare"></div>
-        <div class="leaderboard-item rank-column"><%= rank %></div>
-        <div>
-          <span class="top-line">instance-type</span><br>
-          <span>Alces Cloud</span>
+  <div class="home-leaderboard leaderboard-wrapper mt-4">
+    <div class="leaderboard-content-wrapper">
+      <% countries = %w(se it sc) %>
+      <% (1..3).each do |rank| %>
+        <div class="leaderboard-item-wrapper rank-<%= rank %>">
+          <div class="leaderboard-item glare"></div>
+          <div class="leaderboard-item rank-column"><%= rank %></div>
+          <div>
+            <span class="top-line">instance-type</span><br>
+            <span>Alces Cloud</span>
+          </div>
+          <div></div>
+          <div><span class="flag fi fi-<%= countries[rank - 1] %> fis"></span></div>
         </div>
-        <div></div>
-        <div><span class="flag fi fi-<%= countries[rank - 1] %> fis"></span></div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
   <%= button_to "View full leaderboard", leaderboard_path, class: 'button mt-3', method: :get %>
 
 </div>
+
+<script type="text/javascript" src="/assets/report/glare.js"></script>

@@ -49,13 +49,4 @@ $(document).ready(async () => {
       </div>
     `);
   }
-
-  $('#leaderboard-wrapper .leaderboard-content-wrapper').on('mousemove', (e) => {
-    const leaderboardDimensions = $('#leaderboard-wrapper .leaderboard-header-wrapper').get(0).getBoundingClientRect();
-    const glareTranslateX = e.clientX - leaderboardDimensions.left;
-
-    for (const glareDom of document.getElementsByClassName('leaderboard-item glare')) {
-        glareDom.style.transform = `translateX(${glareTranslateX}px)`;
-    }
-  });
 });
