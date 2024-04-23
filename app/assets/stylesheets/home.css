@@ -19,11 +19,27 @@
     grid-template-columns: calc(60 * var(--fpx)) calc(200 * var(--fpx)) 2.5rem 2.5rem;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    outline: var(--border-white);
+    -webkit-animation: mouse-out 720ms;
+
 }
 
 .home-leaderboard .leaderboard-item-wrapper:hover {
-    border: 0 solid #404040;
+    -webkit-animation: mouse-in 72ms;
+    outline: 1px solid transparent;
 }
+
+@-webkit-keyframes mouse-out {
+    from   { outline: 1px solid transparent; }
+    to { outline: var(--border-white); }
+}
+
+@-webkit-keyframes mouse-in {
+    from   { outline: var(--border-white); }
+    to { outline: 1px solid transparent; }
+}
+
+
 
 .home-leaderboard .leaderboard-item-wrapper .rank-column {
     height: 100%;
