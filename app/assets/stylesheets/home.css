@@ -19,7 +19,6 @@
     grid-template-columns: calc(60 * var(--fpx)) calc(200 * var(--fpx)) 2.5rem 2.5rem;
     gap: 1rem;
     margin-bottom: 1.5rem;
-    border: 1px solid white;
 }
 
 .home-leaderboard .leaderboard-item-wrapper:hover {
