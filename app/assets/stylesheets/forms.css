@@ -3,49 +3,36 @@
 }
 
 .login.card form {
-    width: 80%;
-}
-
-.grid-field {
+    width: 18rem;
     display: grid;
-    grid-template-rows: 3fr 4fr;
-    margin-bottom: 2rem;
+    grid-auto-rows: 1fr;
+    justify-items: center;
+    gap: 3rem;
 }
 
-input {
+.login.card form .icon-wrapper {
     position: relative;
-    padding: 0.5rem;
-    border: solid 1px var(--color-main);
-    outline: none;
-    background: transparent;
+    width: 100%;
 }
 
-input:autofill {
-    background-clip: text !important;
-    background: transparent;
+.login.card form .field {
+    position: relative;
+    width: max-content;
 }
 
 input[type="checkbox"] {
     margin-right: 0.7rem;
     position: relative;
-    top: -1px;
 }
 
-.login-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    width: 100%;
-    margin-top: 3rem;
+.login.card form input[type="submit"] {
+    font-weight: unset;
 }
 
-.login-links a {
-    text-decoration: none;
+.icon-wrapper.user-field {
+    --icon-image: url(/assets/ico/user.png);
 }
 
-.submit-button {
-    margin-top: 3rem;
+.icon-wrapper.password-field {
+    --icon-image: url(/assets/ico/password.png);
 }
-
-
