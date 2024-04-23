@@ -33,13 +33,24 @@ class ReportController < ApplicationController
                           location: data['location'],
                           tags: data['tags'] || []
                          )
-      device.save
+      if device.valid?
+        device.save
+      else
+        render json: "Error(s) with payload data: #{device.errors.full_messages.join(', ')}"
+        return
+      end
     end
 
     report = Report.new(device_id: device.uuid,
                         current: data['current']
                        )
-    report.save
+        
+    if report.valid?
+      report.save
+    else
+      render json: "Error(s) with payload data: #{report.errors.full_messages.join(', ')}"
+      return
+    end
 
     render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{@current_user ? @current_user.username : 'anonymous user'}."
   end
