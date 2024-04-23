@@ -10,8 +10,7 @@ class DeviceController < ApplicationController
   end
 
   def raw_data
-    devices = Device.left_joins(:user) # This join is still necessary for the future leaderboard to include usernames
-    .select('devices.*, users.username, max / (cpus * cores_per_cpu) AS max_per_core')
+    devices = Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
     .order(:max_per_core)
     response = {}.tap do |res|
       max_device = devices.last
@@ -38,7 +37,7 @@ class DeviceController < ApplicationController
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
-            new_dev[:main] = dev.max_per_core.round(3);
+            new_dev[:main] = dev.max_per_core.round(3)
           end
         end
       end

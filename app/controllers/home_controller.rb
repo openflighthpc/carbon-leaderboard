@@ -6,7 +6,14 @@ class HomeController < ApplicationController
                      .select('devices.*, users.username, max / (cpus * cores_per_cpu) AS max_per_core')
                      .order(:max_per_core)
                      .first(3)
-                     .pluck(:uuid, :platform, :location)
+                     .map do |device|
+      {
+        uuid: device.uuid,
+        user: device.pretty_owner,
+        platform: device.platform,
+        location: device.location,
+      }
+    end
 
   end
 end

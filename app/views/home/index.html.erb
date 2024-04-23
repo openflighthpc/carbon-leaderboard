@@ -9,17 +9,16 @@
 
   <div class="home-leaderboard leaderboard-wrapper mt-4">
     <div class="leaderboard-content-wrapper">
-      <% countries = %w(se it sc) %>
       <% (1..3).each do |rank| %>
         <div class="leaderboard-item-wrapper blurred-frame rank-<%= rank %>">
           <div class="leaderboard-item glare"></div>
           <div class="leaderboard-item rank-column"><%= rank %></div>
           <div>
-            <span class="top-line"><%= @devices[rank - 1][0].first(8) %></span><br>
-            <span><%= @devices[rank - 1][1] %></span>
+            <span class="top-line"><%= @devices[rank - 1][:uuid].first(8) %></span><br>
+            <span><%= @devices[rank - 1][:user] %></span>
           </div>
           <div></div>
-          <div><span class="flag fi fi-<%= @devices[rank - 1][2].downcase %> fis"></span></div>
+          <div><span class="flag fi fi-<%= @devices[rank - 1][:location].downcase %> fis"></span></div>
         </div>
       <% end %>
     </div>
