@@ -342,7 +342,7 @@ if echo "$GPUS_RAW" |grep -qi nvidia ; then
 fi
 
 # Get load average of system, removing decimal point (equiv of times by 100) 
-load_avg_15min="$(uptime| awk -F'load average: ' '{print $2}' | cut -d ',' -f3 | tr -d ' ' |sed 's/\.//g')"
+load_avg_15min="10#$(uptime| awk -F'load average: ' '{print $2}' | cut -d ',' -f3 | tr -d ' ' |sed 's/\.//g')"
 # Change load average into a percentage per CPU
 percentage_15min="$(($load_avg_15min / $(nproc)))"
 # Ceiling load average 
