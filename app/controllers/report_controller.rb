@@ -16,6 +16,7 @@ class ReportController < ApplicationController
     device = Device.find_by(uuid: data['device_id'])
     if !device
       device = Device.new(uuid: data['device_id'],
+                          display_name: new_name,
                           user_id: @current_user&.id,
                           cpus: data['cpus'],
                           cores_per_cpu: data['cores_per_cpu'],
@@ -52,7 +53,19 @@ class ReportController < ApplicationController
       return
     end
 
-    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{@current_user ? @current_user.username : 'anonymous user'}."
+    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{@current_user ? @current_user.username : 'an anonymous user'}'s device '#{device.display_name}'"
+  end
+
+  def new_name
+    colours = %w(red orange yellow green blue indigo violet pink purple grey)
+    adjs = %w(big small quick slow mad calm good bad brave lucky)
+    animals = %w(dog cat chicken duck otter lion tiger fish snake dragon)
+
+    name = "#{adjs[rand(10)]}_#{colours[rand(10)]}_#{animals[rand(10)]}#{rand(100)}"
+    while Device.find_by(display_name: name)
+      name = "#{adjs[rand(10)]}_#{colours[rand(10)]}_#{animals[rand(10)]}#{rand(100)}"
+    end
+    name
   end
 end
 

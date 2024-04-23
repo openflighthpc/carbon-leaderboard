@@ -11,7 +11,7 @@ td {
 
 <table style="width:100%" align="right">
   <tr>
-    <th>Device UUID</th>
+    <th>Device Name</th>
     <th>Owner</th>
     <th>CPU name</th>
     <th>CPUs</th>
@@ -31,7 +31,7 @@ td {
   </tr>
 	<% @devices.each do |device| %>
 	  <tr>
-	    <td><%= device.uuid %></td>
+	    <td><%= device.display_name %></td>
 			<td><%= username(device.user_id) %></td>
 	    <td><%= device.cpu_name %></td>
 	    <td><%= device.cpus %></td>
