@@ -1,0 +1,7 @@
+<h1><%= "Profile page for #{username(@user&.id)}" %></h1>
+
+<p>
+<%= "This is the user profile page for #{username(@user&.id)}."%>
+</p>
+
+<%= "Since this is your page, here's your secret Auth token: #{@user.auth_token}" if @user_owns_profile%>

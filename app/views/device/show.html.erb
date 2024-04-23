@@ -13,11 +13,32 @@ td {
   <tr>
     <th>Device UUID</th>
     <th>Owner</th>
+    <th>CPUs</th>
+    <th>Cores Per CPU</th>
+    <th>RAM Units</th>
+    <th>RAM Capacity Per Unit</th>
+    <th>Carbon Usage (min)</th>
+    <th>Carbon Usage (half)</th>
+    <th>Carbon Usage (max)</th>
+    <th>Platform</th>
+    <th>Location</th>
+    <th>Tags</th>
+    
   </tr>
 	<% @devices.each do |device| %>
 	  <tr>
-	    <td><%= device.device_uuid %></td>
-			<td><%= device.name %></td>
+	    <td><%= device.uuid %></td>
+			<td><%= username(device.user_id) %></td>
+	    <td><%= device.cpus %></td>
+	    <td><%= device.cores_per_cpu %></td>
+	    <td><%= device.ram_units %></td>
+	    <td><%= device.ram_capacity_per_unit %></td>
+	    <td><%= device.min %></td>
+	    <td><%= device.half %></td>
+	    <td><%= device.max %></td>
+	    <td><%= device.platform %></td>
+	    <td><%= device.location %></td>
+	    <td><%= device.tags %></td>
 		</tr>
 	<% end %>
 </table>
