@@ -13,32 +13,49 @@ td {
   <tr>
     <th>Device UUID</th>
     <th>Owner</th>
+    <th>CPU name</th>
     <th>CPUs</th>
     <th>Cores Per CPU</th>
     <th>RAM Units</th>
     <th>RAM Capacity Per Unit</th>
+    <th>Disks</th>
+    <th>GPUs</th>
     <th>Carbon Usage (min)</th>
     <th>Carbon Usage (half)</th>
     <th>Carbon Usage (max)</th>
     <th>Platform</th>
+    <th>Cloud Provider ID</th>
+    <th>Instance Type</th>
     <th>Location</th>
     <th>Tags</th>
-    
   </tr>
 	<% @devices.each do |device| %>
 	  <tr>
 	    <td><%= device.uuid %></td>
 			<td><%= username(device.user_id) %></td>
+	    <td><%= device.cpu_name %></td>
 	    <td><%= device.cpus %></td>
 	    <td><%= device.cores_per_cpu %></td>
 	    <td><%= device.ram_units %></td>
 	    <td><%= device.ram_capacity_per_unit %></td>
+	    <td>
+	      <%=
+	      disk_string = ""
+	      device.disks.each do |disk|
+	        disk_string << "#{disk['units']} x #{disk['capacity']}GB #{disk['type'].upcase}\n"
+	      end
+	      simple_format(disk_string)
+	      %>
+	    </td>
+	    <td><%= device.gpus %></td>
 	    <td><%= device.min %></td>
 	    <td><%= device.half %></td>
 	    <td><%= device.max %></td>
 	    <td><%= device.platform %></td>
+	    <td><%= device.cloud_provider %></td>
+	    <td><%= device.instance_type %></td>
 	    <td><%= device.location %></td>
-	    <td><%= device.tags %></td>
+	    <td><%= device.tags.join(", ") %></td>
 		</tr>
 	<% end %>
 </table>

@@ -13,20 +13,25 @@ class ReportController < ApplicationController
 
   def add_record
     data = JSON.parse(request.body.read)
-    device = Device.find_by(uuid: data['user_id'])
+    device = Device.find_by(uuid: data['device_id'])
     if !device
-      device = Device.new(uuid: data['user_id'],
+      device = Device.new(uuid: data['device_id'],
                           user_id: @current_user&.id,
                           cpus: data['cpus'],
                           cores_per_cpu: data['cores_per_cpu'],
+                          cpu_name: data['cpu_name'],
                           ram_units: data['ram_units'],
                           ram_capacity_per_unit: data['ram_capacity_per_unit'],
+                          disks: data['disk'],
+                          gpus: data['gpu'],
                           min: data['min'],
                           half: data['half'],
                           max: data['max'],
                           platform: data['platform'],
+                          cloud_provider: data['cloud_provider'],
+                          instance_type: data['instance_type'],
                           location: data['location'],
-                          tags: []
+                          tags: data['tags'] || []
                          )
       device.save
     end

@@ -1,0 +1,552 @@
+#!/bin/bash
+
+#
+# Command Setup 
+#
+
+action=$1
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" # Directory this script is in
+LOG_DIR="$DIR/carbon-log"
+BOAVIZTA_URL="https://api.boavizta.openflighthpc.org"
+LEADERBOARD_URL="https://leaderboard.openflighthpc.org"
+
+#
+# Functions
+# 
+
+help_message() {
+cat <<EOF
+  SYNOPSIS:
+
+    carbon <command>
+
+  DESCRIPTION:
+
+    Get carbon emission data for your node.
+
+  COMMANDS:
+
+    half    Show carbon emissions for node at 50% load
+    full    Show carbon emissions for node at 100% load
+    min     Show carbon emissions for node at 0% load
+    current Show carbon emissions for node at current load (average from past 15 minutes)
+    report  Show detailed report for all carbon emission data
+    send    Calculate and send carbon data to the carbon leaderboard
+
+EOF
+exit 0
+}
+
+no_internet_message() { 
+cat << EOF 
+This command has been unable to reach the Internet so is unable to determine estimated 
+carbon impact for your resources. 
+
+To calculate the carbon impact of your resources run the 'carbon send' command and upload the 
+payload to your account at $LEADERBOARD_URL.
+EOF
+}
+
+get_carbon_for_load() {
+#
+# Identify Carbon Impact 
+#
+# - If no internet connection detected, this will
+#   not be performed.
+#
+
+if [ $INTERNET == "true" ] ; then
+if [ -z $USE_INSTANCE_TYPE ] ; then
+
+local REQUEST="{
+  \"model\": {
+    \"type\": \"rack\"
+  },
+  \"configuration\": {
+    \"cpu\": {
+      \"units\": $NUMCPUS,
+      \"core_units\": $NUMCORESPERCPU,
+      \"name\": \"$CPUMODEL\"
+    },
+    \"ram\": [{
+      \"units\": $NUMDIMMS,
+      \"capacity\": $GBPERDIMM
+    }],
+    \"disk\": [
+    $(echo "$DISKSJSON" |sed 's/,$//g')
+    ]
+  },
+  \"usage\": {
+    \"usage_location\": \"$LOCATION\",
+    \"hours_use_time\": 1,
+    \"hours_life_time\": 1,
+    \"time_workload\": $1
+  }
+}
+"
+
+local CARBONEQ=$(curl -s -X 'POST' \
+  "${BOAVIZTA_URL}/v1/server/?verbose=false&criteria=gwp" \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d "$REQUEST" |jq '.impacts.gwp.use.value')
+
+else
+
+local REQUEST="{
+\"provider\": \"$CLOUD_PROVIDER\",
+\"instance_type\": \"$INSTANCE_TYPE\",
+\"usage\" : {
+  \"usage_location\": \"GBR\",
+  \"hours_use_time\": 1,
+  \"hours_life_time\": 1,
+  \"time_workload\": [{
+    \"time_percentage\": 100,
+    \"load_percentage\": $1
+    }]
+  }
+}
+"
+
+local CARBONEQ="$(curl -s -X 'POST' \
+  "${BOAVIZTA_URL}/v1/cloud/instance?verbose=false&criteria=gwp" \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d "$REQUEST" |jq '.impacts.gwp.use.value')"
+
+fi
+
+echo $CARBONEQ
+else
+no_internet_message
+fi
+}
+
+
+report() { 
+cat << EOF > $LOG_DIR/report.md
+## Estimated System Specs
+
+CPU: $NUMCPUS x $CPUMODEL ($NUMCORESPERCPU core(s) per CPU)
+
+RAM: $NUMDIMMS x ${GBPERDIMM}GB
+
+Disks: $(echo "$DISKSINFO" |sed 's/, $//g')
+
+GPUs: $(echo "$GPUSINFO" |sed 's/, $//g')
+
+## Platform & Power Information
+
+Platform: $CLOUD_PROVIDER
+
+Location: $LOCATION
+
+EOF
+
+  if [ -z $USE_INSTANCE_TYPE ] ; then
+cat << EOF >> $LOG_DIR/report.md
+## Estimated Carbon Consumption (From Specs)
+EOF
+  else
+cat << EOF >> $LOG_DIR/report.md
+## Estimated Carbon Consumption (From Instance Type)
+### Detected instance type is '${INSTANCE_TYPE}' on ${CLOUD_PROVIDER}
+EOF
+  fi
+
+if [ $INTERNET == "true" ] ; then
+cat << EOF >> $LOG_DIR/report.md
+No Load: $(get_carbon_for_load 0)kgCO2eq/hr
+
+Half Load: $(get_carbon_for_load 50)kgCO2eq/hr
+
+Full Load: $(get_carbon_for_load 100)kgCO2eq/hr
+
+Current Load: $(get_carbon_for_load $percentage_15min)kgCO2eq/hr
+(Current load is based on average load from the last 15 minutes of use)
+EOF
+else
+cat << EOF >> $LOG_DIR/report.md
+$(no_internet_message)
+EOF
+fi
+
+  cat $LOG_DIR/report.md
+}
+
+ask_question() {
+    SPEC="$1"
+    VAL="$2"
+    VALIDATION="$3"
+    correct="placeholder"
+    while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] ]] ; do 
+        read -p "$SPEC is '$VAL', correct? (Y/N) " correct
+    done
+    if [[ $correct == [nN] || $correct == [nN][oO] ]] ; then
+        read -p "Set $SPEC to: " newval
+        if [[ ! -z $newval ]] ; then
+            case $VALIDATION  in 
+                "number")
+                    while [[ ! $newval =~ ^[0-9]+$ ]] ; do 
+                        echo "'$newval' is not an integer"
+                        read -p "Set $SPEC to: " newval
+                    done
+                ;;
+            esac
+            echo "Setting $SPEC to '$newval'"
+            eval $SPEC="\"$newval\""
+        fi
+    fi
+}
+
+debug_specs() {
+    if [ -z $QUIET ] ; then 
+        echo "$UUID: CPU: $NUMCPUS x $NUMCORESPERCPU core, RAM: $NUMDIMMS x ${GBPERDIMM}GB, GPUs: [$(echo "$GPUSINFO" |sed 's/, $//g')], Disks: [$(echo "$DISKSINFO" |sed 's/, $//g')], Location: $LOCATION"
+    fi
+}
+
+#
+# Runtime Checks
+#
+#  - Internet connection?
+#  - Command dependencies present?
+#  - Log directory exists
+
+# Exit before doing anything on unknown command
+case "$action" in
+  help|hel|he|h|--help|-h|"")
+    help_message
+    ;;
+esac
+
+# Internet Connection
+SITES="https://www.openflighthpc.org https://alces-flight.com https://rockylinux.org https://example.com" 
+for site in $SITES ; do 
+    if curl -L -s $site >> /dev/null ; then
+        INTERNET=true
+        break
+    else
+        INTERNET=false
+    fi
+done
+
+# JQ 
+# - If internet connection then JQ is needed (for reporting carbon numbers) 
+# - If internet connection then JQ portable binary can be downloaded if needed 
+if [ $INTERNET == "true" ] ; then
+    if ! command -v jq &> /dev/null ; then 
+        curl -sL https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 > $DIR/jq
+        chmod +x $DIR/jq
+        PATH="$PATH:$DIR"
+        JQ_DL=true
+    fi
+fi
+
+# Various Commands
+COMMANDS="lshw lsblk md5sum"
+for cmd in $COMMANDS ; do 
+    if ! command -v $cmd &> /dev/null ; then 
+        echo "$cmd: Command not found" 
+        exit 1
+    fi
+done
+
+# Log Directory
+mkdir -p $LOG_DIR
+
+#
+# Identify System Info
+#
+# - Utilise non-root commands and data to identify
+#   system information
+
+# UUID 
+## Generate a UUID that'll be unique to the system 
+
+if [ -f /etc/machine-id ] ; then
+    # Combine machine ID and first physical MAC address to create ID
+    MACHINEID=$(cat /etc/machine-id) # Generated by systemd or dbus
+elif [ -f /var/lib/dbus/machine-id ] ; then
+    MACHINEID="$(cat /var/lib/dbus/machine-id)" # Legacy dbus may not use /etc/machine-id
+else
+    # Use UUID of root partition 
+    root_mount=$(awk -v mountpoint="/" '$2==mountpoint {print $1}' /proc/mounts)
+    MACHINEID="$(lsblk $root_mount -f -o UUID -n)"
+fi
+
+FIRSTMAC=$(lshw -c network  2>/dev/null |grep -m 1 'serial:' |sed 's/.*serial: //g;s/://g')
+UUID=$(echo "$MACHINEID$FIRSTMAC" |md5sum |awk '{print $1}')
+
+# CPU 
+NUMCPUS="$(grep '^physical id' /proc/cpuinfo |sort |uniq |wc -l)"
+NUMCORESPERCPU="$(grep -m 1 '^cpu cores' /proc/cpuinfo |sed 's/.*: //g')"
+CPUMODEL="$(grep -m 1 '^model name' /proc/cpuinfo |sed 's/.*: //g;s/ @.*//g')"
+
+if [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating CPU Specs"
+    ask_question CPUMODEL "$CPUMODEL"
+    ask_question NUMCPUS $NUMCPUS number
+    ask_question NUMCORESPERCPU $NUMCORESPERCPU number
+fi
+
+# Memory
+NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l) # This might not be useful at all on systems without ECC memory, further testing needed
+GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
+
+if [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating RAM Specs"
+    ask_question NUMDIMMS $NUMDIMMS number
+    ask_question GBPERDIMM ${GBPERDIMM}GB number
+fi
+
+# Disks
+DISKS=$(lsblk -e7 -l -d -o NAME -n)
+for disk in $DISKS ; do
+    size="$(($(lsblk -b --output SIZE -n -d /dev/$disk)/1024/1024/1024))"
+    disktype="$(grep -q 0 /sys/block/$disk/queue/rotational && echo "ssd" || echo "hdd")"
+    if [ -z $ACCEPT_DEFAULTS ] ; then 
+        echo "# Validating $disk Specs"
+        ask_question disktype $disktype
+        ask_question size ${size}GB number
+    fi
+    DISKSJSON="{\"units\": 1, \"type\": \"$disktype\", \"capacity\": $size},$DISKSJSON"
+    DISKSINFO="${size}GB $disktype, $DISKSINFO"
+done
+
+# GPUs 
+## Locate all GPUs
+GPUS_RAW="$(lshw -c display 2>/dev/null |grep -E 'product|vendor' |sed -z 's/\n[[:blank:]]*vendor://g;s/^[[:blank:]]*product: //g')"
+
+## Identify Nvidia GPUs
+if echo "$GPUS_RAW" |grep -qi nvidia ; then
+    # If we have Nvidia GPUs then nvidia-smi should be present if CUDA is installed but check just in case
+    if command -v nvidia-smi ; then
+        NVID_GPU_IDS="$(nvidia-smi --query-gpu=gpu_bus_id --format=csv,noheader)"
+        for gpu in $NVID_GPU_IDS ; do 
+            model=$(nvidia-smi --query-gpu=name --format=csv,noheader --id=$gpu)
+            mem_mib=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits --id=$gpu)
+            mem_gib=$(($mem_mib / 1024))
+            if [ -z $ACCEPT_DEFAULTS ] ; then 
+                echo "# Validating $gpu Specs"
+                ask_question model $model
+                ask_question mem_gib ${mem_gib}GB number
+            fi
+            GPUSJSON="{\"units\": 1, \"name\": \"$model\", \"memory_capacity\": $mem_gib},$GPUSJSON"
+            GPUSINFO="$model ${mem_gib}GB,$GPUSINFO"
+        done
+    else
+        echo "Nvidia GPUs detected but no nvidia-smi present, panic!"
+        exit 1
+    fi
+fi
+
+# Get load average of system, removing decimal point (equiv of times by 100) 
+load_avg_15min="10#$(uptime| awk -F'load average: ' '{print $2}' | cut -d ',' -f3 | tr -d ' ' |sed 's/\.//g')"
+# Change load average into a percentage per CPU
+percentage_15min="$(($load_avg_15min / $(nproc)))"
+# Ceiling load average 
+if [[ $percentage_15min -gt 100 ]] ; then 
+    percentage_15min=100
+fi
+
+#
+# Identify Platform Info
+#
+
+plat_query="$(cat /sys/devices/virtual/dmi/id/sys_vendor |awk '{print $1}')"
+case $plat_query in
+    "OpenStack")
+        PLATFORM="$plat_query"
+    ;;
+    "Amazon")
+        PLATFORM="AWS"
+    ;;
+    "Microsoft")
+        PLATFORM="Azure"
+    ;;
+    *)
+        PLATFORM="Metal"
+    ;;
+esac
+
+if [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating Platform"
+    ask_question PLATFORM $PLATFORM 
+fi
+
+case "$PLATFORM" in
+    "AWS")
+      CLOUD_PROVIDER=aws
+      TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+      INSTANCE_TYPE=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --fail http://169.254.169.254/latest/meta-data/instance-type)
+      ;;
+    "OpenStack")
+      CLOUD_PROVIDER=alces
+      INSTANCE_TYPE=$(curl -s --fail http://169.254.169.254/latest/meta-data/instance-type)
+      ;;
+    "Azure")
+      CLOUD_PROVIDER=azure
+      INSTANCE_TYPE=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2021-02-01&format=text")
+      ;;
+esac
+
+if [ ! -z $INSTANCE_TYPE ] && [ -z $ACCEPT_DEFAULTS ] ; then
+    echo "# Validating Instance Type"
+    ask_question INSTANCE_TYPE $INSTANCE_TYPE
+fi
+
+if [ $INTERNET == "true" ] ; then
+    ARCHETYPES=$(curl -s -X 'GET' \
+        "${BOAVIZTA_URL}/v1/cloud/instance/all_instances?provider=${CLOUD_PROVIDER}" \
+        -H 'accept: application/json')
+    if echo $ARCHETYPES | jq -e ".|any(. == \"$INSTANCE_TYPE\")" &> /dev/null ; then
+        USE_INSTANCE_TYPE=true
+    fi
+fi
+
+if [ -z $USE_INSTANCE_TYPE ] && [ "$CLOUD_PROVIDER"=="alces" ] ; then
+    CLOUD_PROVIDER=openstack
+fi
+
+#
+# Identify Location Info 
+#
+VALID_LOCATIONS="WOR EEE ZWE ZMB ZAF YEM VNM VEN UZB URY USA UKR TZA TWN TTO TUR TUN TKM TJK THA TGO SYR SLV SEN SVK SVN SGP SWE SDN SAU RUS SCG ROU QAT PRY PRT POL PAK PHL PER PAN OMN NZL NPL NOR NLD NIC NGA NAM MOZ MYS MEX MLT MNG MMR MKD MDA MAR LBY LVA LUX LTU LKA LBN KAZ KWT KOR PRK KHM KGZ KEN JPN JOR JAM ITA ISL IRN IRQ IND ISR IRL IDN HUN HTI HRV HND HKG GTM GRC GIB GHA GEO GBR GAB FRA FIN ETH ESP ERI EGY EST ECU DZA DOM DNK DEU CZE CYP CUB CRI COL CHN CMR CHL CIV CHE COG COD CAN BLR BWA BRA BOL BRN BEN BHR BGR BEL BGD BIH AZE AUS AUT ARG AGO ANT ARM ALB ARE"
+if [ $INTERNET == "true" ] && [ -z $LOCATION ] ; then
+    case $PLATFORM in
+        "AWS")
+            country=$(curl -s -L https://github.com/PaulieScanlon/cloud-regions-country-flags/raw/main/from-provider.js |grep "'$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --fail http://169.254.169.254/latest/meta-data/placement/region)':" -A 5 |grep country |sed "s/.* = '//g;s/'.*//g")
+            if [[ "$country" == "England" ]] ; then
+                country="United Kingdom"
+            elif [[ "$country" == "South Korea" ]] ; then
+                country="Korea, Republic Of"
+            elif [[ "$country" == "United States of America" ]] ; then
+                country="United States"
+            fi
+            LOCATION=$(curl -s ${BOAVIZTA_URL}/v1/utils/country_code |sed "s/.*$country\":\"//g;s/\".*//g")
+            ;;
+        *)
+            # Attempt to work out location by external IP
+            ip=$(curl -s https://ipinfo.io/ip)
+            LOCATION=$(curl -s https://ipapi.co/$ip/country_code_iso3)
+            ;;
+    esac
+    if [ -z $ACCEPT_DEFAULTS ] ; then
+        echo "# Validating Location"
+        ask_question LOCATION $LOCATION
+        if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
+            echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
+            echo "The script failed to identify location correctly due to an issue (e.g. no internet connection) and"
+            echo "the environment variable LOCATION is invalid or has not been provided."
+            echo
+            echo "Valid locations are:"
+            echo "    $VALID_LOCATIONS"
+            echo
+            ask_question LOCATION $LOCATION
+        fi
+    fi
+else 
+    if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
+        echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
+        echo "The script failed to identify location correctly due to an issue (e.g. no internet connection) and"
+        echo "the environment variable LOCATION is invalid or has not been provided."
+        echo
+        echo "Valid locations are:"
+        echo "    $VALID_LOCATIONS"
+        exit 1
+    fi
+fi
+
+#
+# Return data
+#
+
+case $action in
+    "min")
+        echo $(get_carbon_for_load 0)
+        ;;
+    "half")
+        echo $(get_carbon_for_load 50)
+        ;;
+    "full")
+        echo $(get_carbon_for_load 100)
+        ;;
+    "current")
+        echo $(get_carbon_for_load $percentage_15min)
+        ;;
+    "platform")
+        echo $CLOUD_PROVIDER
+        ;;
+    "instance-type")
+        echo $INSTANCE_TYPE
+        ;;
+    "report")
+        report
+        ;;
+    "send")
+        debug_specs
+        if [ $INTERNET == "true" ] ; then 
+            PAYLOAD="{
+            \"device_id\": \"$UUID\",
+            \"platform\": \"$PLATFORM\",
+            \"cloud_provider\": \"$CLOUD_PROVIDER\",
+            \"cpus\": \"$NUMCPUS\",
+            \"cores_per_cpu\": \"$NUMCORESPERCPU\",
+            \"cpu_name\": \"$CPUMODEL\",
+            \"ram_units\": \"$NUMDIMMS\",
+            \"ram_capacity_per_unit\": \"$GBPERDIMM\",
+            \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
+            \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
+            \"instance_type\": \"$INSTANCE_TYPE\",
+            \"min\": \"$(get_carbon_for_load 0)\",
+            \"half\": \"$(get_carbon_for_load 50)\",
+            \"max\": \"$(get_carbon_for_load 100)\",
+            \"current\": \"$(get_carbon_for_load $percentage_15min)\",
+            \"location\": \"$LOCATION\"
+            }
+            "
+            RESPONSE=$(curl -s -X 'POST' \
+            "${LEADERBOARD_URL}/add-record" \
+            -H 'accept: application/json' \
+            -H "Authorization: ${AUTH_TOKEN}" \
+            -H 'Content-Type: application/json' \
+            -d "$PAYLOAD")
+
+            if [ -z "$RESPONSE" ] ; then
+                echo "Could not reach leaderboard server"
+            else
+                echo $RESPONSE
+            fi
+        else
+            PAYLOAD="{
+            \"device_id\": \"$UUID\",
+            \"platform\": \"$PLATFORM\",
+            \"cloud_provider\": \"$CLOUD_PROVIDER\",
+            \"cpus\": \"$NUMCPUS\",
+            \"cores_per_cpu\": \"$NUMCORESPERCPU\",
+            \"cpu_name\": \"$CPUMODEL\",
+            \"ram_units\": \"$NUMDIMMS\",
+            \"ram_capacity_per_unit\": \"$GBPERDIMM\",
+            \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
+            \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
+            \"instance_type\": \"$INSTANCE_TYPE\",
+            \"current_load\": \"$percentage_15min\",
+            \"location\": \"$LOCATION\",
+            \"timestamp\": \"$(date)\"
+            },
+            "
+            PAYLOAD_FILE="$DIR/payload-$UUID.json"
+            echo "$PAYLOAD" >> $PAYLOAD_FILE
+            echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
+        fi
+        ;; 
+    *)
+        help_message
+        ;;
+esac
+
+# Tidy JQ if installed by script
+if [ ! -z $JQ_DL ] ; then
+    rm -f $DIR/jq
+fi
