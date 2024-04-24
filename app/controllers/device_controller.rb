@@ -1,8 +1,12 @@
 class DeviceController < ApplicationController
   before_action :authorize_request, :only=>[:add_tag, :delete_tag]
 
-  def show
+  def index
     @devices = Device.all
+  end
+
+  def show
+    @device = Device.find(params[:device])
   end
 
   def raw_data
