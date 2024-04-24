@@ -11,7 +11,7 @@ class HomeController < ApplicationController
         uuid: device.uuid,
         user: device.pretty_owner,
         platform: device.platform,
-        location: device.location,
+        location: device.two_digit_location,
       }
     end
     @num_devices = Device.all.length

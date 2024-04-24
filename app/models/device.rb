@@ -13,4 +13,8 @@ class Device < ApplicationRecord
   def pretty_owner
     user&.username || "Anonymous"
   end
+
+  def two_digit_location
+    ISO3166::Country.find_country_by_alpha3(self.location).alpha2
+  end
 end
