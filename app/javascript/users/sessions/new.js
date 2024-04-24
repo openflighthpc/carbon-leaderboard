@@ -23,4 +23,56 @@ $(document).ready(() => {
     }
   });
 
+  $('#user_submit').click(async function () {
+
+    let validData = true;
+    const strUser = $('#user_username').val();
+    const strPassword = $('#user_password').val();
+    const regexNotUsername = /\W/;
+    const regexEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/i;
+
+    $('#user_username').attr('placeholder', 'Username or email');
+    $('#user_password').attr('placeholder', 'Password');
+
+    // invalid username
+    if (!regexEmail.test(strUser) && regexNotUsername.test(strUser)) {
+
+      $('#user_username').val('');
+      $('#user_username').attr('placeholder', 'Invalid Username or Email');
+      validData = false;
+
+    // login by username
+    } else if (!regexNotUsername.test(strUser)) {
+
+      // username too short
+      if (strUser.length < 4) {
+        $('#user_username').val('');
+        $('#user_username').attr('placeholder', 'Minimum 4 Characters');
+        validData = false;
+      }
+
+    }
+
+    // password too short
+    if (strPassword.length < 6) {
+      $('#user_password').val('');
+      $('#user_password').attr('placeholder', 'Minimum 6 Characters');
+      validData = false;
+    }
+
+    // submit the form
+    if (validData) {
+      $('#new_user').submit();
+    }
+  });
+
+  // sign in/up by pressing keyboard enter
+  $("#user_password, #user_submit").keydown(function (e) {
+    if (e.which == 13) {
+      $(this).blur();
+      $("#user_submit").click();
+    }
+
+  });
+
 });

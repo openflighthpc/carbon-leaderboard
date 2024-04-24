@@ -65,7 +65,8 @@ body, div, ul, a, button, input {
     box-sizing: border-box;
 }
 
-button {
+button,
+input[type="submit"] {
     border: none;
     background-color: transparent;
     font-weight: unset;
@@ -207,6 +208,7 @@ a {
     color: var(--color-main);
     background-color: #40404000;
     filter: drop-shadow(0px 0px 0px #40404000);
+    cursor: pointer;
     transition:
         border 360ms ease-out,
         color 360ms ease-out,
@@ -221,6 +223,7 @@ a {
     background-color: #404040;
     transform: scale(1.1);
     filter: drop-shadow(var(--fpx) var(--fpx) calc(3 * var(--fpx)) #404040);
+    user-select: none;
     transition:
         border 72ms ease-out,
         color 72ms ease-out,
