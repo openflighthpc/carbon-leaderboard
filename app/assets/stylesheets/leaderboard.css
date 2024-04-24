@@ -23,8 +23,9 @@
 .leaderboard-header-wrapper {
   position: relative;
   padding: calc(6 * var(--fpx));
-  width: calc(1212 * var(--fpx));
+  width: 95%;
   height: max-content;
+  margin-bottom: 0.5rem;
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
@@ -77,7 +78,7 @@
   scrollbar-gutter: stable both-edges;
 
   display: grid;
-  grid-template-columns: calc(1212 * var(--fpx));
+  grid-template-columns: 95%;
   grid-auto-rows: auto;
   gap: calc(6 * var(--fpx));
   justify-content: center;
