@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-  // username/email input
+  // username/email input detection
   $('#user_username').on('input', function () {
     let strUser = $(this).val();
 
@@ -23,6 +23,7 @@ $(document).ready(() => {
     }
   });
 
+  // click submit button
   $('#user_submit').click(async function () {
 
     let validData = true;
@@ -36,27 +37,24 @@ $(document).ready(() => {
 
     // invalid username
     if (!regexEmail.test(strUser) && regexNotUsername.test(strUser)) {
-
       $('#user_username').val('');
-      $('#user_username').attr('placeholder', 'Invalid Username or Email');
+      $('#user_username').attr('placeholder', 'Invalid username or email');
       validData = false;
 
     // login by username
     } else if (!regexNotUsername.test(strUser)) {
-
       // username too short
       if (strUser.length < 4) {
         $('#user_username').val('');
-        $('#user_username').attr('placeholder', 'Minimum 4 Characters');
+        $('#user_username').attr('placeholder', 'Minimum 4 characters');
         validData = false;
       }
-
     }
 
     // password too short
     if (strPassword.length < 6) {
       $('#user_password').val('');
-      $('#user_password').attr('placeholder', 'Minimum 6 Characters');
+      $('#user_password').attr('placeholder', 'Minimum 6 characters');
       validData = false;
     }
 
@@ -72,7 +70,6 @@ $(document).ready(() => {
       $(this).blur();
       $("#user_submit").click();
     }
-
   });
 
 });

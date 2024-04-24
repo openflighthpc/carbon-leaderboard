@@ -3,7 +3,7 @@
 }
 
 .login.card form {
-    width: 18rem;
+    width: 20rem;
     display: grid;
     grid-auto-rows: 1fr;
     justify-items: center;
@@ -12,7 +12,7 @@
 
 .login.card form .icon-wrapper {
     position: relative;
-    width: 100%;
+    width: 18rem;
 }
 
 .login.card form .field {
@@ -31,6 +31,10 @@ input[type="checkbox"] {
 
 .icon-wrapper.user-field {
     --icon-image: url(/assets/ico/user.png);
+}
+
+.icon-wrapper.email-field {
+    --icon-image: url(/assets/ico/email.png);
 }
 
 .icon-wrapper.password-field {

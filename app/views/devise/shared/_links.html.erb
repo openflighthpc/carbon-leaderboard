@@ -1,6 +1,6 @@
 <%- if controller_name != 'sessions' %>
   <% login_text = controller_name == 'passwords' ? 'Back to log in' : "Already have an account? Log in" %>
-  <%= link_to login_text, new_session_path(resource_name) %>
+  <%= link_to login_text, new_session_path(resource_name), class: 'general-button glaring' %>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
