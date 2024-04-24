@@ -5,15 +5,15 @@ $(document).ready(async () => {
   //   {
   //     method: 'POST',
   //     body: JSON.stringify({
-  //       'user_id': crypto.randomUUID(),
-  //       'platform': 'Some University',
+  //       'device_id': crypto.randomUUID(),
+  //       'platform': 'Alces Cloud',
   //       'cpus': 1,
   //       'cores_per_cpu': 10,
   //       'ram_units': 2,
   //       'ram_capacity_per_unit': 16,
   //       'min': 30,
   //       'half': 40,
-  //       'max': 67,
+  //       'max': 56,
   //       'current': 32,
   //       'location': 'US'
   //     })
