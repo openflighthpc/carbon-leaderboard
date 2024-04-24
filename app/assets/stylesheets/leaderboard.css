@@ -6,11 +6,8 @@
 }
 
 #leaderboard-wrapper {
-  position: absolute;
-  top: calc(360 * var(--fpx));
-  left: 0;
   width: 100%;
-  bottom: 0;
+  margin-top: 4rem;
 
   font-size: calc(18 * var(--fpx));
   text-align: left;
