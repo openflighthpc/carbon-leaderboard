@@ -3,10 +3,10 @@
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="icon-wrapper user-field">
-      <%= f.text_field :username, class: 'text-field', placeholder: 'Username or email' %>
+      <%= f.text_field :username, class: 'text-field', placeholder: 'Username or email', maxlength: '40' %>
     </div>
     <div class="icon-wrapper password-field">
-      <%= f.password_field :password, class: 'text-field', placeholder: 'Password' %>
+      <%= f.password_field :password, class: 'text-field', placeholder: 'Password', maxlength: '40' %>
     </div>
 
     <% if devise_mapping.rememberable? %>
