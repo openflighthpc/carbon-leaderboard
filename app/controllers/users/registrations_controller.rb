@@ -11,9 +11,32 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
-    current_user.auth_token = JsonWebToken.encode(user_id: @user.id)
-    current_user.save
+    response = {}
+    if !User.find_by(email: sign_up_params["email"]).nil?
+      response[:email_msg] = "Email has been registered"
+    end
+    if !User.find_by(username: sign_up_params["username"]).nil?
+      response[:username_msg] = "Username has been registered"
+    end
+    unless response.empty?
+      render json: response, status: :conflict
+      return
+    end
+
+    build_resource(sign_up_params)
+    resource.save
+
+    if resource.persisted?
+      if resource.active_for_authentication?
+        sign_up(resource_name, resource)
+        current_user.auth_token = JsonWebToken.encode(user_id: resource.id)
+        current_user.save
+        render json: { location: root_path }, status: :see_other
+        return
+      end
+    end
+
+    render json: '', status: :internal_server_error
   end
 
   # GET /resource/edit

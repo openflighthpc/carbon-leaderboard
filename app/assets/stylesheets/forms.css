@@ -29,7 +29,8 @@ input[type="checkbox"] {
     font-weight: unset;
 }
 
-.icon-wrapper.user-field {
+.icon-wrapper.user-field,
+.icon-wrapper.username-field {
     --icon-image: url(/assets/ico/user.png);
 }
 
