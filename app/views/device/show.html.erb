@@ -9,6 +9,8 @@ td {
 }
 </style>
 
+<h2>Specs</h2>
+
 <table style="width:100%" align="right">
   <tr>
     <th>Owner</th>
@@ -54,4 +56,24 @@ td {
     <td><%= @device.location %></td>
     <td><%= @device.tags.join(", ") %></td>
   </tr>
+</table>
+
+<h2>Latest Entries</h2>
+
+<table style="width:100%" align="right">
+  <tr>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Carbon Usage Per Hour</th>
+    <th>Percentage of maximum carbon usage</th>
+  </tr>
+  <% @device.reports.each do |report| %>
+    <tr>
+      <% time = report.created_at.to_time %>
+      <td><%= time.strftime("%d/%m/%Y") %></td>
+      <td><%= time.strftime("%l:%M%p UTC") %></td>
+      <td><%= report.current%></td>
+      <td><%= "#{(report.current / @device.max * 100).round(1)}%"%></td>
+    </tr>
+  <% end %>
 </table>
