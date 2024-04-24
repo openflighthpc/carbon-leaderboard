@@ -180,8 +180,8 @@ ask_question() {
     VAL="$2"
     VALIDATION="$3"
     correct="placeholder"
-    while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] ]] ; do 
-        read -p "$SPEC is '$VAL', correct? (Y/N) " correct
+    while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] && $correct != "" ]] ; do 
+        read -p "$SPEC is '$VAL', correct? (Y/n) " correct
     done
     if [[ $correct == [nN] || $correct == [nN][oO] ]] ; then
         read -p "Set $SPEC to: " newval
