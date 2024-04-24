@@ -64,6 +64,23 @@ $(document).ready(() => {
     }
   });
 
+  $('#new_user').on('submit', async function (e) {
+    e.preventDefault();
+    const response = await fetch(e.currentTarget.action, {
+      method: e.currentTarget.method,
+      body: new FormData(e.currentTarget)
+    });
+    
+    if (response.status === 303) {
+      const {location} = await response.json();
+      window.location.href = location;
+    } else if (response.status === 401) {
+      const {msg} = await response.json();
+      $('#user_password').val('');
+      $('#user_password').attr('placeholder', msg);
+    }
+  });
+
   // sign in/up by pressing keyboard enter
   $("#user_password, #user_submit").keydown(function (e) {
     if (e.which == 13) {
