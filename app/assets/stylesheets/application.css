@@ -167,3 +167,7 @@ a {
 .light-text {
     color: var(--color-nav-text);
 }
+
+.big-text {
+    font-size: 1.2rem;
+}

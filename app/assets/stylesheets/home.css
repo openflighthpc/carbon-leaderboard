@@ -14,6 +14,24 @@
     margin-top: 2.5rem;
 }
 
+.home-top-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.counter-wrapper {
+    text-align: center;
+    max-width: 15rem;
+}
+
+.counter {
+    font-weight: 800;
+    font-size: 5.8rem;
+    color: var(--color-main);
+    margin-bottom: 0;
+}
+
 .home-leaderboard .leaderboard-item-wrapper {
     height: 5.2rem;
     padding: 0.7rem;
@@ -46,10 +64,6 @@
     height: 100%;
     width: 100%;
     border-top-left-radius: calc(20 * var(--fpx));
-}
-
-.home-leaderboard .leaderboard-item-wrapper .top-line {
-    font-size: 1.2rem;
 }
 
 .flag {
