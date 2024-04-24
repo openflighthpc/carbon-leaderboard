@@ -57,13 +57,13 @@ class ReportController < ApplicationController
   end
 
   def new_name
-    colours = %w(red orange yellow green blue indigo violet pink purple grey)
-    adjs = %w(big small quick slow mad calm good bad brave lucky)
-    animals = %w(dog cat chicken duck otter lion tiger fish snake dragon)
+    colours = %w(Red Orange Yellow Green blue Indigo Violet Pink Purple Grey)
+    adjs = %w(Big Small Quick Slow Mad Calm Good Bad Brave Lucky)
+    animals = %w(Dog Cat Chicken Duck Otter Lion Tiger Fish Snake Dragon)
 
-    name = "#{adjs[rand(10)]}_#{colours[rand(10)]}_#{animals[rand(10)]}#{rand(100)}"
+    name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
     while Device.find_by(display_name: name)
-      name = "#{adjs[rand(10)]}_#{colours[rand(10)]}_#{animals[rand(10)]}#{rand(100)}"
+      name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
     end
     name
   end
