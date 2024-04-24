@@ -1,6 +1,6 @@
 class Device < ApplicationRecord
   self.primary_key = :uuid
-  serialize :tags, coder: JSON
+  serialize :tags, coder: YAML
   serialize :disks, coder: JSON
   serialize :gpus, coder: JSON
   belongs_to :user, optional: true
