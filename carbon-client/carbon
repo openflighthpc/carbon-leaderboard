@@ -39,149 +39,11 @@ cat <<EOF
     COMMAND             If set, will prevent the need for a sub-command to be specified 
                         (this is useful for running via curl & pipe from upstream) 
     LOCATION            Specify the 3 digit country code for the device location
-    QUIET               If set to a non-empty string, will prevent debug output of 
-                        system specs before sending (interactive prompt will still
-                        occur unless ACCEPT_DEFAULTS is set) 
+    QUIET               If set to a non-empty string will reduce command verbosity
+                        (interactive prompt will still occur unless ACCEPT_DEFAULTS is set) 
 
 EOF
 exit 0
-}
-
-no_internet_message() { 
-cat << EOF 
-This command has been unable to reach the Internet so is unable to determine estimated 
-carbon impact for your resources. 
-
-To calculate the carbon impact of your resources run the 'carbon send' command and upload the 
-payload to your account at $LEADERBOARD_URL.
-EOF
-}
-
-get_carbon_for_load() {
-#
-# Identify Carbon Impact 
-#
-# - If no internet connection detected, this will
-#   not be performed.
-#
-
-if [ $INTERNET == "true" ] ; then
-if [ -z $USE_INSTANCE_TYPE ] ; then
-
-local REQUEST="{
-  \"model\": {
-    \"type\": \"rack\"
-  },
-  \"configuration\": {
-    \"cpu\": {
-      \"units\": $NUMCPUS,
-      \"core_units\": $NUMCORESPERCPU,
-      \"name\": \"$CPUMODEL\"
-    },
-    \"ram\": [{
-      \"units\": $NUMDIMMS,
-      \"capacity\": $GBPERDIMM
-    }],
-    \"disk\": [
-    $(echo "$DISKSJSON" |sed 's/,$//g')
-    ]
-  },
-  \"usage\": {
-    \"usage_location\": \"$LOCATION\",
-    \"hours_use_time\": 1,
-    \"hours_life_time\": 1,
-    \"time_workload\": $1
-  }
-}
-"
-
-local CARBONEQ=$(curl -s -X 'POST' \
-  "${BOAVIZTA_URL}/v1/server/?verbose=false&criteria=gwp" \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d "$REQUEST" |jq '.impacts.gwp.use.value')
-
-else
-
-local REQUEST="{
-\"provider\": \"$CLOUD_PROVIDER\",
-\"instance_type\": \"$INSTANCE_TYPE\",
-\"usage\" : {
-  \"usage_location\": \"GBR\",
-  \"hours_use_time\": 1,
-  \"hours_life_time\": 1,
-  \"time_workload\": [{
-    \"time_percentage\": 100,
-    \"load_percentage\": $1
-    }]
-  }
-}
-"
-
-local CARBONEQ="$(curl -s -X 'POST' \
-  "${BOAVIZTA_URL}/v1/cloud/instance?verbose=false&criteria=gwp" \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d "$REQUEST" |jq '.impacts.gwp.use.value')"
-
-fi
-
-echo $CARBONEQ
-else
-no_internet_message
-fi
-}
-
-
-report() { 
-cat << EOF > $LOG_DIR/report.md
-## Estimated System Specs
-
-CPU: $NUMCPUS x $CPUMODEL ($NUMCORESPERCPU core(s) per CPU)
-
-RAM: $NUMDIMMS x ${GBPERDIMM}GB
-
-Disks: $(echo "$DISKSINFO" |sed 's/, $//g')
-
-GPUs: $(echo "$GPUSINFO" |sed 's/, $//g')
-
-## Platform & Power Information
-
-Platform: $CLOUD_PROVIDER
-
-Location: $LOCATION
-
-EOF
-
-  if [ -z $USE_INSTANCE_TYPE ] ; then
-cat << EOF >> $LOG_DIR/report.md
-## Estimated Carbon Consumption (From Specs)
-EOF
-  else
-cat << EOF >> $LOG_DIR/report.md
-## Estimated Carbon Consumption (From Instance Type)
-### Detected instance type is '${INSTANCE_TYPE}' on ${CLOUD_PROVIDER}
-EOF
-  fi
-
-if [ $INTERNET == "true" ] ; then
-cat << EOF >> $LOG_DIR/report.md
-No Load: $(get_carbon_for_load 0)kgCO2eq/hr
-
-Half Load: $(get_carbon_for_load 50)kgCO2eq/hr
-
-Full Load: $(get_carbon_for_load 100)kgCO2eq/hr
-
-Current Load: $(get_carbon_for_load $percentage_15min)kgCO2eq/hr
-(Current load is based on average load from the last 15 minutes of use)
-EOF
-else
-cat << EOF >> $LOG_DIR/report.md
-$(no_internet_message)
-EOF
-fi
-
-  cat $LOG_DIR/report.md
 }
 
 ask_question() {
@@ -509,7 +371,11 @@ case $action in
         else
             PAYLOAD_FILE="$DIR/payload-$UUID.json"
             echo "$PAYLOAD" >> $PAYLOAD_FILE
-            echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
+            if [ -z $QUIET ] ; then
+                echo "This command has been unable to reach the Internet so is unable to send system specs to the
+    carbon leaderboard."
+                echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
+            fi
         fi
         ;; 
     *)
