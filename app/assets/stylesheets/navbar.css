@@ -136,21 +136,3 @@
         color 72ms ease-out,
         background-color 72ms ease-out;
 }
-
-.glaring::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -50%;
-    height: 100%;
-    width: 100%;
-    background-image: var(--gradient-row-glare);
-    opacity: 0;
-    transition: opacity 360ms ease-out;
-}
-
-.glaring:hover::before {
-  opacity: 1;
-  transform: translateX(var(--glare-translate));
-  transition: opacity 72ms ease-out;
-}

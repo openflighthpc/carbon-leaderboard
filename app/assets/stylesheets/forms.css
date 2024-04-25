@@ -3,52 +3,41 @@
 }
 
 .login.card form {
-    width: 80%;
-}
-
-.grid-field {
+    width: 20rem;
     display: grid;
-    grid-template-rows: 3fr 4fr;
-    margin-bottom: 2rem;
+    grid-auto-rows: 1fr;
+    justify-items: center;
+    gap: 3rem;
 }
 
-.grid-field input {
-    padding: 0.5rem;
-    border: solid 1px var(--color-main);
+.login.card form .icon-wrapper {
+    position: relative;
+    width: 18rem;
 }
 
-input:focus {
-    outline: none;
-}
-
-input:autofill,
-input:autofill:hover,
-input:autofill:focus,
-input:autofill:active{
-    background-clip: text;
-    transition: background-color 5000s ease-in-out 0s;
-    box-shadow: inset 0 0 20px 20px #2794d811;
+.login.card form .field {
+    position: relative;
+    width: max-content;
 }
 
 input[type="checkbox"] {
     margin-right: 0.7rem;
     position: relative;
-    top: -1px;
 }
 
-.login-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    width: 100%;
-    margin-top: 3rem;
+.login.card form input[type="submit"] {
+    font-weight: unset;
 }
 
-.login-links a {
-    text-decoration: none;
+.icon-wrapper.user-field,
+.icon-wrapper.username-field {
+    --icon-image: url(/assets/ico/user.png);
 }
 
-.submit-button {
-    margin-top: 3rem;
+.icon-wrapper.email-field {
+    --icon-image: url(/assets/ico/email.png);
+}
+
+.icon-wrapper.password-field {
+    --icon-image: url(/assets/ico/password.png);
 }
