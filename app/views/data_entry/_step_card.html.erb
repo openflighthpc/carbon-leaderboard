@@ -1,0 +1,20 @@
+<div class="card full-width mt-4">
+  <div class="step-wrapper">
+    <span class="step-number"><%= locals[:number] %></span>
+    <div class="step">
+      <h3 class="step-title"><%= locals[:title] %></h3>
+      <div class="step-instructions">
+        <p>
+          <%= locals[:instructions] %>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="step-actions flex-column-centred">
+    <% if locals[:number] == 1 %>
+      <%= link_to "Sign up", new_registration_path(:user) %>
+    <% elsif locals[:number] == 2 %>
+      <%= link_to "Download", data_entry_path %>
+    <% end %>
+  </div>
+</div>

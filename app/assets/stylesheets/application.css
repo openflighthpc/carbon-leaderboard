@@ -172,4 +172,7 @@ a {
 
 .big-text {
     font-size: 1.2rem;
+
+.full-width {
+    width: 100%;
 }
