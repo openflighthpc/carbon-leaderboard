@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   post "/delete-tag/:device",      to: "device#delete_tag"
 
   get "/user/:username",           to: "user#profile"
+
+  get "/data-entry",               to: "data_entry#index"
 end
