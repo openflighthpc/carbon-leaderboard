@@ -236,9 +236,11 @@ done
 # - If internet connection then JQ portable binary can be downloaded if needed 
 if [ $INTERNET == "true" ] ; then
     if ! command -v jq &> /dev/null ; then 
-        curl -sL https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 > $DIR/jq
-        chmod +x $DIR/jq
-        PATH="$PATH:$DIR"
+        TMP_BIN_PATH="/tmp/carbon-bin"
+        mkdir -p $TMP_BIN_PATH
+        curl -sL https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 > $TMP_BIN_PATH/jq
+        chmod +x $TMP_BIN_PATH/jq
+        PATH="$PATH:$TMP_BIN_PATH"
         JQ_DL=true
     fi
 fi
@@ -544,5 +546,5 @@ esac
 
 # Tidy JQ if installed by script
 if [ ! -z $JQ_DL ] ; then
-    rm -f $DIR/jq
+    rm -rf $TMP_BIN_PATH
 fi
