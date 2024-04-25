@@ -1,0 +1,20 @@
+.step-wrapper {
+    display: grid;
+    grid-template-columns: 4rem auto;
+    width: 100%;
+}
+
+.step-number {
+    font-size: 3rem;
+    line-height: 3rem;
+    font-weight: 800;
+    color: var(--color-main);
+}
+
+.step-instructions {
+    margin-top: 1rem;
+}
+
+.step-actions {
+    margin-top: 2rem;
+}

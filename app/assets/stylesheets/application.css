@@ -103,6 +103,7 @@ h2 {
 
 h3 {
     font-weight: 700;
+    color: var(--color-text);
 }
 
 .flex-column-centred {
@@ -122,6 +123,7 @@ h3 {
     border: solid 1px var(--color-main);
     border-radius: 0;
     background-color: transparent;
+    color: var(--color-text);
 }
 
 a {

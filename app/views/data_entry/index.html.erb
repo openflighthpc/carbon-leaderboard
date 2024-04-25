@@ -1,1 +1,18 @@
 <h1 class="text-center mb-5">Enter your server data</h1>
+<div class="card mt-4">
+  <div class="step-wrapper">
+    <span class="step-number">1</span>
+    <div class="step">
+      <h3 class="step-title">Make an account (optional)</h3>
+      <div class="step-instructions">
+        <p>
+          Make an account to claim your servers on the leaderboard and get
+          access to tools for tracking your server emission stats more easily.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="step-actions flex-column-centred">
+    <%= link_to "Sign up", new_registration_path(:user) %>
+  </div>
+</div>
