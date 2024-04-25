@@ -4,7 +4,7 @@
 # Command Setup 
 #
 
-action=$1
+action=${COMMAND:-$1}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" # Directory this script is in
 LOG_DIR="$DIR/carbon-log"
@@ -23,16 +23,25 @@ cat <<EOF
 
   DESCRIPTION:
 
-    Get carbon emission data for your node.
+    Send system specs to $LEADERBOARD_URL to get carbon emission data for your node.
 
   COMMANDS:
 
-    half    Show carbon emissions for node at 50% load
-    full    Show carbon emissions for node at 100% load
-    min     Show carbon emissions for node at 0% load
-    current Show carbon emissions for node at current load (average from past 15 minutes)
-    report  Show detailed report for all carbon emission data
-    send    Calculate and send carbon data to the carbon leaderboard
+    help    Show this help page
+    send    Identify system specs and send carbon data to the carbon leaderboard
+
+  ENVIRONMENT VARIABLES: 
+    
+    ACCEPT_DEFAULTS     If set to a non-empty string will accept the system specs as 
+                        determined by the script
+    AUTH_TOKEN          Defines the authentication token (from $LEADERBOARD_URL) to use
+                        for device ownership
+    COMMAND             If set, will prevent the need for a sub-command to be specified 
+                        (this is useful for running via curl & pipe from upstream) 
+    LOCATION            Specify the 3 digit country code for the device location
+    QUIET               If set to a non-empty string, will prevent debug output of 
+                        system specs before sending (interactive prompt will still
+                        occur unless ACCEPT_DEFAULTS is set) 
 
 EOF
 exit 0
@@ -465,27 +474,6 @@ fi
 #
 
 case $action in
-    "min")
-        echo $(get_carbon_for_load 0)
-        ;;
-    "half")
-        echo $(get_carbon_for_load 50)
-        ;;
-    "full")
-        echo $(get_carbon_for_load 100)
-        ;;
-    "current")
-        echo $(get_carbon_for_load $percentage_15min)
-        ;;
-    "platform")
-        echo $CLOUD_PROVIDER
-        ;;
-    "instance-type")
-        echo $INSTANCE_TYPE
-        ;;
-    "report")
-        report
-        ;;
     "send")
         debug_specs
         PAYLOAD="{
