@@ -1,4 +1,4 @@
-<div class="card wide-card mt-4">
+<div class="card wide-card my-3">
   <div class="step-wrapper">
     <span class="step-number"><%= locals[:number] %></span>
     <div class="step">
@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div class="step-actions flex-column-centred">
+  <div class="<%= 'step-actions ' unless locals[:hide_actions] %>flex-column-centred">
     <%= yield :buttons %>
   </div>
 </div>

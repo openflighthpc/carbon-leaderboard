@@ -19,6 +19,28 @@
     <%= link_to "Download", action: :download_carbon %>
   <% end %>
   <p>
-    The Carbon Client is a BASH script which collects the required data for adding entries to the Carbon Leaderboard.
+    The Carbon Client is a BASH script which collects the required data for
+    adding entries to the Carbon Leaderboard.
+  </p>
+<% end %>
+<%= render 'step_card', locals: {
+  number: 3,
+  title: 'Run the Carbon Client on your server',
+  hide_actions: true,
+} do %>
+  <% content_for :buttons, :flush => true do %>
+    <div></div>
+  <% end %>
+  <p>
+    To collect data on your server emissions and enter onto the leaderboard,
+    save the Carbon Client on your server and run the following command:
+  </p>
+  <p class="text-center mb-4">
+    <code class="code-block">bash carbon send</code>
+  </p>
+  <p>
+    This is all you need to run to submit your server data to the leaderboard.
+    However, you can find information below about more advanced options, such
+    as associating your servers with your user account.
   </p>
 <% end %>
