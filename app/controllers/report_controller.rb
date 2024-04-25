@@ -1,4 +1,5 @@
 class ReportController < ApplicationController
+  require 'boavizta'
   protect_from_forgery with: :null_session
   before_action :authorize_anonymous, :only=>[:add_record]
 
@@ -25,9 +26,6 @@ class ReportController < ApplicationController
                           ram_capacity_per_unit: data['ram_capacity_per_unit'],
                           disks: data['disk'] || [],
                           gpus: data['gpu'] || [],
-                          min: data['min'],
-                          half: data['half'],
-                          max: data['max'],
                           platform: data['platform'],
                           cloud_provider: data['cloud_provider'],
                           instance_type: data['instance_type'],
@@ -35,6 +33,9 @@ class ReportController < ApplicationController
                           tags: data['tags'] || []
                          )
       if device.valid?
+        device.min = Boavizta.carbon_for_load(device, 0)
+        device.half = Boavizta.carbon_for_load(device, 50)
+        device.max = Boavizta.carbon_for_load(device, 100)
         device.save
       else
         render json: "Error(s) with payload data: #{device.errors.full_messages.join(', ')}"
@@ -43,9 +44,9 @@ class ReportController < ApplicationController
     end
 
     report = Report.new(device_id: device.uuid,
-                        current: data['current']
+                        current: Boavizta.carbon_for_load(device, data['current']) # Update when current renamed
                        )
-        
+
     if report.valid?
       report.save
     else
@@ -53,7 +54,7 @@ class ReportController < ApplicationController
       return
     end
 
-    render json: "Report saved successfully: Current carbon usage of #{data['current']}kgCO2eq saved for #{@current_user ? @current_user.username : 'an anonymous user'}'s device '#{device.display_name}'"
+    render json: "Report saved successfully: Current carbon usage of #{report.current}kgCO2eq saved for #{@current_user ? @current_user.username : 'an anonymous user'}'s device '#{device.display_name}'"
   end
 
   def new_name
