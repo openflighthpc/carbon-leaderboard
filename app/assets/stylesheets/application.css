@@ -126,6 +126,10 @@ h3 {
     color: var(--color-text);
 }
 
+.wide-card {
+    width: 65%;
+}
+
 a {
     display: block;
     text-decoration: none;
@@ -172,6 +176,7 @@ a {
 
 .big-text {
     font-size: 1.2rem;
+}
 
 .full-width {
     width: 100%;
