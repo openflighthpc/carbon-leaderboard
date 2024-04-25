@@ -488,22 +488,24 @@ case $action in
         ;;
     "send")
         debug_specs
+        PAYLOAD="{
+        \"device_id\": \"$UUID\",
+        \"platform\": \"$PLATFORM\",
+        \"cloud_provider\": \"$CLOUD_PROVIDER\",
+        \"cpus\": \"$NUMCPUS\",
+        \"cores_per_cpu\": \"$NUMCORESPERCPU\",
+        \"cpu_name\": \"$CPUMODEL\",
+        \"ram_units\": \"$NUMDIMMS\",
+        \"ram_capacity_per_unit\": \"$GBPERDIMM\",
+        \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
+        \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
+        \"instance_type\": \"$INSTANCE_TYPE\",
+        \"current_load\": \"$percentage_15min\",
+        \"location\": \"$LOCATION\",
+        \"timestamp\": \"$(date)\"
+        }
+        "
         if [ $INTERNET == "true" ] ; then 
-            PAYLOAD="{
-            \"device_id\": \"$UUID\",
-            \"platform\": \"$PLATFORM\",
-            \"cpus\": \"$NUMCPUS\",
-            \"cores_per_cpu\": \"$NUMCORESPERCPU\",
-            \"cpu_name\": \"$CPUMODEL\",
-            \"ram_units\": \"$NUMDIMMS\",
-            \"ram_capacity_per_unit\": \"$GBPERDIMM\",
-            \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
-            \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
-            \"instance_type\": \"$INSTANCE_TYPE\",
-            \"current_load\": \"$percentage_15min\",
-            \"location\": \"$LOCATION\"
-            }
-            "
             RESPONSE=$(curl -s -X 'POST' \
             "${LEADERBOARD_URL}/add-record" \
             -H 'accept: application/json' \
@@ -517,23 +519,6 @@ case $action in
                 echo $RESPONSE
             fi
         else
-            PAYLOAD="{
-            \"device_id\": \"$UUID\",
-            \"platform\": \"$PLATFORM\",
-            \"cloud_provider\": \"$CLOUD_PROVIDER\",
-            \"cpus\": \"$NUMCPUS\",
-            \"cores_per_cpu\": \"$NUMCORESPERCPU\",
-            \"cpu_name\": \"$CPUMODEL\",
-            \"ram_units\": \"$NUMDIMMS\",
-            \"ram_capacity_per_unit\": \"$GBPERDIMM\",
-            \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
-            \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
-            \"instance_type\": \"$INSTANCE_TYPE\",
-            \"current_load\": \"$percentage_15min\",
-            \"location\": \"$LOCATION\",
-            \"timestamp\": \"$(date)\"
-            },
-            "
             PAYLOAD_FILE="$DIR/payload-$UUID.json"
             echo "$PAYLOAD" >> $PAYLOAD_FILE
             echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
