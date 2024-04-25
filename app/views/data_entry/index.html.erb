@@ -2,13 +2,23 @@
 <%= render 'step_card', locals: {
   number: 1,
   title: 'Make an account (optional)',
-  instructions: 'Make an account to claim your servers on the leaderboard and get
-          access to tools for tracking your server emission stats more easily.',
-  }
-%>
+} do %>
+  <% content_for :buttons, :flush => true do %>
+    <%= link_to "Sign up", new_registration_path(:user) %>
+  <% end %>
+  <p>
+    Make an account to claim your servers on the leaderboard and get
+    access to tools for tracking your server emission stats more easily.
+  </p>
+<% end %>
 <%= render 'step_card', locals: {
   number: 2,
   title: 'Download the Carbon Client',
-  instructions: 'The Carbon Client is a BASH script which collects the required data for adding entries to the Carbon Leaderboard.',
-}
-%>
+} do %>
+  <% content_for :buttons, :flush => true do %>
+    <%= link_to "Download", action: :download_carbon %>
+  <% end %>
+  <p>
+    The Carbon Client is a BASH script which collects the required data for adding entries to the Carbon Leaderboard.
+  </p>
+<% end %>
