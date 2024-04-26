@@ -102,20 +102,6 @@ for site in $SITES ; do
     fi
 done
 
-# JQ 
-# - If internet connection then JQ is needed (for reporting carbon numbers) 
-# - If internet connection then JQ portable binary can be downloaded if needed 
-if [ $INTERNET == "true" ] ; then
-    if ! command -v jq &> /dev/null ; then 
-        TMP_BIN_PATH="/tmp/carbon-bin"
-        mkdir -p $TMP_BIN_PATH
-        curl -sL https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 > $TMP_BIN_PATH/jq
-        chmod +x $TMP_BIN_PATH/jq
-        PATH="$PATH:$TMP_BIN_PATH"
-        JQ_DL=true
-    fi
-fi
-
 # Various Commands
 COMMANDS="lshw lsblk md5sum"
 for cmd in $COMMANDS ; do 
@@ -365,8 +351,3 @@ case $action in
         help_message
         ;;
 esac
-
-# Tidy JQ if installed by script
-if [ ! -z $JQ_DL ] ; then
-    rm -rf $TMP_BIN_PATH
-fi
