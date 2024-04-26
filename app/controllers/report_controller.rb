@@ -27,12 +27,12 @@ class ReportController < ApplicationController
                           disks: data['disk'] || [],
                           gpus: data['gpu'] || [],
                           platform: data['platform'],
-                          cloud_provider: data['cloud_provider'],
                           instance_type: data['instance_type'],
                           location: data['location'],
                           tags: data['tags'] || []
                          )
       if device.valid?
+        device.cloud_provider = Boavizta.provider(device.platform)
         device.min = Boavizta.carbon_for_load(device, 0)
         device.half = Boavizta.carbon_for_load(device, 50)
         device.max = Boavizta.carbon_for_load(device, 100)

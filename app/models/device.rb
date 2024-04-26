@@ -8,7 +8,7 @@ class Device < ApplicationRecord
   has_many :reports, dependent: :destroy
 
   validates :uuid, :cpus, :cores_per_cpu, :ram_units, :ram_capacity_per_unit, :platform,
-            :location, :cpu_name, :cloud_provider, presence: { message: "is required" }
+            :location, :cpu_name, presence: { message: "is required" }
 
   def pretty_owner
     User.find_by(id: self.user_id)&.username || "Anonymous"

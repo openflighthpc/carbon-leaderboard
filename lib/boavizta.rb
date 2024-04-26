@@ -1,6 +1,8 @@
 class Boavizta
   require 'faraday'
-  BOAVIZTA_URL="https://api.boavizta.openflighthpc.org"
+  BOAVIZTA_URL='https://api.boavizta.openflighthpc.org'
+  PROVIDERS={'AWS' => 'aws',
+             'OpenStack' => 'alces'}
 
   def self.boavizta
     @boavizta ||= Faraday.new(BOAVIZTA_URL)
@@ -49,5 +51,9 @@ class Boavizta
       end
     end
     JSON.parse(response.body).dig(*%w[impacts gwp use value])
+  end
+
+  def self.provider(platform)
+    PROVIDERS[platform]
   end
 end
