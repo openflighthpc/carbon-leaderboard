@@ -58,7 +58,7 @@ class ReportController < ApplicationController
   end
 
   def new_name
-    colours = %w(Red Orange Yellow Green blue Indigo Violet Pink Purple Grey)
+    colours = %w(Red Orange Yellow Green Blue Indigo Violet Pink Purple Grey)
     adjs = %w(Big Small Quick Slow Mad Calm Good Bad Brave Lucky)
     animals = %w(Dog Cat Chicken Duck Otter Lion Tiger Fish Snake Dragon)
 
