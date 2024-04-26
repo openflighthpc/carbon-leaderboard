@@ -44,7 +44,7 @@ class ReportController < ApplicationController
     end
 
     report = Report.new(device_id: device.uuid,
-                        current: Boavizta.carbon_for_load(device, data['current']) # Update when current renamed
+                        current: Boavizta.carbon_for_load(device, data['current_load'])
                        )
 
     if report.valid?
