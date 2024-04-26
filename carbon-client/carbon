@@ -250,16 +250,13 @@ fi
 
 case "$PLATFORM" in
     "AWS")
-      CLOUD_PROVIDER=aws
       TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
       INSTANCE_TYPE=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --fail http://169.254.169.254/latest/meta-data/instance-type)
       ;;
     "OpenStack")
-      CLOUD_PROVIDER=alces
       INSTANCE_TYPE=$(curl -s --fail http://169.254.169.254/latest/meta-data/instance-type)
       ;;
     "Azure")
-      CLOUD_PROVIDER=azure
       INSTANCE_TYPE=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2021-02-01&format=text")
       ;;
 esac
@@ -267,19 +264,6 @@ esac
 if [ ! -z $INSTANCE_TYPE ] && [ -z $ACCEPT_DEFAULTS ] ; then
     echo "# Validating Instance Type"
     ask_question INSTANCE_TYPE $INSTANCE_TYPE
-fi
-
-if [ $INTERNET == "true" ] ; then
-    ARCHETYPES=$(curl -s -X 'GET' \
-        "${BOAVIZTA_URL}/v1/cloud/instance/all_instances?provider=${CLOUD_PROVIDER}" \
-        -H 'accept: application/json')
-    if echo $ARCHETYPES | jq -e ".|any(. == \"$INSTANCE_TYPE\")" &> /dev/null ; then
-        USE_INSTANCE_TYPE=true
-    fi
-fi
-
-if [ -z $USE_INSTANCE_TYPE ] && [ "$CLOUD_PROVIDER"=="alces" ] ; then
-    CLOUD_PROVIDER=openstack
 fi
 
 #
@@ -341,7 +325,6 @@ case $action in
         PAYLOAD="{
         \"device_id\": \"$UUID\",
         \"platform\": \"$PLATFORM\",
-        \"cloud_provider\": \"$CLOUD_PROVIDER\",
         \"cpus\": \"$NUMCPUS\",
         \"cores_per_cpu\": \"$NUMCORESPERCPU\",
         \"cpu_name\": \"$CPUMODEL\",
