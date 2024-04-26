@@ -44,3 +44,24 @@
     as associating your servers with your user account.
   </p>
 <% end %>
+<%= render 'step_card', locals: {
+  number: 4,
+  title: 'Upload your data manually',
+} do %>
+  <% content_for :buttons, :flush => true do %>
+    <%= link_to "Upload", action: :download_carbon %>
+  <% end %>
+  <p>
+    If your system has internet access, you can skip this step! Otherwise, the
+    Carbon Client will create a payload file at <code>carbon-log/payload-${UUID}.json</code>
+    which can be manually uploaded to the OpenFlight Carbon Leaderboard.
+  </p>
+<% end %>
+<%= render 'step_card', locals: {
+  number: 5,
+  title: 'See how your server does on the leaderboard!',
+} do %>
+  <% content_for :buttons, :flush => true do %>
+    <%= link_to "View leaderboard", leaderboard_path %>
+  <% end %>
+<% end %>

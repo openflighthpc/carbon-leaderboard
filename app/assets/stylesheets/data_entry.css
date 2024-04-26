@@ -1,3 +1,10 @@
+.step-card {
+    margin: 0.5rem 0;
+}
+.step-card:last-child {
+    margin-bottom: 3rem;
+}
+
 .step-wrapper {
     display: grid;
     grid-template-columns: 4rem auto;
