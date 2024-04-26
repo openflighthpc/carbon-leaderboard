@@ -9,7 +9,7 @@ class Boavizta
   end
 
   def self.carbon_for_load(device, cpu_load)
-    if device.cloud_provider.blank? || device.instance_type.blank?
+    if device.instance_type.blank?
       response = boavizta.post('/v1/server/') do |req|
         req.headers[:content_type] = 'application/json'
         req.params[:verbose] = false
@@ -55,5 +55,12 @@ class Boavizta
 
   def self.provider(platform)
     PROVIDERS[platform]
+  end
+
+  def self.type_exists?(type, provider)
+    response = boavizta.get('/v1/cloud/instance/all_instances') do |req|
+      req.params[:provider] = provider
+    end
+    JSON.parse(response.body).include?(type)
   end
 end
