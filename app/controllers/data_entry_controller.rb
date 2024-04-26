@@ -14,13 +14,17 @@ class DataEntryController < ApplicationController
                                        .chomp(',')
       device = Device.find_by(uuid: data['device_id'])
       if device
-        redirect_to action: index, upload_status: 'Device has already been entered'
+        refresh_page('Device has already been entered')
       else
         device = Device.create_from_json(data)
-        redirect_to action: index, upload_status: device.errors.messages.values.join(', ')
+        refresh_page(device.errors.messages.values.join(', '))
       end
     rescue JSON::ParserError
-      redirect_to action: index, upload_status: 'Invalid JSON file'
+      refresh_page('Invalid JSON file')
     end
+  end
+
+  def refresh_page(upload_status)
+    redirect_to action: index, upload_status: upload_status, anchor: 'step-card-3'
   end
 end
