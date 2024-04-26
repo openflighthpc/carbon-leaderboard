@@ -20,7 +20,7 @@ To send data with the script, download it and run:
 $ bash carbon send
 ```
 
-The above will send carbon information to the [OpenFlight Carbon Leaderboard](https://leaderboard.openflighthpc.org). If the system is unable to reach the internet then it will create a payload file at `carbon-log/payload-${UUID}.json` which can be manually uploaded to the OpenFlight Carbon Leaderboard. 
+The above will send system information to the [OpenFlight Carbon Leaderboard](https://leaderboard.openflighthpc.org). If the system is unable to reach the internet then it will create a payload file at `carbon-log/payload-${UUID}.json` which can be manually uploaded to the OpenFlight Carbon Leaderboard. 
 
 ## Sending Data (Advanced) 
 
@@ -47,3 +47,12 @@ As the `send` command collects the load average over the last 15 minutes for "li
 By default the script will prompt confirmation of the various system specs with the user. To prevent this from happening in the future set the environment variable `ACCEPT_DEFAULTS` to `true`. 
 
 _Note: Overrides to system specs only happen on a per-run basis so would need to be overridden each time the command is run_
+
+### Setting Command
+
+If running the command through a pipe (e.g. `curl` from here to execute with BASH) the sub-command to run will need to be set with the variable `COMMAND`. 
+
+If the device is connected to the internet, the script won't even need to be downloaded and can be executed via curl as follows (note that `ACCEPT_DEFAULTS` also needs to be set because interactive prompts don't play nicely with curl):
+```bash
+$ curl -s -L https://github.com/openflighthpc/carbon-leaderboard/raw/main/carbon-client/carbon | COMMAND='send' ACCEPT_DEFAULTS='true' /bin/bash
+```
