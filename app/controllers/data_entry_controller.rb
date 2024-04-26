@@ -7,10 +7,20 @@ class DataEntryController < ApplicationController
   end
 
   def upload
-    data = JSON.parse params[:device].read
-                                     .gsub("\n","")
-                                     .strip
-                                     .chomp(',')
-    Device.create_from_json(data)
+    begin
+      data = JSON.parse params[:device].read
+                                       .gsub("\n","")
+                                       .strip
+                                       .chomp(',')
+      device = Device.find_by(uuid: data['device_id'])
+      if device
+        redirect_to action: index, upload_status: 'Device has already been entered'
+      else
+        device = Device.create_from_json(data)
+        redirect_to action: index, upload_status: device.errors.messages.values.join(', ')
+      end
+    rescue JSON::ParserError
+      redirect_to action: index, upload_status: 'Invalid JSON file'
+    end
   end
 end

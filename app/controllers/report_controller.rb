@@ -39,17 +39,4 @@ class ReportController < ApplicationController
 
     render json: "Report saved successfully: Current carbon usage of #{report.current}kgCO2eq saved for #{@current_user ? @current_user.username : 'an anonymous user'}'s device '#{device.display_name}'"
   end
-
-  def new_name
-    colours = %w(Red Orange Yellow Green Blue Indigo Violet Pink Purple Grey)
-    adjs = %w(Big Small Quick Slow Mad Calm Good Bad Brave Lucky)
-    animals = %w(Dog Cat Chicken Duck Otter Lion Tiger Fish Snake Dragon)
-
-    name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
-    while Device.find_by(display_name: name)
-      name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
-    end
-    name
-  end
 end
-
