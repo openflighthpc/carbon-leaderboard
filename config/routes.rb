@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   get "/show-devices",             to: "device#index"
   get "/leaderboard/raw-data",     to: "device#raw_data"
-  get "/devices/:device",          to: "device#show"
+  get "/device/:device",           to: "device#show"
   post "/add-tag/:device",         to: "device#add_tag"
   post "/delete-tag/:device",      to: "device#delete_tag"
 
