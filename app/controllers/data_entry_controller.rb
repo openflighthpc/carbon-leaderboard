@@ -22,7 +22,9 @@ class DataEntryController < ApplicationController
         refresh_page(device.errors.messages.values.join(', '))
       end
     rescue JSON::ParserError
-      refresh_page('Invalid JSON file')
+      refresh_page('Invalid payload file format')
+    rescue
+      refresh_page('An unexpected error occurred')
     end
   end
 
