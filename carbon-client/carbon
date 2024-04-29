@@ -42,8 +42,10 @@ cat <<EOF
     NUMDIMMS            Specify the number of DIMMs in the system. This option is available
                         for use cases without sudo/root as insufficient privilege prevents 
                         correctly determining this information
-    OFFLINE             If set this will force the command to run in offline mode (payload
-                        will be written to file instead of pushed to leaderboard)
+    OFFLINE             If set to true this will force the command to run in offline mode
+                        (payload will be written to file instead of pushed to leaderboard).
+                        If set to false will force the command to run in online mode
+                        (it won't check it can reach the internet and will proceed anyway).
     QUIET               If set to a non-empty string will reduce command verbosity
                         (interactive prompt will still occur unless ACCEPT_DEFAULTS is set) 
 
@@ -82,6 +84,17 @@ debug_specs() {
     fi
 }
 
+write_payload() { 
+    PAYLOAD_FILE="$LOG_DIR/payload-$UUID.json"
+    echo "$PAYLOAD," >> $PAYLOAD_FILE
+    if [ -z $QUIET ] ; then
+        echo "This command has been set to offline mode or has been unable to reach the Internet"
+        echo "so is unable to send system specs to the carbon leaderboard."
+        echo
+        echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
+    fi
+}
+
 #
 # Runtime Checks
 #
@@ -98,7 +111,9 @@ esac
 
 # Internet Connection
 SITES="https://www.openflighthpc.org https://alces-flight.com https://rockylinux.org https://example.com" 
-if [ -z $OFFLINE ] ; then
+if [[ $OFFLINE == "false" || $OFFLINE == "true" ]] ; then
+    INTERNET=$OFFLINE
+else
     for site in $SITES ; do 
         if curl -L -s $site >> /dev/null ; then
             INTERNET=true
@@ -107,8 +122,6 @@ if [ -z $OFFLINE ] ; then
             INTERNET=false
         fi
     done
-else
-    INTERNET=false
 fi
 
 # Various Commands
@@ -358,19 +371,13 @@ case $action in
             -d "$PAYLOAD")
 
             if [ -z "$RESPONSE" ] ; then
-                echo "Could not reach leaderboard server"
+                echo "Failed to reach leaderboard server"
+                write_payload
             else
                 echo $RESPONSE
             fi
         else
-            PAYLOAD_FILE="$LOG_DIR/payload-$UUID.json"
-            echo "$PAYLOAD," >> $PAYLOAD_FILE
-            if [ -z $QUIET ] ; then
-                echo "This command has been set to offline mode or has been unable to reach the Internet"
-                echo "so is unable to send system specs to the carbon leaderboard."
-                echo
-                echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
-            fi
+            write_payload
         fi
         ;; 
     *)
