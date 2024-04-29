@@ -17,16 +17,18 @@
       <div class="home-leaderboard leaderboard-wrapper mt-4">
         <div class="leaderboard-content-wrapper">
           <% @devices.each_with_index do |device, index| %>
-            <div class="leaderboard-item-wrapper blurred-frame rank-<%= index + 1 %>">
-              <div class="leaderboard-item glare"></div>
-              <div class="leaderboard-item rank-column"><%= index + 1 %></div>
-              <div>
-                <span class="big-text"><%= device[:display_name] %></span><br>
-                <span><%= device[:user] %></span>
+            <a href="/device/<%= device[:display_name] %>">
+              <div class="leaderboard-item-wrapper blurred-frame rank-<%= index + 1 %>">
+                <div class="leaderboard-item glare"></div>
+                <div class="leaderboard-item rank-column"><%= index + 1 %></div>
+                <div>
+                  <span class="big-text"><%= device[:display_name] %></span><br>
+                  <span><%= device[:user] %></span>
+                </div>
+                <div></div>
+                <div><span class="flag fi fi-<%= device[:location].downcase %> fis"></span></div>
               </div>
-              <div></div>
-              <div><span class="flag fi fi-<%= device[:location].downcase %> fis"></span></div>
-            </div>
+            </a>
           <% end %>
         </div>
       </div>

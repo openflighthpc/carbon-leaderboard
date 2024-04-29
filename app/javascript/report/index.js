@@ -39,14 +39,16 @@ $(document).ready(async () => {
       barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${device[column]}</div>`;
     }
     $('.leaderboard-content-wrapper').append(`
-      <div class="leaderboard-item-wrapper full-leaderboard rank-${device.rank < 4 ? device.rank : 'other'}">
-        <div class="leaderboard-item glare"></div>
-        <div class="leaderboard-item rank-column">${device.rank}</div>
-        <div class="leaderboard-item bar-column" style="--flight-bar-length: ${device.main * 100/ max_main}%">
-          <div class="leaderboard-item bar-data">${barHTML}</div>
+      <a href="/device/${device.user}">
+        <div class="leaderboard-item-wrapper full-leaderboard rank-${device.rank < 4 ? device.rank : 'other'}">
+          <div class="leaderboard-item glare"></div>
+          <div class="leaderboard-item rank-column">${device.rank}</div>
+          <div class="leaderboard-item bar-column" style="--flight-bar-length: ${device.main * 100/ max_main}%">
+            <div class="leaderboard-item bar-data">${barHTML}</div>
+          </div>
+          <div class="value-column">${device.main}</div>
         </div>
-        <div class="value-column">${device.main}</div>
-      </div>
+      </a>
     `);
   }
 });
