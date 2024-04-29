@@ -1,1 +1,42 @@
-<h1 id="welcome">Making HPC Greener</h1>
+<h1 id="welcome">Making HPC greener</h1>
+<p id="welcome-tagline">
+  Finding the most carbon efficient HPC solutions by ranking the emissions of real servers.
+</p>
+
+<%= button_to "Enter your server data", root_path, class: 'button big-text my-4', method: :get %>
+
+<div class="home-top-section my-4">
+  <%= render 'counter', locals: { number: @num_devices, text: 'servers entered' } %>
+
+  <div class="cl-card flex-column-centred">
+    <h3>Top most carbon efficient servers</h3>
+    <p>Ranked by estimated equivalent CO<sub>2</sub> emissions per core at full load.</p>
+    <% if @devices.empty? %>
+      <p class="big-text mt-5">No server data has been entered yet</p>
+    <% else %>
+      <div class="home-leaderboard leaderboard-wrapper mt-4">
+        <div class="leaderboard-content-wrapper">
+          <% @devices.each_with_index do |device, index| %>
+            <a href="/device/<%= device[:display_name] %>">
+              <div class="leaderboard-item-wrapper blurred-frame rank-<%= index + 1 %>">
+                <div class="leaderboard-item glare"></div>
+                <div class="leaderboard-item rank-column"><%= index + 1 %></div>
+                <div>
+                  <span class="big-text"><%= device[:display_name] %></span><br>
+                  <span><%= device[:user] %></span>
+                </div>
+                <div></div>
+                <div><span class="flag fi fi-<%= device[:location].downcase %> fis"></span></div>
+              </div>
+            </a>
+          <% end %>
+        </div>
+      </div>
+      <%= button_to "View full leaderboard", leaderboard_path, class: 'button mt-3', method: :get %>
+    <% end %>
+  </div>
+
+  <%= render 'counter', locals: { number: @num_configs, text: 'different server configurations' } %>
+</div>
+
+<script type="text/javascript" src="/assets/report/glare.js"></script>

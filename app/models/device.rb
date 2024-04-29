@@ -11,6 +11,10 @@ class Device < ApplicationRecord
             :location, :cpu_name, presence: { message: "is required" }
 
   def pretty_owner
-    User.find_by(id: self.user_id)&.username || "Anonymous"
+    user&.username || "Anonymous"
+  end
+
+  def two_digit_location
+    ISO3166::Country.find_country_by_alpha3(self.location).alpha2
   end
 end

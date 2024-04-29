@@ -5,7 +5,7 @@
   --gradient-row-glare: linear-gradient(to right, #ffffff00, #ffffff40, #ffffff00);
 }
 
-#leaderboard-wrapper {
+.full-leaderboard.leaderboard-wrapper {
   width: 100%;
   margin-top: 4rem;
 
@@ -29,6 +29,7 @@
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
+  gap: calc(16 * var(--fpx));
   grid-auto-flow: column;
 }
 
@@ -68,7 +69,7 @@
   text-align: center;
 }
 
-.leaderboard-content-wrapper {
+.full-leaderboard .leaderboard-content-wrapper {
   position: relative;
   padding-top: calc(6 * var(--fpx));
   padding-bottom: calc(6 * var(--fpx));
@@ -87,7 +88,6 @@
 
 .leaderboard-item-wrapper {
   position: relative;
-  padding: calc(6 * var(--fpx));
   background-color: #40404000;
   cursor: pointer;
   overflow: hidden;
@@ -99,14 +99,24 @@
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
+  gap: calc(16 * var(--fpx));
   grid-auto-flow: column;
   justify-items: start;
   align-items: center;
+
+  border-radius:
+          calc(30 * var(--fpx))
+          calc(9 * var(--fpx))
+          calc(30 * var(--fpx))
+          calc(9 * var(--fpx));
 }
-.leaderboard-item-wrapper:not(.rank-other) {
+.full-leaderboard .leaderboard-item-wrapper {
+  padding: calc(6 * var(--fpx));
+}
+.full-leaderboard .leaderboard-item-wrapper:not(.rank-other) {
   height: calc(60 * var(--fpx));
 }
-.leaderboard-item-wrapper.rank-other {
+.full-leaderboard .leaderboard-item-wrapper.rank-other {
   height: calc(48 * var(--fpx));
 }
 
@@ -139,13 +149,16 @@
 }
 
 .leaderboard-item-wrapper .rank-column {
-  width: calc(48 * var(--fpx));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: calc(24 * var(--fpx));
-  text-align: center;
+}
+.full-leaderboard .leaderboard-item-wrapper .rank-column {
+  width: calc(48 * var(--fpx));
 }
 
 .leaderboard-item-wrapper:not(.rank-other) .rank-column {
-  height: calc(48 * var(--fpx));
   border-radius:
       calc(24 * var(--fpx))
       calc(3 * var(--fpx))
@@ -155,8 +168,12 @@
   color: #ffffff;
   font-weight: 400;
 }
+.full-leaderboard .leaderboard-item-wrapper:not(.rank-other) .rank-column {
+  height: calc(48 * var(--fpx));
+}
+
 .leaderboard-item-wrapper.rank-1 .rank-column {
-  background-color: gold;
+  background-color: #FFD700;
 }
 .leaderboard-item-wrapper.rank-2 .rank-column {
   background-color: silver;

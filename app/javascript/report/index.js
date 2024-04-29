@@ -5,15 +5,15 @@ $(document).ready(async () => {
   //   {
   //     method: 'POST',
   //     body: JSON.stringify({
-  //       'user_id': crypto.randomUUID(),
-  //       'platform': 'Some University',
+  //       'device_id': crypto.randomUUID(),
+  //       'platform': 'Alces Cloud',
   //       'cpus': 1,
   //       'cores_per_cpu': 10,
   //       'ram_units': 2,
   //       'ram_capacity_per_unit': 16,
   //       'min': 30,
   //       'half': 40,
-  //       'max': 67,
+  //       'max': 56,
   //       'current': 32,
   //       'location': 'US'
   //     })
@@ -39,23 +39,16 @@ $(document).ready(async () => {
       barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${device[column]}</div>`;
     }
     $('.leaderboard-content-wrapper').append(`
-      <div class="leaderboard-item-wrapper rank-${device.rank < 4 ? device.rank : 'other'} slanted-shape">
-        <div class="leaderboard-item glare"></div>
-        <div class="leaderboard-item rank-column">${device.rank}</div>
-        <div class="leaderboard-item bar-column" style="--flight-bar-length: ${device.main * 100/ max_main}%">
-          <div class="leaderboard-item bar-data">${barHTML}</div>
+      <a href="/device/${device.user}">
+        <div class="leaderboard-item-wrapper full-leaderboard rank-${device.rank < 4 ? device.rank : 'other'}">
+          <div class="leaderboard-item glare"></div>
+          <div class="leaderboard-item rank-column">${device.rank}</div>
+          <div class="leaderboard-item bar-column" style="--flight-bar-length: ${device.main * 100/ max_main}%">
+            <div class="leaderboard-item bar-data">${barHTML}</div>
+          </div>
+          <div class="value-column">${device.main}</div>
         </div>
-        <div class="value-column">${device.main}</div>
-      </div>
+      </a>
     `);
   }
-
-  $('#leaderboard-wrapper .leaderboard-content-wrapper').on('mousemove', (e) => {
-    const leaderboardDimensions = $('#leaderboard-wrapper .leaderboard-header-wrapper').get(0).getBoundingClientRect();
-    const glareTranslateX = e.clientX - leaderboardDimensions.left;
-
-    for (const glareDom of document.getElementsByClassName('leaderboard-item glare')) {
-        glareDom.style.transform = `translateX(${glareTranslateX}px)`;
-    }
-  });
 });
