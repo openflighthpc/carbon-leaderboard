@@ -21,7 +21,31 @@
   </p>
 <% end %>
 <%= render 'step_card', locals: {
-  number: 2,
+  number: 2.1,
+  title: 'Run the Carbon Client on your server',
+  hide_actions: true,
+  show_card: { online: true, offline: false },
+} do %>
+  <% content_for :buttons, :flush => true do %>
+    <div></div>
+  <% end %>
+  <p>
+    To collect data on your server specifications and enter onto the leaderboard,
+    run the following command on your server:
+  </p>
+  <p class="code-wrapper">
+    <code class="code-block">
+      curl -s -L https://github.com/openflighthpc/carbon-leaderboard/raw/main/carbon-client/carbon | COMMAND='send' ACCEPT_DEFAULTS='true' /bin/bash
+    </code>
+  </p>
+  <p>
+    For more options, such as associating your servers with your user account,
+    see the advanced usage information below.
+  </p>
+<% end %>
+
+<%= render 'step_card', locals: {
+  number: 2.2,
   title: 'Download the Carbon Client',
   show_card: { online: false, offline: true },
 } do %>
@@ -50,14 +74,14 @@
     <code class="code-block">bash carbon send</code>
   </p>
   <p>
-    This is all you need to run to submit your server data to the leaderboard.
+    This will collect all the data you need to enter your server onto the leaderboard.
     However, you can find information below about more advanced options, such
     as associating your servers with your user account.
   </p>
 <% end %>
 <%= render 'step_card', locals: {
   number: 4,
-  title: 'Upload your data manually',
+  title: 'Upload your data',
   show_card: { online: false, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
@@ -74,9 +98,7 @@
     <% end %>
   <% end %>
   <p>
-    If your system has internet access, you can skip this step! Otherwise, the
-    Carbon Client will create a payload file at <code>carbon-log/payload-${UUID}.json</code>
-    which can be manually uploaded to the OpenFlight Carbon Leaderboard.
+    Find your payload file at <code>carbon-log/payload-${UUID}.json</code> and upload it below.
   </p>
 <% end %>
 <%= render 'step_card', locals: {
