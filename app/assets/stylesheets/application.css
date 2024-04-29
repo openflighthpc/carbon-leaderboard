@@ -14,9 +14,6 @@
  *= require_self
  */
 
-@import "navbar.css";
-@import "forms.css";
-
 :root {
     --color-text: #586674;
     --color-main: #2794d8;
@@ -87,6 +84,7 @@ body {
 
 #main {
     margin-top: var(--navbar-height);
+    padding-inline: 18rem;
 }
 
 h1, h2 {
@@ -106,6 +104,12 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .card {

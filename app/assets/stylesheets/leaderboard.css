@@ -6,11 +6,8 @@
 }
 
 #leaderboard-wrapper {
-  position: absolute;
-  top: calc(360 * var(--fpx));
-  left: 0;
   width: 100%;
-  bottom: 0;
+  margin-top: 4rem;
 
   font-size: calc(18 * var(--fpx));
   text-align: left;
@@ -26,8 +23,9 @@
 .leaderboard-header-wrapper {
   position: relative;
   padding: calc(6 * var(--fpx));
-  width: calc(1212 * var(--fpx));
+  width: 95%;
   height: max-content;
+  margin-bottom: 0.5rem;
 
   display: grid;
   grid-template-columns: calc(60 * var(--fpx)) 1fr calc(180 * var(--fpx));
@@ -80,7 +78,7 @@
   scrollbar-gutter: stable both-edges;
 
   display: grid;
-  grid-template-columns: calc(1212 * var(--fpx));
+  grid-template-columns: 95%;
   grid-auto-rows: auto;
   gap: calc(6 * var(--fpx));
   justify-content: center;
@@ -155,6 +153,7 @@
       calc(3 * var(--fpx));
   line-height: calc(48 * var(--fpx));
   color: #ffffff;
+  font-weight: 400;
 }
 .leaderboard-item-wrapper.rank-1 .rank-column {
   background-color: gold;
@@ -195,8 +194,8 @@
   font-size: calc(18 * var(--fpx));
 }
 .leaderboard-item-wrapper.rank-other .bar-data {
-  line-height: calc(14 * var(--fpx));
-  font-size: calc(14 * var(--fpx));
+  line-height: calc(16 * var(--fpx));
+  font-size: calc(16 * var(--fpx));
 }
 
 .leaderboard-item.owner-column {
@@ -272,6 +271,6 @@
 .leaderboard-item-wrapper.rank-other .value-column{
   justify-self: center;
   line-height: calc(36 * var(--fpx));
-  font-size: calc(24 * var(--fpx));
+  font-size: calc(36 * var(--fpx));
   text-align: center;
 }
