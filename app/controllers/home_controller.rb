@@ -8,7 +8,7 @@ class HomeController < ApplicationController
                      .first(3)
                      .map do |device|
       {
-        uuid: device.uuid,
+        display_name: device.display_name,
         user: device.pretty_owner,
         platform: device.platform,
         location: device.two_digit_location,
