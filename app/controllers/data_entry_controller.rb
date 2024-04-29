@@ -8,15 +8,17 @@ class DataEntryController < ApplicationController
 
   def upload
     begin
-      data = JSON.parse params[:device].read
-                                       .gsub("\n","")
-                                       .strip
-                                       .chomp(',')
-      device = Device.find_by(uuid: data['device_id'])
+      data = params[:device].read
+                            .gsub("\n","")
+                            .strip
+                            .chomp(',')
+      json = JSON.parse("[ #{data} ]")
+                 .last
+      device = Device.find_by(uuid: json['device_id'])
       if device
         refresh_page('Device has already been entered')
       else
-        device = Device.create_from_json(data)
+        device = Device.create_from_json(json)
         refresh_page(device.errors.messages.values.join(', '))
       end
     rescue JSON::ParserError
