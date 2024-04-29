@@ -144,6 +144,7 @@ code {
 }
 
 .code-block {
+    display: block;
     border: solid 1px rgba(255, 255, 255, 0.7);
     padding: 0.6rem 2rem 0.5rem;
     overflow-x: scroll;

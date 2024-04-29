@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
   updateInstructions();
+  setCodeBlockWidth();
 
   yesButton().onclick = updateInstructions;
   noButton().onclick = updateInstructions;
@@ -38,5 +39,14 @@ function updateInstructions() {
         card.style.display = 'none';
       }
     }
+  }
+}
+
+function setCodeBlockWidth() {
+  const codeWrappers = document.querySelectorAll(".step-wrapper .code-block");
+  for (let i = 0; i < codeWrappers.length; i++) {
+    let wrapper = codeWrappers[i];
+    let stepContainer = wrapper.closest("div.step-wrapper");
+    wrapper.style.maxWidth = `${stepContainer.getBoundingClientRect().width - 64}px`;
   }
 }
