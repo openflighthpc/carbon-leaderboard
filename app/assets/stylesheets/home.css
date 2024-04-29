@@ -16,8 +16,9 @@
 
 .home-top-section {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 10rem auto 10rem;
     justify-items: center;
+    width: 100%;
 }
 
 .counter-wrapper {
