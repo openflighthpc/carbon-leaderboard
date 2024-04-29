@@ -116,7 +116,6 @@
 
 <div class="card wide-card advanced-card">
   <h3>Advanced usage options</h3>
-
   <%= render 'advanced_instruction', locals: {
     id: 'accountInstructions',
     title: 'Associating a device with your user account',
@@ -130,13 +129,63 @@
   <% end %>
   <%= render 'advanced_instruction', locals: {
     id: 'locationInstructions',
-    title: 'Specifying Location',
+    title: 'Specifying location',
   } do %>
     <p>
       If the connection to the Internet goes via a VPN or proxy then the location
       determined by the script may be incorrect. To override the automated location
       identified, ensure that the environment variable <code>LOCATION</code> is set
       to a valid ISO 3166-1 alpha-3 code.
+    </p>
+  <% end %>
+  <%= render 'advanced_instruction', locals: {
+    id: 'dependencies',
+    title: 'View dependencies',
+  } do %>
+    <p><code>BASH  </code></p>
+    <p><code>lshw  </code></p>
+    <p><code>lsblk </code></p>
+    <p><code>md5sum</code></p>
+  <% end %>
+  <%= render 'advanced_instruction', locals: {
+    id: 'silenceInstructions',
+    title: 'Silencing output',
+  } do %>
+    <p>
+      By default the script will print a one-line debug of the system specs when
+      <code>send</code> is run. This can be silenced by setting the environment
+      variable <code>QUIET</code> to <code>true</code>.
+    </p>
+  <% end %>
+  <%= render 'advanced_instruction', locals: {
+    id: 'payload',
+    title: 'Offline data collection (the payload file)',
+  } do %>
+    <p>
+      The payload file (<code>carbon-log/payload-${UUID}.json</code>) is created
+      by a device when it is unable to reach the leaderboard. This payload file can
+      have 1 or more entries for the device.
+    </p>
+    <p>
+      As the <code>send</code> command collects
+      the load average over the last 15 minutes for "live" carbon data, this file can
+      be used to build up many entries over time for a single device in order to get
+      historical estimates of the actual impact of the device at whatever load it has
+      been at.
+    </p>
+  <% end %>
+  <%= render 'advanced_instruction', locals: {
+    id: 'acceptDefaults',
+    title: 'Accepting defaults',
+  } do %>
+    <p>
+      By default the script will prompt confirmation of the various system specs with
+      the user. To prevent this from happening in the future set the environment variable
+      <code>ACCEPT_DEFAULTS</code> to <code>true</code>.
+    </p>
+    <p>
+      Note: Overrides to system specs only happen on a per-run basis so would need to be
+      overridden each time the command is run.
     </p>
   <% end %>
 </div>
