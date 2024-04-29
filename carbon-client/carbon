@@ -326,7 +326,7 @@ case $action in
     \"current_load\": \"$percentage_15min\",
     \"location\": \"$LOCATION\",
     \"timestamp\": \"$(date)\"
-},"
+}"
         if [ $INTERNET == "true" ] ; then 
             RESPONSE=$(curl -s -X 'POST' \
             "${LEADERBOARD_URL}/add-record" \
@@ -342,7 +342,7 @@ case $action in
             fi
         else
             PAYLOAD_FILE="$LOG_DIR/payload-$UUID.json"
-            echo "$PAYLOAD" >> $PAYLOAD_FILE
+            echo "$PAYLOAD," >> $PAYLOAD_FILE
             if [ -z $QUIET ] ; then
                 echo "This command has been set to offline mode or has been unable to reach the Internet"
                 echo "so is unable to send system specs to the carbon leaderboard."
