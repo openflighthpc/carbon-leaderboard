@@ -115,54 +115,30 @@
 <hr class="wide-card">
 
 <div class="card wide-card advanced-card">
-      <h3>Advanced usage options</h3>
+  <h3>Advanced usage options</h3>
 
-      <div class="advanced-instruction-wrapper">
-        <button class="button"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#accountInstructions"
-                aria-expanded="false"
-                aria-controls="accountInstructions"
-        >
-          <span class="big-blue-plus">+</span>
-          <span class="big-text">Associating a device with your user account</span>
-        </button>
-        <div class="collapse" id="accountInstructions">
-          <br>
-          <p>
-            When collecting system information in the leaderboard it may be desired to
-            optionally "claim" the device that is being sent. To do so, a user account
-            will need to be created in the leaderboard and the <code>JWT_TOKEN</code>
-            for the user will need to be set as the environment variable <code>AUTH_TOKEN</code>.
-          </p>
-        </div>
-      </div>
-
-      <div class="step-instructions advanced-instruction-wrapper">
-        <button class="button" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#locationInstructions" 
-                aria-expanded="false" 
-                aria-controls="locationInstructions"
-        >
-          <span class="big-blue-plus">+</span>
-          <span class="big-text">Specifying Location</span>
-        </button>
-        <div class="collapse" id="locationInstructions">
-          <br>
-          <p>
-            If the connection to the Internet goes via a VPN or proxy then the location
-            determined by the script may be incorrect. To override the automated location
-            identified, ensure that the environment variable <code>LOCATION</code> is set
-            to a valid ISO 3166-1 alpha-3 code.
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  <%= render 'advanced_instruction', locals: {
+    id: 'accountInstructions',
+    title: 'Associating a device with your user account',
+  } do %>
+    <p>
+      When collecting system information in the leaderboard it may be desired to
+      optionally "claim" the device that is being sent. To do so, a user account
+      will need to be created in the leaderboard and the <code>JWT_TOKEN</code>
+      for the user will need to be set as the environment variable <code>AUTH_TOKEN</code>.
+    </p>
+  <% end %>
+  <%= render 'advanced_instruction', locals: {
+    id: 'locationInstructions',
+    title: 'Specifying Location',
+  } do %>
+    <p>
+      If the connection to the Internet goes via a VPN or proxy then the location
+      determined by the script may be incorrect. To override the automated location
+      identified, ensure that the environment variable <code>LOCATION</code> is set
+      to a valid ISO 3166-1 alpha-3 code.
+    </p>
+  <% end %>
 </div>
 
 <script type="text/javascript" src="/assets/data_entry/index.js"></script>
