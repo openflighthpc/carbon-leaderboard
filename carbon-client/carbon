@@ -180,8 +180,8 @@ ask_question() {
     VAL="$2"
     VALIDATION="$3"
     correct="placeholder"
-    while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] ]] ; do 
-        read -p "$SPEC is '$VAL', correct? (Y/N) " correct
+    while [[ $correct != [yY] && $correct != [yY][eE][sS] && $correct != [nN] && $correct != [nN][oO] && $correct != "" ]] ; do 
+        read -p "$SPEC is '$VAL', correct? (Y/n) " correct
     done
     if [[ $correct == [nN] || $correct == [nN][oO] ]] ; then
         read -p "Set $SPEC to: " newval
@@ -490,7 +490,6 @@ case $action in
             PAYLOAD="{
             \"device_id\": \"$UUID\",
             \"platform\": \"$PLATFORM\",
-            \"cloud_provider\": \"$CLOUD_PROVIDER\",
             \"cpus\": \"$NUMCPUS\",
             \"cores_per_cpu\": \"$NUMCORESPERCPU\",
             \"cpu_name\": \"$CPUMODEL\",
@@ -499,10 +498,7 @@ case $action in
             \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
             \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
             \"instance_type\": \"$INSTANCE_TYPE\",
-            \"min\": \"$(get_carbon_for_load 0)\",
-            \"half\": \"$(get_carbon_for_load 50)\",
-            \"max\": \"$(get_carbon_for_load 100)\",
-            \"current\": \"$(get_carbon_for_load $percentage_15min)\",
+            \"current_load\": \"$percentage_15min\",
             \"location\": \"$LOCATION\"
             }
             "

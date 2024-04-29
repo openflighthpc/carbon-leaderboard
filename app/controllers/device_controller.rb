@@ -1,19 +1,23 @@
 class DeviceController < ApplicationController
   before_action :authorize_request, :only=>[:add_tag, :delete_tag]
 
-  def show
+  def index
     @devices = Device.all
   end
 
+  def show
+    @device = Device.find_by(display_name: params[:device])
+  end
+
   def raw_data
-    devices = Device.left_joins(:user)
+    devices = Device.left_joins(:user) # This join is still necessary for the future leaderboard to include usernames
     .select('devices.*, users.username, max / (cpus * cores_per_cpu) AS max_per_core')
     .order(:max_per_core)
     response = {}.tap do |res|
       max_device = devices.last
       res[:max_main] = max_device&.max_per_core&.round(3);
       res[:header] = {}.tap do |h|
-        h[:user] = 'User'
+        h[:user] = 'Name'
         h[:platform] = 'Platform'
         h[:location] = 'Location'
         h[:core_number] = 'No. cores'
@@ -29,7 +33,7 @@ class DeviceController < ApplicationController
         dev_group.map do |dev|
           {}.tap do |new_dev|
             new_dev[:rank] = current_rank
-            new_dev[:user] = dev.username || 'Anonymous'
+            new_dev[:user] = dev.display_name
             new_dev[:platform] = dev.platform
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
@@ -43,7 +47,7 @@ class DeviceController < ApplicationController
   end
 
   def add_tag
-    device = Device.find(params[:device])
+    device = Device.find_by(display_name: params[:device])
     if device.user_id == @current_user.id
       report.add_tag(request.body.read)
     else
@@ -52,7 +56,7 @@ class DeviceController < ApplicationController
   end
 
   def delete_tag
-    device = Device.find(params[:device])
+    device = Device.find_by(display_name: params[:device])
     if device.user_id == @current_user.id
       report.delete_tag(request.body.read)
     else

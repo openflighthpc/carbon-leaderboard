@@ -10,11 +10,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    super
-    current_user.auth_token = JsonWebToken.encode(user_id: @user.id)
-    current_user.save
-  end
+  #def create
+  #  super
+  #end
 
   # GET /resource/edit
   # def edit
@@ -53,9 +51,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    current_user.auth_token = JsonWebToken.encode(user_id: @user.id)
+    current_user.save
+    super(resource)
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
