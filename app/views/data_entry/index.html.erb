@@ -1,7 +1,16 @@
 <h1 class="text-center mb-5">Enter your server data</h1>
+<div class="mb-4">
+  <p>Is your server connected to the internet?</p>
+  <input type="radio" id="radio-yes" name="age" value="yes">
+  <label for="yes">Yes</label>
+  <input type="radio" id="radio-no" name="age" value="no">
+  <label for="no">No</label>
+</div>
+
 <%= render 'step_card', locals: {
   number: 1,
   title: 'Make an account (optional)',
+  show_card: { online: true, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
     <%= link_to "Sign up", new_registration_path(:user) %>
@@ -14,6 +23,7 @@
 <%= render 'step_card', locals: {
   number: 2,
   title: 'Download the Carbon Client',
+  show_card: { online: false, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
     <%= link_to "Download", action: :download_carbon %>
@@ -27,6 +37,7 @@
   number: 3,
   title: 'Run the Carbon Client on your server',
   hide_actions: true,
+  show_card: { online: false, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
     <div></div>
@@ -47,6 +58,7 @@
 <%= render 'step_card', locals: {
   number: 4,
   title: 'Upload your data manually',
+  show_card: { online: false, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
     <%= form_with url: "/data-entry/upload", multipart: true do |form| %>
@@ -70,8 +82,11 @@
 <%= render 'step_card', locals: {
   number: 5,
   title: 'See how your server does on the leaderboard!',
+  show_card: { online: true, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
     <%= link_to "View leaderboard", leaderboard_path %>
   <% end %>
 <% end %>
+
+<script type="text/javascript" src="/assets/data_entry/index.js"></script>
