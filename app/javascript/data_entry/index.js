@@ -14,22 +14,26 @@ function noButton() {
 }
 
 function updateInstructions() {
+  let stepNumber = 1;
+  const cards = document.getElementsByClassName('step-card');
   if (yesButton().checked) {
-    const cards = document.getElementsByClassName('step-card');
     for (let i = 0; i < cards.length; i++) {
       let card = cards[i];
       if (card.dataset.online === 'true') {
         card.style.display = 'block';
+        card.getElementsByClassName('step-number')[0].innerHTML = stepNumber;
+        stepNumber++;
       } else {
         card.style.display = 'none';
       }
     }
   } else {
-    const cards = document.getElementsByClassName('step-card');
     for (let i = 0; i < cards.length; i++) {
       let card = cards[i];
       if (card.dataset.offline === 'true') {
         card.style.display = 'block';
+        card.getElementsByClassName('step-number')[0].innerHTML = stepNumber;
+        stepNumber++;
       } else {
         card.style.display = 'none';
       }
