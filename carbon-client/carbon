@@ -39,6 +39,8 @@ cat <<EOF
     COMMAND             If set, will prevent the need for a sub-command to be specified 
                         (this is useful for running via curl & pipe from upstream) 
     LOCATION            Specify the 3 digit country code for the device location
+    OFFLINE             If set this will force the command to run in offline mode (payload
+                        will be written to file instead of pushed to leaderboard)
     QUIET               If set to a non-empty string will reduce command verbosity
                         (interactive prompt will still occur unless ACCEPT_DEFAULTS is set) 
 
@@ -93,14 +95,18 @@ esac
 
 # Internet Connection
 SITES="https://www.openflighthpc.org https://alces-flight.com https://rockylinux.org https://example.com" 
-for site in $SITES ; do 
-    if curl -L -s $site >> /dev/null ; then
-        INTERNET=true
-        break
-    else
-        INTERNET=false
-    fi
-done
+if [ -z $OFFLINE ] ; then
+    for site in $SITES ; do 
+        if curl -L -s $site >> /dev/null ; then
+            INTERNET=true
+            break
+        else
+            INTERNET=false
+        fi
+    done
+else
+    INTERNET=false
+fi
 
 # Various Commands
 COMMANDS="lshw lsblk md5sum"
