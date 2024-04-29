@@ -39,6 +39,9 @@ cat <<EOF
     COMMAND             If set, will prevent the need for a sub-command to be specified 
                         (this is useful for running via curl & pipe from upstream) 
     LOCATION            Specify the 3 digit country code for the device location
+    NUMDIMMS            Specify the number of DIMMs in the system. This option is available
+                        for use cases without sudo/root as insufficient privilege prevents 
+                        correctly determining this information
     OFFLINE             If set this will force the command to run in offline mode (payload
                         will be written to file instead of pushed to leaderboard)
     QUIET               If set to a non-empty string will reduce command verbosity
@@ -158,12 +161,31 @@ if [ -z $ACCEPT_DEFAULTS ] ; then
 fi
 
 # Memory
-NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l) # This might not be useful at all on systems without ECC memory, further testing needed
+if [ ! -z $NUMDIMMS ] ; then 
+    # If provided env var is a number then it will be trusted 
+    if [ -z $ACCEPT_DEFAULTS ] ; then 
+        while [[ ! $NUMDIMMS =~ ^[0-9]+$ ]] ; do
+            echo "Invalid NUMDIMMS environment varialbe. Expected number, got '$NUMDIMMS'"
+            ask_question NUMDIMMS $NUMDIMMS number
+        done
+    elif [[ ! $NUMDIMMS =~ ^[0-9]+$ ]] ; then
+        echo "Invalid NUMDIMMS environment varialbe. Expected number, got '$NUMDIMMS'"
+        exit 1
+    fi
+elif sudo -l -n sudo &>/dev/null ; then
+    # If sudo, we can use DMI Decode and get correct result
+    NUMDIMMS=$(sudo dmidecode -t memory |grep '^[[:blank:]]*Size:' |grep -v 'No Module Installed'  |wc -l)
+else
+    # This doesn't seem to work on older OSes or those without ECC memory but in the event that these dirs exist then a non-root
+    # user can count the dimms
+    NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l)
+fi
 GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
     echo "# Validating RAM Specs"
     ask_question NUMDIMMS $NUMDIMMS number
+    GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
     ask_question GBPERDIMM ${GBPERDIMM}GB number
 fi
 
