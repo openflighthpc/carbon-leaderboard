@@ -50,7 +50,7 @@
   </p>
   <p>
     For more options, such as associating your servers with your user account,
-    see the advanced usage information below.
+    see the advanced usage information <a href="#advanced-usage" class="below-link">below</a>.
   </p>
 <% end %>
 
@@ -84,8 +84,8 @@
   </p>
   <p>
     This will collect all the data you need to enter your server onto the leaderboard.
-    However, you can find information below about more advanced options, such
-    as associating your servers with your user account.
+    However, you can find information <a href="#advanced-usage" class="below-link">below</a>
+    about more advanced options, such as associating your servers with your user account.
   </p>
 <% end %>
 <%= render 'step_card', locals: {
@@ -114,7 +114,7 @@
   <% end %>
 <% end %>
 
-<div class="card wide-card advanced-card">
+<div id="advanced-usage" class="card wide-card advanced-card">
   <h3>Advanced usage options</h3>
   <%= render 'advanced_instruction', locals: {
     id: 'accountInstructions',

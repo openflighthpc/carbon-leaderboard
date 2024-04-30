@@ -27,6 +27,14 @@
     gap: 1rem;
 }
 
+.below-link {
+    display: inline;
+    color: var(--color-main);
+}
+.below-link:hover {
+    filter: brightness(0.8);
+}
+
 .advanced-card {
     margin-top: 5rem;
     margin-bottom: 3rem;
