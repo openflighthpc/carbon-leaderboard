@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
   root "home#index"
 
-  get "/leaderboard",              to: "report#index"
+  get "/leaderboard",              to: "report#index", defaults: { grouped: false }
+  get "/leaderboard/grouped",      to: "report#index", defaults: { grouped: true }
   post "/add-record",              to: "report#add_record"
 
   get "/show-devices",             to: "device#index"

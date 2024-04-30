@@ -3,6 +3,10 @@ class ReportController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :authorize_anonymous, :only=>[:add_record]
 
+  def index
+    @grouped = params[:grouped]
+  end
+
   def show
     @user = User.find_by(username: params[:name])
     if @user

@@ -19,13 +19,22 @@ $(document).ready(async () => {
   //     })
   //   }
   // ));
-
-  const leaderboardResponse = await fetch(
-    '/leaderboard/raw-data',
-    {
-      method: 'GET'
-    }
-  );
+  var leaderboardResponse
+  if (grouped) {
+    leaderboardResponse = await fetch(
+      '/leaderboard/grouped-data',
+      {
+        method: 'GET'
+      }
+    );
+  } else {
+    leaderboardResponse = await fetch(
+      '/leaderboard/raw-data',
+      {
+        method: 'GET'
+      }
+    );
+  };
   const {max_main, header, devices} = await leaderboardResponse.json();
   $('#leaderboard-bar-value-wrapper').text(header.main);
   delete header.main;
