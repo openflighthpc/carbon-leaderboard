@@ -48,6 +48,7 @@ cat <<EOF
                         (it won't check it can reach the internet and will proceed anyway).
     QUIET               If set to a non-empty string will reduce command verbosity
                         (interactive prompt will still occur unless ACCEPT_DEFAULTS is set) 
+    TAGS                A comma-separated list of tags to assign to the device
 
 EOF
 exit 0
@@ -362,6 +363,7 @@ case $action in
     \"instance_type\": \"$INSTANCE_TYPE\",
     \"current_load\": \"$percentage_15min\",
     \"location\": \"$LOCATION\",
+    \"tags\": [$(echo "$TAGS" |sed 's/^/\\"/g;s/,/\\",\\"/g;s/$/\\"/g')],
     \"timestamp\": \"$(date)\"
 }"
         if [ $INTERNET == "true" ] ; then 
