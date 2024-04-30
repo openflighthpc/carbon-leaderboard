@@ -8,14 +8,14 @@
          autocomplete="off"
          <%= 'checked' unless params[:offline_instructions] %>
   >
-  <label class="btn btn-outline-primary" for="radio-yes">Yes</label>
+  <label class="btn btn-outline-primary button glaring" for="radio-yes">Yes</label>
   <input type="radio"
          class="btn-check"
          name="btnradio" id="radio-no"
          autocomplete="off"
          <%= 'checked' if params[:offline_instructions] %>
   >
-  <label class="btn btn-outline-primary" for="radio-no">No</label>
+  <label class="btn btn-outline-primary button glaring" for="radio-no">No</label>
 </div>
 
 <%= render 'step_card', locals: {

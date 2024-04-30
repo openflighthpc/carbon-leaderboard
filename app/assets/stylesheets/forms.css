@@ -56,7 +56,8 @@ input[type="checkbox"] {
 
 .btn-check:checked + .btn-outline-primary,
 .btn-outline-primary:is(:hover, :active) {
-    background-color: var(--color-main);
+    background-color: var(--color-main) !important;
+    color: white !important;
 }
 .btn-check:not(:checked) + .btn-outline-primary,
 .btn-outline-primary:not(:hover, :active) {
@@ -64,6 +65,7 @@ input[type="checkbox"] {
 }
 .btn-outline-primary {
     border-color: var(--color-main) !important;
+    line-height: calc(1.2rem + 4px) !important;
 }
 
 .form-control, .form-control:focus {
