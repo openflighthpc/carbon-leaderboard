@@ -293,7 +293,7 @@ case "$PLATFORM" in
       ;;
 esac
 
-if [ ! -z $INSTANCE_TYPE ] && [ -z $ACCEPT_DEFAULTS ] ; then
+if [[ ! -z $INSTANCE_TYPE && -z $ACCEPT_DEFAULTS ]] ; then
     echo "# Validating Instance Type"
     ask_question INSTANCE_TYPE $INSTANCE_TYPE
 fi
