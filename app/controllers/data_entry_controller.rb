@@ -41,6 +41,6 @@ class DataEntryController < ApplicationController
     redirect_to action: index,
                 upload_status: upload_status,
                 offline_instructions: offline_instructions,
-                anchor: 'step-card-3'
+                anchor: 'anchor-card'
   end
 end

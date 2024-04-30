@@ -1,4 +1,5 @@
 <div class="card wide-card step-card"
+     <%= "id=#{ locals[:id] } " if locals[:id] %>
      data-online="<%= locals[:show_card][:online] %>"
      data-offline="<%= locals[:show_card][:offline] %>"
 >
