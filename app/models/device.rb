@@ -40,12 +40,16 @@ class Device < ApplicationRecord
     end
   end
 
-  def pretty_owner
-    user&.username || "Anonymous"
-  end
+  def self.new_name
+    colours = %w(Red Orange Yellow Green Blue Indigo Violet Pink Purple Grey)
+    adjs = %w(Big Small Quick Slow Mad Calm Good Bad Brave Lucky)
+    animals = %w(Dog Cat Chicken Duck Otter Lion Tiger Fish Snake Dragon)
 
-  def two_digit_location
-    ISO3166::Country.find_country_by_alpha3(self.location).alpha2
+    name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
+    while Device.find_by(display_name: name)
+      name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
+    end
+    name
   end
 
   def config_attributes
@@ -64,15 +68,11 @@ class Device < ApplicationRecord
     Device.pluck(:group).compact.max.to_i + 1
   end
 
-  def new_name
-    colours = %w(Red Orange Yellow Green Blue Indigo Violet Pink Purple Grey)
-    adjs = %w(Big Small Quick Slow Mad Calm Good Bad Brave Lucky)
-    animals = %w(Dog Cat Chicken Duck Otter Lion Tiger Fish Snake Dragon)
+  def pretty_owner
+    user&.username || "Anonymous"
+  end
 
-    name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
-    while Device.find_by(display_name: name)
-      name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
-    end
-    name
+  def two_digit_location
+    ISO3166::Country.find_country_by_alpha3(self.location).alpha2
   end
 end
