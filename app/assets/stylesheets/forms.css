@@ -68,6 +68,9 @@ input[type="checkbox"] {
 
 .form-control, .form-control:focus {
     border: solid 1px var(--color-main);
+    border-radius: 2rem;
+    height: 2.2rem;
+    line-height: calc(1.2rem + 4px);
     background-color: transparent;
     color: var(--color-main);
 }
@@ -77,6 +80,9 @@ input[type="checkbox"] {
 }
 
 .file-input {
-    display: flex;
-    gap: 1rem;
+    max-width: 37rem;
+}
+
+.file-input input[type='file'] {
+    max-width: 30rem;
 }
