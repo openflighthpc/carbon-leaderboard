@@ -54,3 +54,6 @@ By default the script will prompt confirmation of the various system specs with 
 
 _Note: Overrides to system specs only happen on a per-run basis so would need to be overridden each time the command is run_
 
+### Tagging Instance 
+
+When adding a device to the leaderboard it may be desired to add some tagging to help group it with similar nodes. To do this, set the environment variable `TAGS` to a comma-separated list of tags.
