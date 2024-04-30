@@ -111,8 +111,10 @@ esac
 
 # Internet Connection
 SITES="https://www.openflighthpc.org https://alces-flight.com https://rockylinux.org https://example.com" 
-if [[ $OFFLINE == "false" || $OFFLINE == "true" ]] ; then
-    INTERNET=$OFFLINE
+if [[ $OFFLINE == "false" ]] ; then 
+    INTERNET=true
+elif [[ $OFFLINE == "true" ]] ; then
+    INTERNET=false
 else
     for site in $SITES ; do 
         if curl -L -s $site >> /dev/null ; then
