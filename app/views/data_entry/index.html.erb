@@ -19,7 +19,6 @@
 </div>
 
 <%= render 'step_card', locals: {
-  number: 1,
   title: 'Make an account (optional)',
   show_card: { online: true, offline: true },
 } do %>
@@ -32,7 +31,6 @@
   </p>
 <% end %>
 <%= render 'step_card', locals: {
-  number: 2.1,
   title: 'Run the Carbon Client on your server',
   hide_actions: true,
   show_card: { online: true, offline: false },
@@ -57,7 +55,6 @@
 <% end %>
 
 <%= render 'step_card', locals: {
-  number: 2.2,
   title: 'Download the Carbon Client',
   show_card: { online: false, offline: true },
 } do %>
@@ -70,7 +67,6 @@
   </p>
 <% end %>
 <%= render 'step_card', locals: {
-  number: 3,
   title: 'Run the Carbon Client on your server',
   hide_actions: true,
   show_card: { online: false, offline: true },
@@ -92,7 +88,6 @@
   </p>
 <% end %>
 <%= render 'step_card', locals: {
-  number: 4,
   title: 'Upload your data',
   show_card: { online: false, offline: true },
 } do %>
@@ -110,7 +105,6 @@
   </p>
 <% end %>
 <%= render 'step_card', locals: {
-  number: 5,
   title: 'See how your server does on the leaderboard!',
   show_card: { online: true, offline: true },
 } do %>
