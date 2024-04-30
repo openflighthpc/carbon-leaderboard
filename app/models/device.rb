@@ -25,12 +25,12 @@ class Device < ApplicationRecord
   end
 
   def determine_group
-    group_devices = Device.all.group(:group).where.not(uuid: self.uuid)
+    group_devices = Device.group(:group).where.not(uuid: self.uuid)
     group_devices.each do |device|
       if self.config_attributes == device.config_attributes
         return device.group
       end
     end
-    group_devices.length
+    Device.pluck(:group).max.to_i + 1
   end
 end
