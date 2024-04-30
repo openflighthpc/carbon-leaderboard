@@ -53,3 +53,30 @@ input[type="checkbox"] {
 .submit-button {
     margin-top: 3rem;
 }
+
+.btn-check:checked + .btn-outline-primary,
+.btn-outline-primary:is(:hover, :active) {
+    background-color: var(--color-main);
+}
+.btn-check:not(:checked) + .btn-outline-primary,
+.btn-outline-primary:not(:hover, :active) {
+    color: var(--color-main);
+}
+.btn-outline-primary {
+    border-color: var(--color-main) !important;
+}
+
+.form-control, .form-control:focus {
+    border: solid 1px var(--color-main);
+    background-color: transparent;
+    color: var(--color-main);
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.file-input {
+    display: flex;
+    gap: 1rem;
+}

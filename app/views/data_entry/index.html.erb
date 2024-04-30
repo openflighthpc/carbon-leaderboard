@@ -92,12 +92,12 @@
   show_card: { online: false, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
-    <%= form_with url: "/data-entry/upload", multipart: true do |form| %>
-      <%= file_field_tag :device %>
-      <%= submit_tag "Upload", class: "button" %>
-      <% if params[:upload_status] %>
-        <span><%= params[:upload_status] %></span>
-      <% end %>
+    <%= form_with url: "/data-entry/upload", multipart: true, class: 'file-input' do |form| %>
+      <%= file_field_tag :device, class: "form-control" %>
+      <%= submit_tag "Upload", class: "btn btn-outline-primary ml-3" %>
+    <% end %>
+    <% if params[:upload_status] %>
+      <span><%= params[:upload_status] %></span>
     <% end %>
   <% end %>
   <p>
