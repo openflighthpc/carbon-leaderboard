@@ -1,9 +1,19 @@
 <h1 class="text-center mb-5">Enter your server data</h1>
 <div class="mb-4 text-center">
   <p>Is your server connected to the internet?</p>
-  <input type="radio" id="radio-yes" name="internet" value="yes" checked="checked">
+  <input type="radio"
+         id="radio-yes"
+         name="internet"
+         value="yes"
+         <%= 'checked="checked"' unless params[:offline_instructions] %>
+  >
   <label for="yes">Yes</label>
-  <input type="radio" id="radio-no" name="internet" value="no">
+  <input type="radio"
+         id="radio-no"
+         name="internet"
+         value="no"
+         <%= 'checked="checked"' if params[:offline_instructions] %>
+  >
   <label for="no">No</label>
 </div>
 

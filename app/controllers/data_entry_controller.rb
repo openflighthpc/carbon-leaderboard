@@ -19,7 +19,7 @@ class DataEntryController < ApplicationController
         refresh_page('Device has already been entered')
       else
         device = Device.create_from_json(json)
-        refresh_page(device.errors.messages.values.join(', '))
+        refresh_page(device.errors.full_messages.join(', '))
       end
     rescue JSON::ParserError
       refresh_page('Invalid payload file format')
@@ -28,7 +28,10 @@ class DataEntryController < ApplicationController
     end
   end
 
-  def refresh_page(upload_status)
-    redirect_to action: index, upload_status: upload_status, anchor: 'step-card-3'
+  def refresh_page(upload_status, offline_instructions = true)
+    redirect_to action: index,
+                upload_status: upload_status,
+                offline_instructions: offline_instructions,
+                anchor: 'step-card-3'
   end
 end
