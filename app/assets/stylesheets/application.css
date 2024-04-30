@@ -145,7 +145,6 @@ code {
 
 .code-block {
     display: block;
-    border: solid 1px rgba(255, 255, 255, 0.7);
     padding: 0.6rem 2rem 0.5rem;
     overflow-x: scroll;
 }
@@ -170,16 +169,14 @@ code {
     z-index: -1;
 }
 
-.blurred-frame {
+.blurred-frame, .code-block {
     backdrop-filter: blur(calc(270 * var(--fpx)));
     -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
 }
-.blurred-frame:not(:hover) {
-    box-shadow: inset 0 0 5px rgba(255, 255, 255, .5);
-}
 
-.white-outline {
+.white-outline, .code-block {
     border: var(--border-white);
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, .5);
 }
 
 .rounded-shape {
