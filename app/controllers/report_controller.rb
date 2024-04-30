@@ -36,6 +36,7 @@ class ReportController < ApplicationController
         device.min = Boavizta.carbon_for_load(device, 0)
         device.half = Boavizta.carbon_for_load(device, 50)
         device.max = Boavizta.carbon_for_load(device, 100)
+        device.group = device.determine_group
         device.save
       else
         render json: "Error(s) with payload data: #{device.errors.full_messages.join(', ')}"
