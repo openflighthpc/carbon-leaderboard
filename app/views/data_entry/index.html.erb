@@ -100,11 +100,7 @@
       <%= file_field_tag :device %>
       <%= submit_tag "Upload", class: "button" %>
       <% if params[:upload_status] %>
-        <% if params[:upload_status].empty? %>
-          <span>Upload successful</span>
-        <% else %>
-          <span>Upload failed: <%= params[:upload_status] %></span>
-        <% end %>
+          <span><%= params[:upload_status] %></span>
       <% end %>
     <% end %>
   <% end %>
