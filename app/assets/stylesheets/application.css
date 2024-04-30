@@ -155,6 +155,11 @@ code {
     margin-bottom: 2rem;
 }
 
+.radio-buttons {
+    width: 10rem;
+    margin-bottom: 3rem;
+}
+
 #dynamic-bg {
     position: fixed;
     top: 0;

@@ -1,3 +1,13 @@
+.btn-check:checked + .btn-outline-primary {
+    background-color: var(--color-main);
+}
+.btn-check:not(:checked) + .btn-outline-primary {
+    color: var(--color-main);
+}
+.btn-check + .btn-outline-primary {
+    border-color: var(--color-main) !important;
+}
+
 .step-card {
     margin: 0.5rem 0;
 }

@@ -1,20 +1,21 @@
 <h1 class="text-center mb-5">Enter your server data</h1>
-<div class="mb-4 text-center">
-  <p>Is your server connected to the internet?</p>
+<p class="text-center">Is your server connected to the internet?</p>
+<div class="btn-group radio-buttons flex-space-between" role="group" aria-label="internet-toggle">
   <input type="radio"
+         class="btn-check"
+         name="btnradio"
          id="radio-yes"
-         name="internet"
-         value="yes"
-         <%= 'checked="checked"' unless params[:offline_instructions] %>
+         autocomplete="off"
+         <%= 'checked' unless params[:offline_instructions] %>
   >
-  <label for="yes">Yes</label>
+  <label class="btn btn-outline-primary" for="radio-yes">Yes</label>
   <input type="radio"
-         id="radio-no"
-         name="internet"
-         value="no"
-         <%= 'checked="checked"' if params[:offline_instructions] %>
+         class="btn-check"
+         name="btnradio" id="radio-no"
+         autocomplete="off"
+         <%= 'checked' if params[:offline_instructions] %>
   >
-  <label for="no">No</label>
+  <label class="btn btn-outline-primary" for="radio-no">No</label>
 </div>
 
 <%= render 'step_card', locals: {
@@ -100,7 +101,7 @@
       <%= file_field_tag :device %>
       <%= submit_tag "Upload", class: "button" %>
       <% if params[:upload_status] %>
-          <span><%= params[:upload_status] %></span>
+        <span><%= params[:upload_status] %></span>
       <% end %>
     <% end %>
   <% end %>
