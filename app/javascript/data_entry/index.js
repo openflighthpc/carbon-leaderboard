@@ -40,6 +40,7 @@ function updateInstructions() {
       }
     }
   }
+  setCodeBlockWidth();
 }
 
 function setCodeBlockWidth() {
