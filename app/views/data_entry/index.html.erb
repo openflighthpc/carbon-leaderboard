@@ -17,18 +17,19 @@
   >
   <label class="btn btn-outline-primary button glaring" for="radio-no">No</label>
 </div>
-
-<%= render 'step_card', locals: {
-  title: 'Make an account (optional)',
-  show_card: { online: true, offline: true },
-} do %>
-  <% content_for :buttons, :flush => true do %>
-    <%= link_to "Sign up", new_registration_path(:user), class: 'button glaring' %>
+<% unless user_signed_in? %>
+  <%= render 'step_card', locals: {
+    title: 'Make an account (optional)',
+    show_card: { online: true, offline: true },
+  } do %>
+    <% content_for :buttons, :flush => true do %>
+      <%= link_to "Sign up", new_registration_path(:user), class: 'button glaring' %>
+    <% end %>
+    <p>
+      Make an account to claim your servers on the leaderboard and get
+      access to tools for tracking your server emission stats more easily.
+    </p>
   <% end %>
-  <p>
-    Make an account to claim your servers on the leaderboard and get
-    access to tools for tracking your server emission stats more easily.
-  </p>
 <% end %>
 <%= render 'step_card', locals: {
   title: 'Run the Carbon Client on your server',
