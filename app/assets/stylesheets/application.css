@@ -130,6 +130,10 @@ h3 {
     width: 90%;
 }
 
+.wide-card {
+    width: 90%;
+}
+
 a {
     display: block;
     text-decoration: none;
