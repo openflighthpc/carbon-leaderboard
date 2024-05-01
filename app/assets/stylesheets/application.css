@@ -126,10 +126,9 @@ h3 {
     color: var(--color-text);
 }
 
-.wide-card {
-    width: 90%;
+.med-card {
+    width: 80%;
 }
-
 .wide-card {
     width: 90%;
 }
