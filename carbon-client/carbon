@@ -92,7 +92,7 @@ write_payload() {
         echo "This command has been set to offline mode or has been unable to reach the Internet"
         echo "so is unable to send system specs to the carbon leaderboard."
         echo
-        echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
+        echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL/data-entry to get your carbon calculations."
     fi
 }
 
