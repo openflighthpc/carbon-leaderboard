@@ -1,0 +1,15 @@
+<div class="advanced-instruction-wrapper blurred-frame white-outline"
+     data-bs-toggle="collapse"
+     data-bs-target="#<%= locals[:id] %>"
+     aria-expanded="false"
+     aria-controls="<%= locals[:id] %>"
+>
+  <div class="d-flex align-items-center">
+    <img src="assets/ico/plus.svg" class="big-blue-plus">
+    <span class="big-text"><%= locals[:title] %></span>
+  </div>
+  <div class="collapse" id="<%= locals[:id] %>">
+    <br>
+    <%= yield %>
+  </div>
+</div>

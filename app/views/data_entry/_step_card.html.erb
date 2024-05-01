@@ -1,0 +1,18 @@
+<div class="card wide-card step-card"
+     <%= "id=#{ locals[:id] } " if locals[:id] %>
+     data-online="<%= locals[:show_card][:online] %>"
+     data-offline="<%= locals[:show_card][:offline] %>"
+>
+  <div class="step-wrapper">
+    <span class="step-number"></span>
+    <div class="step">
+      <h3 class="step-title"><%= locals[:title] %></h3>
+      <div class="step-instructions">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  <div class="<%= 'step-actions ' unless locals[:hide_actions] %>">
+    <%= yield :buttons %>
+  </div>
+</div>

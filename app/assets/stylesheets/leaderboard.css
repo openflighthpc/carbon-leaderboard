@@ -123,6 +123,7 @@
 .leaderboard-item-wrapper:hover {
   background-color: #404040;
   color: #ffffff;
+  box-shadow: none;
   filter: drop-shadow(calc(3 * var(--fpx)) calc(3 * var(--fpx)) calc(6 * var(--fpx)) var(--color-text));
   transform: scale(1.012);
   transition:

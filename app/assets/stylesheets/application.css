@@ -103,6 +103,7 @@ h2 {
 
 h3 {
     font-weight: 700;
+    color: var(--color-text);
 }
 
 .flex-column-centred {
@@ -122,12 +123,35 @@ h3 {
     border: solid 1px var(--color-main);
     border-radius: 0;
     background-color: transparent;
+    color: var(--color-text);
+}
+
+.wide-card {
+    width: 90%;
 }
 
 a {
     display: block;
     text-decoration: none;
     color: var(--color-text);
+}
+
+code {
+    color: var(--color-text);
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0.3rem;
+    text-wrap: nowrap;
+}
+
+.code-block {
+    display: block;
+    padding: 0.6rem 2rem 0.5rem;
+    overflow-x: scroll;
+}
+
+.code-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 #dynamic-bg {
@@ -140,16 +164,14 @@ a {
     z-index: -1;
 }
 
-.blurred-frame {
+.blurred-frame, .code-block {
     backdrop-filter: blur(calc(270 * var(--fpx)));
     -webkit-backdrop-filter: blur(calc(270 * var(--fpx)));
 }
-.blurred-frame:not(:hover) {
-    box-shadow: inset 0 0 5px rgba(255, 255, 255, .5);
-}
 
-.white-outline {
+.white-outline, .code-block {
     border: var(--border-white);
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, .5);
 }
 
 .rounded-shape {
@@ -170,4 +192,79 @@ a {
 
 .big-text {
     font-size: 1.2rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.button {
+    padding-inline: 1.4rem;
+    border-radius:  1.4rem;
+    border: 1px solid var(--color-main);
+    height: 2.2rem;
+    line-height: calc(2rem + 1px);
+    color: var(--color-main);
+    font-weight: 400;
+    background-color: #40404000;
+    filter: drop-shadow(0px 0px 0px #40404000);
+    cursor: pointer;
+    transition:
+            border 360ms ease-out,
+            color 360ms ease-out,
+            background-color 360ms ease-out,
+            filter 360ms ease-out,
+            transform 360ms ease-out;
+}
+
+.button.big-text {
+    background-color: var(--color-main);
+    color: white;
+    height: 2.8rem;
+    line-height: calc(2.8rem - 3px);
+    padding-inline: 1.8rem;
+    border-radius:  1.8rem;
+}
+
+.button:hover {
+    border: 0 solid #2794d800;
+    color: #fff;
+    background-color: #404040;
+    line-height: calc(2rem + 4px);
+    transform: scale(1.1);
+    filter: drop-shadow(var(--fpx) var(--fpx) calc(3 * var(--fpx)) #404040);
+    user-select: none;
+    transition:
+            border 72ms ease-out,
+            color 72ms ease-out,
+            transform 72ms ease-out,
+            filter 72ms ease-out,
+            background-color 72ms ease-out;
+}
+
+.button:active {
+    transform: scale(1);
+    filter: drop-shadow(0px 0px 0px #40404000);
+    transition: none;
+}
+
+.glaring {
+    overflow: hidden;
+}
+
+.glaring::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    height: 100%;
+    width: 100%;
+    background-image: var(--gradient-row-glare);
+    opacity: 0;
+    transition: opacity 360ms ease-out;
+}
+
+.glaring:hover::before {
+    opacity: 1;
+    transition: opacity 72ms ease-out;
 }

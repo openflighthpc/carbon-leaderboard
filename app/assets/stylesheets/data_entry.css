@@ -1,0 +1,63 @@
+.step-card {
+    margin: 0.5rem 0;
+}
+
+.step-wrapper {
+    display: grid;
+    grid-template-columns: 4rem auto;
+    width: 100%;
+}
+
+.step-number {
+    font-size: 3rem;
+    line-height: 3rem;
+    font-weight: 800;
+    color: var(--color-main);
+}
+
+.step-instructions {
+    margin-top: 1rem;
+}
+
+.step-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.below-link {
+    display: inline;
+    color: var(--color-main);
+}
+.below-link:hover {
+    filter: brightness(0.8);
+}
+
+.advanced-card {
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+.advanced-instruction-wrapper {
+    color: var(--color-text);
+    padding: 0.7rem 1.4rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background-color 360ms ease-out;
+}
+.advanced-instruction-wrapper:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: background-color 72ms ease-out;
+}
+
+.big-blue-plus {
+    width: 1rem;
+    margin-right: 1.5rem;
+    transition: transform 100ms ease-out;
+}
+
+.advanced-instruction-wrapper[aria-expanded='true'] .big-blue-plus {
+    transform: rotate(45deg);
+}

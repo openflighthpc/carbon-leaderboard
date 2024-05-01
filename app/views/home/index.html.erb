@@ -3,7 +3,7 @@
   Finding the most carbon efficient HPC solutions by ranking the emissions of real servers.
 </p>
 
-<%= button_to "Enter your server data", root_path, class: 'button big-text my-4', method: :get %>
+<%= button_to "Enter your server data", data_entry_path, class: 'button glaring big-text my-5', method: :get %>
 
 <div class="home-top-section my-4">
   <%= render 'counter', locals: { number: @num_devices, text: 'servers entered' } %>
@@ -32,7 +32,7 @@
           <% end %>
         </div>
       </div>
-      <%= button_to "View full leaderboard", leaderboard_path, class: 'button mt-3', method: :get %>
+      <%= button_to "View full leaderboard", leaderboard_path, class: 'button glaring mt-3', method: :get %>
     <% end %>
   </div>
 
