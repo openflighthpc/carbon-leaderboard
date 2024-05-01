@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   get "/data-entry",               to: "data_entry#index"
   get "/download-carbon",          to: "data_entry#download_carbon"
   post "/data-entry/upload",       to: "data_entry#upload"
+
+  get "/faq",                      to: "faq#index"
 end
