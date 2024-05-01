@@ -3,8 +3,8 @@
   question: 'What is the OpenFlight Carbon Leaderboard?'
 } do %>
   <p>
-    The *OpenFlight Carbon Leaderboard* is a community initiative aiming to
-    provide a simple methodology and clear comparison of *Carbon Impact Estimates*
+    The <em>OpenFlight Carbon Leaderboard</em> is a community initiative aiming to
+    provide a simple methodology and clear comparison of <em>Carbon Impact Estimates</em>
     for a range of servers while adding a light competitive edge. This service
     should be used to help get an understanding of the impact of resources (both
     physical and virtual) at various levels of load.
@@ -23,11 +23,11 @@
     impact reports (from manufacturers).
   </p>
   <p>
-    This project uses the *Global Warming Potential (GWP)*  metric to identify the
-    *Carbon Equivalent* of the system specifications at run time (this means that
-    estimations of impact of hardware manufacturer are **not** included in the value).
-    This value is provided in *Kilograms of CO<sub>2</sub> Equivalent per Hour
-    (kgCO<sub>2</sub>eq/hr)*.
+    This project uses the <em>Global Warming Potential (GWP)</em> metric to identify the
+    <em>Carbon Equivalent</em> of the system specifications at run time (this means that
+    estimations of impact of hardware manufacturer are <strong>not</strong> included in the value).
+    This value is provided in kilograms of CO<sub>2</sub> equivalent per hour
+    (kgCO<sub>2</sub>eq/hr).
   </p>
   <p>
     For more information on the intricacies of the estimate, please refer to the
@@ -47,8 +47,8 @@
   question: 'How Do I Submit Data?'
 } do %>
   <p>
-    Data can be submitted by running the *Carbon Client* script. More information can be
-    found
+    Data can be submitted by running the <em>Carbon Client</em> script. More information about how
+    to run this script can be found
     <%= render 'link', locals: { text: 'here', link: '/', same_tab: true } %>.
   </p>
 <% end %>
@@ -88,11 +88,11 @@
   </p>
   <p>
     Some initial understanding of the hardware backing AWS instances is implemented in the
-    underlying API which allows for a better estimation to occur in the impact of those resources.
+    underlying API which allows for a better estimation in the impact of those resources.
   </p>
   <p>
-    For other platforms (e.g. Azure, GCP, OpenStack) the underlying hardware is not known or is
-    bespoke as is the case with private cloud solutions such as OpenStack.
+    For other platforms (e.g. Azure, GCP, OpenStack), the underlying hardware is not known or is
+    bespoke as is the case with private cloud solutions, such as OpenStack.
   </p>
   <p>
     It has been observed that estimations for virtual resources on OpenStack have seemed higher
