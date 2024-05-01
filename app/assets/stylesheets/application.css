@@ -279,3 +279,9 @@ code {
     opacity: 1;
     transition: opacity 72ms ease-out;
 }
+
+ul {
+    position: relative;
+    left: 2rem;
+    list-style-type: circle;
+}
