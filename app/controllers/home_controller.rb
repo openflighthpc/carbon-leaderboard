@@ -15,10 +15,7 @@ class HomeController < ApplicationController
       }
     end
     @num_devices = Device.all.length
-    config_attributes = Device.attribute_names.filter do |attr|
-      !%w(uuid user_id created_at updated_at tags).include?(attr)
-    end
-    @num_configs = Device.all.pluck(config_attributes).uniq.length
+    @num_configs = Device.select(:group).distinct.length
   end
 end
 

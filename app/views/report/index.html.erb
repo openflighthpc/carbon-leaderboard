@@ -1,5 +1,6 @@
 <h1>OpenFlight Carbon Leaderboard</h1>
 <h3 class="light-text">Servers with the lowest CO<sub>2</sub> emissions</h3>
+<h4 class="light-text"><%= "Grouped by identical specs" if @grouped %><h4>
 
 <div class="leaderboard-wrapper full-leaderboard">
   <div class="leaderboard-header-wrapper blurred-frame rounded-shape white-outline">
@@ -13,5 +14,8 @@
   <div class="leaderboard-content-wrapper"></div>
 </div>
 
+<script type="text/javascript">
+  var grouped = <%= @grouped %>
+</script>
 <script type="text/javascript" src="/assets/report/index.js"></script>
 <script type="text/javascript" src="/assets/report/glare.js"></script>

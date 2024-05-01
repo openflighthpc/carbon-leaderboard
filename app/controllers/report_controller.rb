@@ -3,6 +3,10 @@ class ReportController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :authorize_anonymous, :only=>[:add_record]
 
+  def index
+    @grouped = params[:grouped]
+  end
+
   def show
     @user = User.find_by(username: params[:name])
     if @user
@@ -36,6 +40,7 @@ class ReportController < ApplicationController
         device.min = Boavizta.carbon_for_load(device, 0)
         device.half = Boavizta.carbon_for_load(device, 50)
         device.max = Boavizta.carbon_for_load(device, 100)
+        device.group = device.determine_group
         device.save
       else
         render json: "Error(s) with payload data: #{device.errors.full_messages.join(', ')}"

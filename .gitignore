@@ -33,8 +33,11 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-/config/credentials.ymc.enc
+/config/credentials.yml.enc
+/config/credentials/production.yml.enc
 
 # Ignore rubymine files
 .idea/*
 
+
+/config/credentials/production.key
