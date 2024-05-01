@@ -31,6 +31,6 @@ class Device < ApplicationRecord
         return device.group
       end
     end
-    Device.pluck(:group).max.to_i + 1
+    Device.pluck(:group).compact.max.to_i + 1
   end
 end
