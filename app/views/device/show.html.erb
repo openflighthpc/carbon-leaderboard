@@ -1,4 +1,4 @@
-<h1><%= "Info for device #{@device.display_name}" %> </h1>
+<h1 class="mb-5"><%= @device.display_name %></h1>
 
 <style>
 table, th, td {
@@ -9,7 +9,38 @@ td {
 }
 </style>
 
-<h2>Specs</h2>
+<div class="cl-card flex-column-centred mb-4">
+  <div class="device-type-wrapper">
+    <%= image_tag 'logo.svg' %>
+    <div>
+      <% if @device.cloud_provider %>
+        <h4><%= @device.instance_type %></h4>
+        <span><%= @device.cloud_provider %></span>
+      <% else %>
+        <h4>On Premise</h4>
+      <% end %>
+    </div>
+  </div>
+  <div class="device-specs-wrapper">
+    <div>
+      <strong>CPU cores</strong>
+      <span><%= @device.cpus * @device.cores_per_cpu %></span>
+    </div>
+    <div>
+      <strong>GPUs</strong>
+      <span><%= @device.gpus.length %></span>
+    </div>
+    <div>
+      <strong>RAM</strong>
+      <span><%= (@device.ram_units * @device.ram_capacity_per_unit).to_i %>GB</span>
+    </div>
+    <div>
+      <strong>Mem</strong>
+      <span><%= @device.disks.reduce(0) { |mem, disk| mem + disk['capacity'] } %>GB</span>
+    </div>
+  </div>
+</div>
+
 
 <table style="width:100%" align="right">
   <tr>

@@ -1,0 +1,20 @@
+.device-type-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.device-type-wrapper img {
+    max-width: 7rem;
+}
+
+.device-specs-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.device-specs-wrapper strong {
+    margin-right: 0.5rem;
+}

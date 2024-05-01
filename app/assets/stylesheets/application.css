@@ -285,3 +285,7 @@ ul {
     left: 2rem;
     list-style-type: circle;
 }
+        
+strong {
+    font-weight: 600;
+}
