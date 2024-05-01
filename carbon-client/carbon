@@ -4,7 +4,7 @@
 # Command Setup 
 #
 
-action=$1
+action=${COMMAND:-$1}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" # Directory this script is in
 LOG_DIR="$DIR/carbon-log"
@@ -23,156 +23,35 @@ cat <<EOF
 
   DESCRIPTION:
 
-    Get carbon emission data for your node.
+    Send system specs to $LEADERBOARD_URL to get carbon emission data for your node.
 
   COMMANDS:
 
-    half    Show carbon emissions for node at 50% load
-    full    Show carbon emissions for node at 100% load
-    min     Show carbon emissions for node at 0% load
-    current Show carbon emissions for node at current load (average from past 15 minutes)
-    report  Show detailed report for all carbon emission data
-    send    Calculate and send carbon data to the carbon leaderboard
+    help    Show this help page
+    send    Identify system specs and send carbon data to the carbon leaderboard
+
+  ENVIRONMENT VARIABLES: 
+    
+    ACCEPT_DEFAULTS     If set to a non-empty string will accept the system specs as 
+                        determined by the script
+    AUTH_TOKEN          Defines the authentication token (from $LEADERBOARD_URL) to use
+                        for device ownership
+    COMMAND             If set, will prevent the need for a sub-command to be specified 
+                        (this is useful for running via curl & pipe from upstream) 
+    LOCATION            Specify the 3 digit country code for the device location
+    NUMDIMMS            Specify the number of DIMMs in the system. This option is available
+                        for use cases without sudo/root as insufficient privilege prevents 
+                        correctly determining this information
+    OFFLINE             If set to true this will force the command to run in offline mode
+                        (payload will be written to file instead of pushed to leaderboard).
+                        If set to false will force the command to run in online mode
+                        (it won't check it can reach the internet and will proceed anyway).
+    QUIET               If set to a non-empty string will reduce command verbosity
+                        (interactive prompt will still occur unless ACCEPT_DEFAULTS is set) 
+    TAGS                A comma-separated list of tags to assign to the device
 
 EOF
 exit 0
-}
-
-no_internet_message() { 
-cat << EOF 
-This command has been unable to reach the Internet so is unable to determine estimated 
-carbon impact for your resources. 
-
-To calculate the carbon impact of your resources run the 'carbon send' command and upload the 
-payload to your account at $LEADERBOARD_URL.
-EOF
-}
-
-get_carbon_for_load() {
-#
-# Identify Carbon Impact 
-#
-# - If no internet connection detected, this will
-#   not be performed.
-#
-
-if [ $INTERNET == "true" ] ; then
-if [ -z $USE_INSTANCE_TYPE ] ; then
-
-local REQUEST="{
-  \"model\": {
-    \"type\": \"rack\"
-  },
-  \"configuration\": {
-    \"cpu\": {
-      \"units\": $NUMCPUS,
-      \"core_units\": $NUMCORESPERCPU,
-      \"name\": \"$CPUMODEL\"
-    },
-    \"ram\": [{
-      \"units\": $NUMDIMMS,
-      \"capacity\": $GBPERDIMM
-    }],
-    \"disk\": [
-    $(echo "$DISKSJSON" |sed 's/,$//g')
-    ]
-  },
-  \"usage\": {
-    \"usage_location\": \"$LOCATION\",
-    \"hours_use_time\": 1,
-    \"hours_life_time\": 1,
-    \"time_workload\": $1
-  }
-}
-"
-
-local CARBONEQ=$(curl -s -X 'POST' \
-  "${BOAVIZTA_URL}/v1/server/?verbose=false&criteria=gwp" \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d "$REQUEST" |jq '.impacts.gwp.use.value')
-
-else
-
-local REQUEST="{
-\"provider\": \"$CLOUD_PROVIDER\",
-\"instance_type\": \"$INSTANCE_TYPE\",
-\"usage\" : {
-  \"usage_location\": \"GBR\",
-  \"hours_use_time\": 1,
-  \"hours_life_time\": 1,
-  \"time_workload\": [{
-    \"time_percentage\": 100,
-    \"load_percentage\": $1
-    }]
-  }
-}
-"
-
-local CARBONEQ="$(curl -s -X 'POST' \
-  "${BOAVIZTA_URL}/v1/cloud/instance?verbose=false&criteria=gwp" \
-  -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d "$REQUEST" |jq '.impacts.gwp.use.value')"
-
-fi
-
-echo $CARBONEQ
-else
-no_internet_message
-fi
-}
-
-
-report() { 
-cat << EOF > $LOG_DIR/report.md
-## Estimated System Specs
-
-CPU: $NUMCPUS x $CPUMODEL ($NUMCORESPERCPU core(s) per CPU)
-
-RAM: $NUMDIMMS x ${GBPERDIMM}GB
-
-Disks: $(echo "$DISKSINFO" |sed 's/, $//g')
-
-GPUs: $(echo "$GPUSINFO" |sed 's/, $//g')
-
-## Platform & Power Information
-
-Platform: $CLOUD_PROVIDER
-
-Location: $LOCATION
-
-EOF
-
-  if [ -z $USE_INSTANCE_TYPE ] ; then
-cat << EOF >> $LOG_DIR/report.md
-## Estimated Carbon Consumption (From Specs)
-EOF
-  else
-cat << EOF >> $LOG_DIR/report.md
-## Estimated Carbon Consumption (From Instance Type)
-### Detected instance type is '${INSTANCE_TYPE}' on ${CLOUD_PROVIDER}
-EOF
-  fi
-
-if [ $INTERNET == "true" ] ; then
-cat << EOF >> $LOG_DIR/report.md
-No Load: $(get_carbon_for_load 0)kgCO2eq/hr
-
-Half Load: $(get_carbon_for_load 50)kgCO2eq/hr
-
-Full Load: $(get_carbon_for_load 100)kgCO2eq/hr
-
-Current Load: $(get_carbon_for_load $percentage_15min)kgCO2eq/hr
-(Current load is based on average load from the last 15 minutes of use)
-EOF
-else
-cat << EOF >> $LOG_DIR/report.md
-$(no_internet_message)
-EOF
-fi
-
-  cat $LOG_DIR/report.md
 }
 
 ask_question() {
@@ -206,6 +85,17 @@ debug_specs() {
     fi
 }
 
+write_payload() { 
+    PAYLOAD_FILE="$LOG_DIR/payload-$UUID.json"
+    echo "$PAYLOAD," >> $PAYLOAD_FILE
+    if [ -z $QUIET ] ; then
+        echo "This command has been set to offline mode or has been unable to reach the Internet"
+        echo "so is unable to send system specs to the carbon leaderboard."
+        echo
+        echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL/data-entry to get your carbon calculations."
+    fi
+}
+
 #
 # Runtime Checks
 #
@@ -222,25 +112,19 @@ esac
 
 # Internet Connection
 SITES="https://www.openflighthpc.org https://alces-flight.com https://rockylinux.org https://example.com" 
-for site in $SITES ; do 
-    if curl -L -s $site >> /dev/null ; then
-        INTERNET=true
-        break
-    else
-        INTERNET=false
-    fi
-done
-
-# JQ 
-# - If internet connection then JQ is needed (for reporting carbon numbers) 
-# - If internet connection then JQ portable binary can be downloaded if needed 
-if [ $INTERNET == "true" ] ; then
-    if ! command -v jq &> /dev/null ; then 
-        curl -sL https://github.com/jqlang/jq/releases/download/jq-1.7.1/jq-linux-amd64 > $DIR/jq
-        chmod +x $DIR/jq
-        PATH="$PATH:$DIR"
-        JQ_DL=true
-    fi
+if [[ $OFFLINE == "false" ]] ; then 
+    INTERNET=true
+elif [[ $OFFLINE == "true" ]] ; then
+    INTERNET=false
+else
+    for site in $SITES ; do 
+        if curl -L -s $site >> /dev/null ; then
+            INTERNET=true
+            break
+        else
+            INTERNET=false
+        fi
+    done
 fi
 
 # Various Commands
@@ -253,7 +137,9 @@ for cmd in $COMMANDS ; do
 done
 
 # Log Directory
-mkdir -p $LOG_DIR
+if [[ $INTERNET == "false" ]] ; then 
+    mkdir -p $LOG_DIR
+fi
 
 #
 # Identify System Info
@@ -291,12 +177,31 @@ if [ -z $ACCEPT_DEFAULTS ] ; then
 fi
 
 # Memory
-NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l) # This might not be useful at all on systems without ECC memory, further testing needed
+if [ ! -z $NUMDIMMS ] ; then 
+    # If provided env var is a number then it will be trusted 
+    if [ -z $ACCEPT_DEFAULTS ] ; then 
+        while [[ ! $NUMDIMMS =~ ^[0-9]+$ ]] ; do
+            echo "Invalid NUMDIMMS environment varialbe. Expected number, got '$NUMDIMMS'"
+            ask_question NUMDIMMS $NUMDIMMS number
+        done
+    elif [[ ! $NUMDIMMS =~ ^[0-9]+$ ]] ; then
+        echo "Invalid NUMDIMMS environment varialbe. Expected number, got '$NUMDIMMS'"
+        exit 1
+    fi
+elif sudo -l -n sudo &>/dev/null ; then
+    # If sudo, we can use DMI Decode and get correct result
+    NUMDIMMS=$(sudo dmidecode -t memory |grep '^[[:blank:]]*Size:' |grep -v 'No Module Installed'  |wc -l)
+else
+    # This doesn't seem to work on older OSes or those without ECC memory but in the event that these dirs exist then a non-root
+    # user can count the dimms
+    NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l)
+fi
 GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
     echo "# Validating RAM Specs"
     ask_question NUMDIMMS $NUMDIMMS number
+    GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
     ask_question GBPERDIMM ${GBPERDIMM}GB number
 fi
 
@@ -377,36 +282,20 @@ fi
 
 case "$PLATFORM" in
     "AWS")
-      CLOUD_PROVIDER=aws
       TOKEN=$(curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
       INSTANCE_TYPE=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" -s --fail http://169.254.169.254/latest/meta-data/instance-type)
       ;;
     "OpenStack")
-      CLOUD_PROVIDER=alces
       INSTANCE_TYPE=$(curl -s --fail http://169.254.169.254/latest/meta-data/instance-type)
       ;;
     "Azure")
-      CLOUD_PROVIDER=azure
       INSTANCE_TYPE=$(curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance/compute/vmSize?api-version=2021-02-01&format=text")
       ;;
 esac
 
-if [ ! -z $INSTANCE_TYPE ] && [ -z $ACCEPT_DEFAULTS ] ; then
+if [[ ! -z $INSTANCE_TYPE && -z $ACCEPT_DEFAULTS ]] ; then
     echo "# Validating Instance Type"
     ask_question INSTANCE_TYPE $INSTANCE_TYPE
-fi
-
-if [ $INTERNET == "true" ] ; then
-    ARCHETYPES=$(curl -s -X 'GET' \
-        "${BOAVIZTA_URL}/v1/cloud/instance/all_instances?provider=${CLOUD_PROVIDER}" \
-        -H 'accept: application/json')
-    if echo $ARCHETYPES | jq -e ".|any(. == \"$INSTANCE_TYPE\")" &> /dev/null ; then
-        USE_INSTANCE_TYPE=true
-    fi
-fi
-
-if [ -z $USE_INSTANCE_TYPE ] && [ "$CLOUD_PROVIDER"=="alces" ] ; then
-    CLOUD_PROVIDER=openstack
 fi
 
 #
@@ -435,25 +324,21 @@ if [ $INTERNET == "true" ] && [ -z $LOCATION ] ; then
     if [ -z $ACCEPT_DEFAULTS ] ; then
         echo "# Validating Location"
         ask_question LOCATION $LOCATION
-        if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
-            echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
-            echo "The script failed to identify location correctly due to an issue (e.g. no internet connection) and"
-            echo "the environment variable LOCATION is invalid or has not been provided."
-            echo
-            echo "Valid locations are:"
-            echo "    $VALID_LOCATIONS"
+        while ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; do
+            echo "Location is invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
             echo
             ask_question LOCATION $LOCATION
-        fi
+        done
     fi
+elif [ -z $ACCEPT_DEFAULTS ] ; then
+    while ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; do
+        echo "Location is invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
+        echo
+        ask_question LOCATION $LOCATION
+    done
 else 
     if ! echo "$VALID_LOCATIONS" |grep -q -w "$LOCATION" ; then
-        echo "Location not provided or invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
-        echo "The script failed to identify location correctly due to an issue (e.g. no internet connection) and"
-        echo "the environment variable LOCATION is invalid or has not been provided."
-        echo
-        echo "Valid locations are:"
-        echo "    $VALID_LOCATIONS"
+        echo "Location is invalid. Must be a 3 letter country code as per the ISO 3166-1 alpha-3 standard."
         exit 1
     fi
 fi
@@ -463,45 +348,25 @@ fi
 #
 
 case $action in
-    "min")
-        echo $(get_carbon_for_load 0)
-        ;;
-    "half")
-        echo $(get_carbon_for_load 50)
-        ;;
-    "full")
-        echo $(get_carbon_for_load 100)
-        ;;
-    "current")
-        echo $(get_carbon_for_load $percentage_15min)
-        ;;
-    "platform")
-        echo $CLOUD_PROVIDER
-        ;;
-    "instance-type")
-        echo $INSTANCE_TYPE
-        ;;
-    "report")
-        report
-        ;;
     "send")
         debug_specs
+        PAYLOAD="{
+    \"device_id\": \"$UUID\",
+    \"platform\": \"$PLATFORM\",
+    \"cpus\": \"$NUMCPUS\",
+    \"cores_per_cpu\": \"$NUMCORESPERCPU\",
+    \"cpu_name\": \"$CPUMODEL\",
+    \"ram_units\": \"$NUMDIMMS\",
+    \"ram_capacity_per_unit\": \"$GBPERDIMM\",
+    \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
+    \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
+    \"instance_type\": \"$INSTANCE_TYPE\",
+    \"current_load\": \"$percentage_15min\",
+    \"location\": \"$LOCATION\",
+    \"tags\": [$(echo "$TAGS" |sed 's/^/\\"/g;s/,/\\",\\"/g;s/$/\\"/g')],
+    \"timestamp\": \"$(date)\"
+}"
         if [ $INTERNET == "true" ] ; then 
-            PAYLOAD="{
-            \"device_id\": \"$UUID\",
-            \"platform\": \"$PLATFORM\",
-            \"cpus\": \"$NUMCPUS\",
-            \"cores_per_cpu\": \"$NUMCORESPERCPU\",
-            \"cpu_name\": \"$CPUMODEL\",
-            \"ram_units\": \"$NUMDIMMS\",
-            \"ram_capacity_per_unit\": \"$GBPERDIMM\",
-            \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
-            \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
-            \"instance_type\": \"$INSTANCE_TYPE\",
-            \"current_load\": \"$percentage_15min\",
-            \"location\": \"$LOCATION\"
-            }
-            "
             RESPONSE=$(curl -s -X 'POST' \
             "${LEADERBOARD_URL}/add-record" \
             -H 'accept: application/json' \
@@ -510,39 +375,16 @@ case $action in
             -d "$PAYLOAD")
 
             if [ -z "$RESPONSE" ] ; then
-                echo "Could not reach leaderboard server"
+                echo "Failed to reach leaderboard server"
+                write_payload
             else
                 echo $RESPONSE
             fi
         else
-            PAYLOAD="{
-            \"device_id\": \"$UUID\",
-            \"platform\": \"$PLATFORM\",
-            \"cloud_provider\": \"$CLOUD_PROVIDER\",
-            \"cpus\": \"$NUMCPUS\",
-            \"cores_per_cpu\": \"$NUMCORESPERCPU\",
-            \"cpu_name\": \"$CPUMODEL\",
-            \"ram_units\": \"$NUMDIMMS\",
-            \"ram_capacity_per_unit\": \"$GBPERDIMM\",
-            \"disk\": [$(echo "$DISKSJSON" |sed 's/,$//g')], 
-            \"gpu\": [$(echo "$GPUSJSON" |sed 's/,$//g')], 
-            \"instance_type\": \"$INSTANCE_TYPE\",
-            \"current_load\": \"$percentage_15min\",
-            \"location\": \"$LOCATION\",
-            \"timestamp\": \"$(date)\"
-            },
-            "
-            PAYLOAD_FILE="$DIR/payload-$UUID.json"
-            echo "$PAYLOAD" >> $PAYLOAD_FILE
-            echo "Upload $PAYLOAD_FILE to $LEADERBOARD_URL to get your carbon calculations."
+            write_payload
         fi
         ;; 
     *)
         help_message
         ;;
 esac
-
-# Tidy JQ if installed by script
-if [ ! -z $JQ_DL ] ; then
-    rm -f $DIR/jq
-fi
