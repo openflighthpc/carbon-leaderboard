@@ -363,7 +363,7 @@ case $action in
     \"instance_type\": \"$INSTANCE_TYPE\",
     \"current_load\": \"$percentage_15min\",
     \"location\": \"$LOCATION\",
-    \"tags\": [$(echo "$TAGS" |sed 's/^/\\"/g;s/,/\\",\\"/g;s/$/\\"/g')],
+    \"tags\": [$(echo "$TAGS" |sed 's/^/\"/g;s/,/\",\"/g;s/$/\"/g')],
     \"timestamp\": \"$(date)\"
 }"
         if [ $INTERNET == "true" ] ; then 
