@@ -18,13 +18,8 @@
 } do %>
   <p>
     This project utilises the
-    <a
-      href="https://doc.api.boavizta.org/"
-      target="_blank"
-    >
-      Boavizta API
-    </a>
-    for performing calculations based off of system. specifications and collected carbon
+    <%= render 'link', locals: { text: 'Boavizta API', link: 'https://doc.api.boavizta.org/' } %>&nbsp;for
+    performing calculations based off of system. specifications and collected carbon
     impact reports (from manufacturers).
   </p>
   <p>
@@ -36,12 +31,7 @@
   </p>
   <p>
     For more information on the intricacies of the estimate, please refer to the
-    <a
-      href="https://doc.api.boavizta.org/"
-      target="_blank"
-    >
-      Boavizta project's documentation
-    </a>.
+    <%= render 'link', locals: { text: 'Boavizta project documentation', link: 'https://doc.api.boavizta.org/' } %>.
   </p>
 <% end %>
 <%= render 'faq', locals: {
@@ -59,7 +49,7 @@
   <p>
     Data can be submitted by running the *Carbon Client* script. More information can be
     found
-    <%= link_to "here", root_path %>.
+    <%= render 'link', locals: { text: 'here', link: '/', same_tab: true } %>.
   </p>
 <% end %>
 <%= render 'faq', locals: {
@@ -77,12 +67,7 @@
     Therefore, the values are merely estimates to the best of the ability of the Boavizta
     service (which has put considerable effort and transparency into their methodology which
     can be read about
-    <a
-      href="https://doc.api.boavizta.org/q%26a/"
-      target="_blank"
-    >
-      on their website
-    </a>.
+    <%= render 'link', locals: { text: 'on their website', link: 'https://doc.api.boavizta.org/q%26a/' } %>.
   </p>
   <p>
     Things that are not currently considered by the leaderboard:
@@ -115,12 +100,10 @@
     to instances. This leads to each core that a VM has being seen as a separate physical CPU.
     With more physical CPUs this will largely inflate the carbon estimates for the virtual system.
     It is possible to address this issue on an OpenStack deployment by
-    <a
-      href="https://docs.openstack.org/nova/latest/admin/cpu-topologies.html#customizing-instance-cpu-topologies"
-      target="_blank"
-    >
-      defining the CPU topology
-    </a>.
+    <%= render 'link', locals: {
+      text: 'defining the CPU topology',
+      link: 'https://docs.openstack.org/nova/latest/admin/cpu-topologies.html#customizing-instance-cpu-topologies'
+    } %>.
   </p>
 <% end %>
 

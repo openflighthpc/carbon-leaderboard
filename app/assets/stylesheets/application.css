@@ -138,6 +138,14 @@ a {
     text-decoration: none;
     color: var(--color-text);
 }
+.inline-link {
+    display: inline;
+    margin-right: -4px;
+    color: var(--color-main);
+}
+.inline-link:hover {
+    filter: brightness(0.8);
+}
 
 code {
     color: var(--color-text);
