@@ -46,7 +46,7 @@
 }
 
 .user-column{
-  width: calc(150 * var(--fpx));
+  width: calc(250 * var(--fpx));
 }
 
 .owner-column{
