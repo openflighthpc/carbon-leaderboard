@@ -22,7 +22,7 @@ class ReportController < ApplicationController
 
     unless device
       device = Device.create_from_json(data, @current_user) unless device
-      if device.errors
+      if !device.errors.empty?
         render json: "Error(s) with payload data: #{device.errors.full_messages.join(', ')}"
         return
       end
