@@ -1,6 +1,128 @@
 <h1 class="mb-5">FAQs</h1>
 <%= render 'faq', locals: {
-  question: 'Question'
+  question: 'What is the OpenFlight Carbon Leaderboard?'
 } do %>
-  <p>Text</p>
+  <p>
+    The *OpenFlight Carbon Leaderboard* is a community initiative aiming to
+    provide a simple methodology and clear comparison of *Carbon Impact Estimates*
+    for a range of servers while adding a light competitive edge. This service
+    should be used to help get an understanding of the impact of resources (both
+    physical and virtual) at various levels of load.
+  </p>
+  <p>
+    Currently the Carbon Leaderboard supports physical & virtual devices running Linux.
+  </p>
 <% end %>
+<%= render 'faq', locals: {
+  question: 'How Are Carbon Figures Estimated?'
+} do %>
+  <p>
+    This project utilises the
+    <a
+      href="https://doc.api.boavizta.org/"
+      target="_blank"
+    >
+      Boavizta API
+    </a>
+    for performing calculations based off of system. specifications and collected carbon
+    impact reports (from manufacturers).
+  </p>
+  <p>
+    This project uses the *Global Warming Potential (GWP)*  metric to identify the
+    *Carbon Equivalent* of the system specifications at run time (this means that
+    estimations of impact of hardware manufacturer are **not** included in the value).
+    This value is provided in *Kilograms of CO<sub>2</sub> Equivalent per Hour
+    (kgCO<sub>2</sub>eq/hr)*.
+  </p>
+  <p>
+    For more information on the intricacies of the estimate, please refer to the
+    <a
+      href="https://doc.api.boavizta.org/"
+      target="_blank"
+    >
+      Boavizta project's documentation
+    </a>.
+  </p>
+<% end %>
+<%= render 'faq', locals: {
+  question: 'How Are Devices Ranked?'
+} do %>
+  <p>
+    Devices in the leaderboard are ranked based on the kgCO<sub>2</sub>eq/hr per core.
+    Comparing on a per-core basis means that the leaderboard won't skew based on size of
+    resources but will instead use a fairer method for clearer insight.
+  </p>
+<% end %>
+<%= render 'faq', locals: {
+  question: 'How Do I Submit Data?'
+} do %>
+  <p>
+    Data can be submitted by running the *Carbon Client* script. More information can be
+    found
+    <%= link_to "here", root_path %>.
+  </p>
+<% end %>
+<%= render 'faq', locals: {
+  question: 'Are the Values Accurate?'
+} do %>
+  <p>
+    Calculating carbon equivalent impacts is not a simple procedure and takes in multiple factors:
+    <ul>
+      <li>Manufacturer's reports on hardware</li>
+      <li>Cleanliness of the power to a country</li>
+      <li>Available information on the reported hardware</li>
+    </ul>
+  </p>
+  <p>
+    Therefore, the values are merely estimates to the best of the ability of the Boavizta
+    service (which has put considerable effort and transparency into their methodology which
+    can be read about
+    <a
+      href="https://doc.api.boavizta.org/q%26a/"
+      target="_blank"
+    >
+      on their website
+    </a>.
+  </p>
+  <p>
+    Things that are not currently considered by the leaderboard:
+    <ul>
+      <li>The cleanliness of the power source to the data-centre housing the servers</li>
+      <li>Impact of the manufacture of the hardware</li>
+      <li>Any initiatives taken to offset carbon</li>
+    </ul>
+  </p>
+<% end %>
+<%= render 'faq', locals: {
+  question: 'How Are Virtual Devices Estimated?'
+} do %>
+  <p>
+    The estimation of virtual devices is still in early estimation and will improve over time.
+    One of the main complexities in estimating the impact of virtual resources is through
+    knowing the hardware that hosts the virtual system.
+  </p>
+  <p>
+    Some initial understanding of the hardware backing AWS instances is implemented in the
+    underlying API which allows for a better estimation to occur in the impact of those resources.
+  </p>
+  <p>
+    For other platforms (e.g. Azure, GCP, OpenStack) the underlying hardware is not known or is
+    bespoke as is the case with private cloud solutions such as OpenStack.
+  </p>
+  <p>
+    It has been observed that estimations for virtual resources on OpenStack have seemed higher
+    than expected because OpenStack will, by default, provide very little CPU layout information
+    to instances. This leads to each core that a VM has being seen as a separate physical CPU.
+    With more physical CPUs this will largely inflate the carbon estimates for the virtual system.
+    It is possible to address this issue on an OpenStack deployment by
+    <a
+      href="https://docs.openstack.org/nova/latest/admin/cpu-topologies.html#customizing-instance-cpu-topologies"
+      target="_blank"
+    >
+      defining the CPU topology
+    </a>.
+  </p>
+<% end %>
+
+
+
