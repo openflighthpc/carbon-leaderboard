@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   get "/user/:username",           to: "user#profile"
 
   get "/data-entry",               to: "data_entry#index"
-  get 'download_carbon',           to: "data_entry#download_carbon"
+  get "/download-carbon",          to: "data_entry#download_carbon"
   post "/data-entry/upload",       to: "data_entry#upload"
 end
