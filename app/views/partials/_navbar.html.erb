@@ -13,18 +13,22 @@
 
   <div class="centre section">
     <div id="leaderboard-link-wrapper" class="nav-link-wrapper nav-link-dropdown-wrapper d-flex align-items-center">
-        <%= link_to "Leaderboards", leaderboard_path, class: "nav-link" %>
-        <div class="dropdown-wrapper d-flex justify-content-center">
-          <ul class="dropdown-list blurred-frame white-outline">
-            <%= link_to "Individual leaderboard", leaderboard_path, class: "nav-dropdown-link px-2 glaring" %>
-            <%= link_to "Grouped leaderboard", leaderboard_grouped_path, class: "nav-dropdown-link last-item px-2 glaring" %>
-          </ul>
-        </div>
+      <%= link_to "Leaderboards", leaderboard_path, class: "nav-link px-3" %>
+      <div class="dropdown-wrapper d-flex justify-content-center">
+        <ul class="dropdown-list blurred-frame white-outline">
+          <%= link_to "Individual leaderboard", leaderboard_path, class: "nav-dropdown-link px-2 glaring" %>
+          <%= link_to "Grouped leaderboard", leaderboard_grouped_path, class: "nav-dropdown-link last-item px-2 glaring" %>
+        </ul>
       </div>
+    </div>
     <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
       <%= link_to "Enter server data", data_entry_path, class: "nav-link" %>
-      <%= link_to "Servers", show_devices_path, class: "nav-link" %>
-      <%= link_to "FAQs", faq_path, class: "nav-link" %>
+    </div>
+    <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
+      <%= link_to "Servers", show_devices_path, class: "nav-link px-3" %>
+    </div>
+    <div id="leaderboard-link-wrapper" class="nav-link-wrapper d-flex align-items-center">
+      <%= link_to "FAQs", faq_path, class: "nav-link px-3" %>
     </div>
   </div>
 

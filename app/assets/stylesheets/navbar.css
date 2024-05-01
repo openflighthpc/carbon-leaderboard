@@ -107,6 +107,8 @@
 
 .dropdown-list {
     position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
     display: block;
     background-color: transparent;
     border-radius: 0 0 calc(9 * var(--fpx)) calc(9 * var(--fpx));
