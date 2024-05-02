@@ -1,23 +1,38 @@
-class DeviceController < ApplicationController
-  before_action :authorize_request, :only=>[:add_tag, :delete_tag]
+class GroupController < ApplicationController
+  protect_from_forgery with: :null_session
+
+  def index
+    @groups = Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
+                     .group(:group)
+                     .order(:max_per_core)
+                     .map do |device|
+      {
+        display_name: "#{device.platform}-#{device.instance_type || "Group#{device.group}"}-#{device.location}",
+        count: Device.where(:group => device.group).count,
+        platform: device.platform,
+        location: device.two_digit_location,
+        group_index: device.group
+      }
+    end
+  end
 
   def show
-    @device = Device.find_by(display_name: params[:device])
   end
 
   def raw_data
     devices = Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
+    .group(:group)
     .order(:max_per_core)
     response = {}.tap do |res|
       max_device = devices.last
       res[:max_main] = max_device&.max_per_core&.round(3);
       res[:header] = {}.tap do |h|
-        h[:user] = 'Name'
+        h[:user] = 'Group'
         h[:platform] = 'Platform'
         h[:location] = 'Location'
         h[:core_number] = 'No. cores'
         h[:ram] = 'RAM (GB)'
-        h[:main] = 'Carbon emissions per core at full load (CO2eq/hr)'
+        h[:main] = 'Carbon emissions per core at full load (CO2eq/h)'
       end
       rank = 1
       res[:devices] = devices
@@ -28,7 +43,7 @@ class DeviceController < ApplicationController
         dev_group.map do |dev|
           {}.tap do |new_dev|
             new_dev[:rank] = current_rank
-            new_dev[:user] = dev.display_name
+            new_dev[:user] = "#{dev.platform}-#{dev.instance_type || "Group#{dev.group}"}-#{dev.location}"
             new_dev[:platform] = dev.platform
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
@@ -40,22 +55,5 @@ class DeviceController < ApplicationController
     end
     render json: response
   end
-
-  def add_tag
-    device = Device.find_by(display_name: params[:device])
-    if device.user_id == @current_user.id
-      report.add_tag(request.body.read)
-    else
-      render json: "Error: User does not own specified report"
-    end
-  end
-
-  def delete_tag
-    device = Device.find_by(display_name: params[:device])
-    if device.user_id == @current_user.id
-      report.delete_tag(request.body.read)
-    else
-      render json: "Error: User does not own specified report"
-    end
-  end
 end
+
