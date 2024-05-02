@@ -89,8 +89,10 @@ td {
   </tr>
 </table>
 
-<h3 class="my-5">Live emissions</h3>
-<canvas id="live-emissions-chart" class="mb-5"></canvas>
+<div class="full-width-section blurred-frame flex-column-centred">
+  <h2>Live emissions</h2>
+  <canvas id="live-emissions-chart" class="mb-5"></canvas>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
@@ -102,10 +104,10 @@ td {
   const maxLoad = <%= raw(@device.max) %>;
   const halfLoad = <%= raw(@device.half) %>;
   const minLoad = <%= raw(@device.min) %>;
-  const gridColour = '#FFFFFF';
-  const borderColour = '#AEC7D7';
   const alcesBlue = '#2693D7';
-  const currentCycleGreen = '#5FD094';
+  const borderColour = '#404040';
+  const gridColour = '#FFFFFF';
+  const loadLineColor = '#8c9cad';
 
   const ctx = document.getElementById('live-emissions-chart');
   let chart = new Chart(ctx, {
@@ -219,16 +221,15 @@ td {
       type: 'line',
       yMin: val,
       yMax: val,
-      borderColor: alcesBlue,
-      borderWidth: 1,
+      borderColor: loadLineColor,
+      borderWidth: 2,
       borderDash: [3, 3],
-      z: -1,
       label: {
         display: true,
         content: label,
         position: 'end',
         backgroundColor: 'transparent',
-        color: alcesBlue,
+        color: loadLineColor,
         font: {
           size: 16,
           weight: 'light',
