@@ -21,7 +21,7 @@ $ bash carbon send
 ```
 Alternatively, the script can be run via cURL as follows:
 ```bash
-$ bash -c "$(curl -L -s https://raw.githubusercontent.com/openflighthpc/carbon-leaderboard/dev/carbon-client-improvements/carbon-client/carbon)" carbon send
+$ bash -c "$(curl -L -s https://raw.githubusercontent.com/openflighthpc/carbon-leaderboard/main/carbon-client/carbon)" carbon send
 ```
 
 In both circumstances, variables can be set before `bash` to influence how the script executes.
