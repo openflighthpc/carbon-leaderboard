@@ -126,6 +126,9 @@ h3 {
     color: var(--color-text);
 }
 
+.med-card {
+    width: 80%;
+}
 .wide-card {
     width: 90%;
 }
@@ -134,6 +137,14 @@ a {
     display: block;
     text-decoration: none;
     color: var(--color-text);
+}
+.inline-link {
+    display: inline;
+    margin-right: -4px;
+    color: var(--color-main);
+}
+.inline-link:hover {
+    filter: brightness(0.8);
 }
 
 code {
@@ -267,4 +278,10 @@ code {
 .glaring:hover::before {
     opacity: 1;
     transition: opacity 72ms ease-out;
+}
+
+ul {
+    position: relative;
+    left: 2rem;
+    list-style-type: circle;
 }
