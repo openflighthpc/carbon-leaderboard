@@ -167,6 +167,7 @@ UUID=$(echo "$MACHINEID$FIRSTMAC" |md5sum |awk '{print $1}')
 # CPU 
 NUMCPUS="$(grep '^physical id' /proc/cpuinfo |sort |uniq |wc -l)"
 NUMCORESPERCPU="$(grep -m 1 '^cpu cores' /proc/cpuinfo |sed 's/.*: //g')"
+TOTAL_CORES="$(($NUMCPUS * $NUMCORESPERCPU))"
 CPUMODEL="$(grep -m 1 '^model name' /proc/cpuinfo |sed 's/.*: //g;s/ @.*//g')"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
@@ -249,7 +250,7 @@ fi
 # Get load average of system, removing decimal point (equiv of times by 100) 
 load_avg_15min="10#$(uptime| awk -F'load average: ' '{print $2}' | cut -d ',' -f3 | tr -d ' ' |sed 's/\.//g')"
 # Change load average into a percentage per CPU
-percentage_15min="$(($load_avg_15min / $(nproc)))"
+percentage_15min="$(($load_avg_15min / $TOTAL_CORES))"
 # Ceiling load average 
 if [[ $percentage_15min -gt 100 ]] ; then 
     percentage_15min=100
