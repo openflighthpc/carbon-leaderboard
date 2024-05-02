@@ -23,7 +23,8 @@ class DataEntryController < ApplicationController
       end
       if device.errors.empty?
         Report.create(device_id: device.uuid,
-                      current: Boavizta.carbon_for_load(device, data['current_load'])
+                      current: Boavizta.carbon_for_load(device, json['current_load']),
+                      created_at: DateTime.parse(json['timestamp'])
         )
         refresh_page("Device #{device.display_name} successfully #{existing ? 'updated' : 'entered'}")
       else
