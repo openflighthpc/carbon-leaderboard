@@ -11,8 +11,8 @@ class GroupController < ApplicationController
   def raw_data
     kg = params[:unit] == 'kg_per_year'
     devices = Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
-    .group(:group)
-    .order(:max_per_core)
+                    .group(:group)
+                    .order(:max_per_core)
     response = {}.tap do |res|
       max_device = devices.last
       res[:max_main] = max_device&.max_per_core * (kg ? 8.76 : 1)
@@ -26,8 +26,8 @@ class GroupController < ApplicationController
       end
       rank = 1
       res[:groups] = devices
-      .group_by(&:max_per_core)
-      .values.flat_map do |dev_group|
+                       .group_by(&:max_per_core)
+                       .values.flat_map do |dev_group|
         current_rank = rank
         rank += dev_group.size
         dev_group.map do |dev|
