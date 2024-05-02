@@ -90,4 +90,126 @@ td {
 </table>
 
 <h3 class="my-5">Live emissions</h3>
-<%= line_chart @device.reports.map { |report| [report.created_at.to_time, report.current] } %>
+<canvas id="live-emissions-chart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
+<script>
+  const allData = <%= raw(@device.reports.map { |report| [report['created_at'], report['current']] }.to_json) %>;
+  const allTooltips = <%= raw(@device.reports.map { |report| report['current'] }.to_json) %>;
+  const maxLoad = <%= raw(@device.max) %>;
+  const gridColour = '#FFFFFF';
+  const borderColour = '#AEC7D7';
+  const alcesBlue = '#2693D7';
+  const currentCycleGreen = '#5FD094';
+
+  const ctx = document.getElementById('live-emissions-chart');
+  let chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        data: allData,
+        borderWidth: 2,
+        tooltips: allTooltips,
+      }]
+    },
+    options: {
+      clip: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Equivalent CO2 emissions (kg/h)',
+            font: {
+              size: 20,
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          ticks: {
+            font: {
+              size: 16,
+            },
+            maxTicksLimit: 8
+          },
+          grid: {
+            color: gridColour
+          },
+          border: {
+            color: borderColour
+          }
+        },
+        x: {
+          ticks: {
+            color: "#666",
+            font: {
+              size: 16,
+              weight: 'normal',
+            }
+          },
+          grid: {
+            color: gridColour
+          },
+          border: {
+            color: borderColour
+          },
+          type: 'time',
+          time: {
+            unit: 'month',
+            displayFormats: {
+              'week': 'DD.MM',
+              'month': 'do MMM',
+              'year': 'MMMM',
+            },
+          },
+        }
+      },
+      elements: {
+        point: {
+          pointBorderColor: alcesBlue,
+          pointBorderWidth: 4,
+          pointBackgroundColor: '#ffffff',
+          pointRadius: 5,
+          pointHitRadius: 5
+        }
+      },
+      plugins: {
+        clip: false,
+        annotation: {
+          annotations: {
+            current: {
+              type: 'line',
+              yMin: maxLoad,
+              yMax: maxLoad,
+              borderColor: alcesBlue,
+              borderWidth: 1,
+              borderDash: [3, 3],
+            }
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltip: {
+          displayColors: false,
+          bodyAlign: 'center',
+          yAlign: 'bottom',
+          bodyFont: {
+            size: 16
+          },
+          callbacks: {
+            title: function () {
+              return ""
+            },
+            label: function (context) {
+              return context.dataset.tooltips[context.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
