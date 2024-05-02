@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .device-type-wrapper img {
@@ -10,11 +10,17 @@
 }
 
 .device-specs-wrapper {
-    display: flex;
-    justify-content: center;
     gap: 2rem;
+}
+
+.wide-specs {
+    display: flex;
+    gap: 2rem;
+    text-wrap: nowrap;
+    margin-top: 0.5rem;
 }
 
 .device-specs-wrapper strong {
     margin-right: 0.5rem;
+    color: var(--color-main);
 }
