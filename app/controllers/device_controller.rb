@@ -17,7 +17,7 @@ class DeviceController < ApplicationController
         h[:location] = 'Location'
         h[:core_number] = 'No. cores'
         h[:ram] = 'RAM (GB)'
-        h[:main] = 'Carbon emissions per core at full load (kgCO2eq/h)'
+        h[:main] = 'Carbon emissions per core at full load (CO2eq/hr)'
       end
       rank = 1
       res[:devices] = devices
@@ -33,7 +33,7 @@ class DeviceController < ApplicationController
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
-            new_dev[:main] = dev.max_per_core.round(3)
+            new_dev[:main] = "#{dev.max_per_core.round(4)}g"
           end
         end
       end
@@ -54,7 +54,7 @@ class DeviceController < ApplicationController
         h[:location] = 'Location'
         h[:core_number] = 'No. cores'
         h[:ram] = 'RAM (GB)'
-        h[:main] = 'Carbon emissions per core at full load (kgCO2eq/h)'
+        h[:main] = 'Carbon emissions per core at full load (CO2eq/h)'
       end
       rank = 1
       res[:devices] = devices
@@ -70,7 +70,7 @@ class DeviceController < ApplicationController
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
-            new_dev[:main] = dev.max_per_core.round(3)
+            new_dev[:main] = "#{dev.max_per_core.round(4)}g"
           end
         end
       end
