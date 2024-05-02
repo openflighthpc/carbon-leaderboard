@@ -4,7 +4,6 @@ class ReportController < ApplicationController
   before_action :authorize_anonymous, :only=>[:add_record]
 
   def index
-    @grouped = params[:grouped]
   end
 
   def show

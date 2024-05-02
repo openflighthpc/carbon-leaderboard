@@ -1,0 +1,30 @@
+<% dev = @group.first %>
+<h1>Group Information for <%= "#{dev.platform}-#{dev.instance_type || "Group#{dev.group}"}-#{dev.location}" %></h1>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+td {
+  text-align: center;
+}
+</style>
+<h4>Devices in group</h4>
+<table style="width:100%" align="right">
+  <tr>
+    <th>Device Name</th>
+    <th>Owner</th>
+  </tr>
+  <% @group.each do |device| %>
+    <tr>
+      <td>
+        <a href="/device/<%= device.display_name %>">
+          <%= device.display_name %>
+        </a>
+      </td>
+      <td><%= username(device.user_id) %></td>
+    </tr>
+  <% end %>
+</table>
+
+

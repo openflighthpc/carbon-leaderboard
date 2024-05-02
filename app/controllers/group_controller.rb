@@ -2,21 +2,10 @@ class GroupController < ApplicationController
   protect_from_forgery with: :null_session
 
   def index
-    @groups = Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
-                     .group(:group)
-                     .order(:max_per_core)
-                     .map do |device|
-      {
-        display_name: "#{device.platform}-#{device.instance_type || "Group#{device.group}"}-#{device.location}",
-        count: Device.where(:group => device.group).count,
-        platform: device.platform,
-        location: device.two_digit_location,
-        group_index: device.group
-      }
-    end
   end
 
   def show
+    @group = Device.where(group: params[:group_id])
   end
 
   def raw_data
@@ -35,7 +24,7 @@ class GroupController < ApplicationController
         h[:main] = 'Carbon emissions per core at full load (CO2eq/h)'
       end
       rank = 1
-      res[:devices] = devices
+      res[:groups] = devices
       .group_by(&:max_per_core)
       .values.flat_map do |dev_group|
         current_rank = rank
@@ -49,6 +38,7 @@ class GroupController < ApplicationController
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
             new_dev[:main] = "#{dev.max_per_core.round(4)}g"
+            new_dev[:group_id] = dev.group
           end
         end
       end
