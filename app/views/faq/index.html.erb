@@ -19,7 +19,7 @@
   <p>
     This project utilises the
     <%= render 'link', locals: { text: 'Boavizta API', link: 'https://doc.api.boavizta.org/' } %>&nbsp;for
-    performing calculations based off of system. specifications and collected carbon
+    performing calculations based off of system specifications and collected carbon
     impact reports (from manufacturers).
   </p>
   <p>
@@ -65,7 +65,7 @@
   </p>
   <p>
     Therefore, the values are merely estimates to the best of the ability of the Boavizta
-    service (which has put considerable effort and transparency into their methodology which
+    service (which has put considerable effort and transparency into their methodology), which
     can be read about
     <%= render 'link', locals: { text: 'on their website', link: 'https://doc.api.boavizta.org/q%26a/' } %>.
   </p>
@@ -95,7 +95,7 @@
     bespoke as is the case with private cloud solutions, such as OpenStack.
   </p>
   <p>
-    It has been observed that estimations for virtual resources on OpenStack have seemed higher
+    For example, it has been observed that estimations for virtual resources on OpenStack have seemed higher
     than expected because OpenStack will, by default, provide very little CPU layout information
     to instances. This leads to each core that a VM has being seen as a separate physical CPU.
     With more physical CPUs this will largely inflate the carbon estimates for the virtual system.
@@ -106,6 +106,3 @@
     } %>.
   </p>
 <% end %>
-
-
-
