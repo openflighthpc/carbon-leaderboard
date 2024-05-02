@@ -167,6 +167,7 @@ UUID=$(echo "$MACHINEID$FIRSTMAC" |md5sum |awk '{print $1}')
 # CPU 
 NUMCPUS="$(grep '^physical id' /proc/cpuinfo |sort |uniq |wc -l)"
 NUMCORESPERCPU="$(grep -m 1 '^cpu cores' /proc/cpuinfo |sed 's/.*: //g')"
+TOTAL_CORES="$(($NUMCPUS * $NUMCORESPERCPU))"
 CPUMODEL="$(grep -m 1 '^model name' /proc/cpuinfo |sed 's/.*: //g;s/ @.*//g')"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
@@ -196,7 +197,23 @@ else
     # user can count the dimms
     NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l)
 fi
-GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
+
+totalmem=$(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size)
+totalmemval=$(echo "$totalmem" |grep -o '[[:digit:]]*')
+totalmemunit=$(echo "$totalmem" |grep -o '[A-Z]iB')
+case $totalmemunit in 
+    "TiB")
+        TOTALMEMGB=$(($totalmemval * 1024))
+        ;;
+    "GiB")
+        TOTALMEMGB=$totalmemval
+        ;;
+    "MiB")
+        TOTALMEMGB=$(($totalmemval / 1024))
+        ;;
+esac
+
+GBPERDIMM="$(($TOTALMEMGB / $NUMDIMMS))"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
     echo "# Validating RAM Specs"
@@ -226,7 +243,7 @@ GPUS_RAW="$(lshw -c display 2>/dev/null |grep -E 'product|vendor' |sed -z 's/\n[
 ## Identify Nvidia GPUs
 if echo "$GPUS_RAW" |grep -qi nvidia ; then
     # If we have Nvidia GPUs then nvidia-smi should be present if CUDA is installed but check just in case
-    if command -v nvidia-smi ; then
+    if command -v nvidia-smi  &> /dev/null ; then
         NVID_GPU_IDS="$(nvidia-smi --query-gpu=gpu_bus_id --format=csv,noheader)"
         for gpu in $NVID_GPU_IDS ; do 
             model=$(nvidia-smi --query-gpu=name --format=csv,noheader --id=$gpu)
@@ -249,7 +266,7 @@ fi
 # Get load average of system, removing decimal point (equiv of times by 100) 
 load_avg_15min="10#$(uptime| awk -F'load average: ' '{print $2}' | cut -d ',' -f3 | tr -d ' ' |sed 's/\.//g')"
 # Change load average into a percentage per CPU
-percentage_15min="$(($load_avg_15min / $(nproc)))"
+percentage_15min="$(($load_avg_15min / $TOTAL_CORES))"
 # Ceiling load average 
 if [[ $percentage_15min -gt 100 ]] ; then 
     percentage_15min=100
