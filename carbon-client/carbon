@@ -197,7 +197,23 @@ else
     # user can count the dimms
     NUMDIMMS=$((grep dimm <(ls /sys/devices/system/edac/mc/mc*/ 2> /dev/null ) || echo 'virtual') |wc -l)
 fi
-GBPERDIMM="$(($(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size |grep -o '[[:digit:]]*') / $NUMDIMMS))"
+
+totalmem=$(lshw -quiet -c memory 2>/dev/null |grep -A 5 '*-memory' |grep size)
+totalmemval=$(echo "$totalmem" |grep -o '[[:digit:]]*')
+totalmemunit=$(echo "$totalmem" |grep -o '[A-Z]iB')
+case $totalmemunit in 
+    "TiB")
+        TOTALMEMGB=$(($totalmemval * 1024))
+        ;;
+    "GiB")
+        TOTALMEMGB=$totalmemval
+        ;;
+    "MiB")
+        TOTALMEMGB=$(($totalmemval / 1024))
+        ;;
+esac
+
+GBPERDIMM="$(($TOTALMEMGB / $NUMDIMMS))"
 
 if [ -z $ACCEPT_DEFAULTS ] ; then
     echo "# Validating RAM Specs"
