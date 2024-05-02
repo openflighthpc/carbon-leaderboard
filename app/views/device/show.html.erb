@@ -100,6 +100,8 @@ td {
   const allTooltips = <%= raw(@device.live_emissions_tooltips.to_json) %>;
   const timeRange = <%= raw(@device.live_emissions_time_range.to_json) %>;
   const maxLoad = <%= raw(@device.max) %>;
+  const halfLoad = <%= raw(@device.half) %>;
+  const minLoad = <%= raw(@device.min) %>;
   const gridColour = '#FFFFFF';
   const borderColour = '#AEC7D7';
   const alcesBlue = '#2693D7';
@@ -184,14 +186,9 @@ td {
         clip: false,
         annotation: {
           annotations: {
-            current: {
-              type: 'line',
-              yMin: maxLoad,
-              yMax: maxLoad,
-              borderColor: alcesBlue,
-              borderWidth: 1,
-              borderDash: [3, 3],
-            }
+            max: loadAnnotation(maxLoad, 'Max load'),
+            half: loadAnnotation(halfLoad, 'Half load'),
+            min: loadAnnotation(minLoad, 'Min load'),
           }
         },
         legend: {
@@ -216,4 +213,28 @@ td {
       }
     }
   });
+
+  function loadAnnotation(val, label) {
+    return {
+      type: 'line',
+      yMin: val,
+      yMax: val,
+      borderColor: alcesBlue,
+      borderWidth: 1,
+      borderDash: [3, 3],
+      z: -1,
+      label: {
+        display: true,
+        content: label,
+        position: 'end',
+        backgroundColor: 'transparent',
+        color: alcesBlue,
+        font: {
+          size: 16,
+          weight: 'light',
+        },
+        yAdjust: -12,
+      }
+    }
+  }
 </script>
