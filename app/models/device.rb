@@ -95,6 +95,12 @@ class Device < ApplicationRecord
     [convert_to_date(times.min), convert_to_date(times.max + 1.day)]
   end
 
+  def live_emissions_tooltips
+    self.reports.map do |report|
+      [report['created_at'].strftime("%d %b %Y"), "#{report['current']}kg/hr"]
+    end
+  end
+
   def convert_to_date(datetime)
     datetime.strftime("%Y-%m-%d")
   end

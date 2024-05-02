@@ -97,8 +97,8 @@ td {
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
 <script>
   const allData = <%= raw(@device.live_emissions_data.to_json) %>;
-  const allTooltips = <%= raw(@device.reports.map { |report| report['current'] }.to_json) %>;
-  const timeRange = <%= raw(@device.live_emissions_time_range.to_json) %>
+  const allTooltips = <%= raw(@device.live_emissions_tooltips.to_json) %>;
+  const timeRange = <%= raw(@device.live_emissions_time_range.to_json) %>;
   const maxLoad = <%= raw(@device.max) %>;
   const gridColour = '#FFFFFF';
   const borderColour = '#AEC7D7';
