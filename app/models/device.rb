@@ -83,4 +83,19 @@ class Device < ApplicationRecord
   def total_memory
     self.disks.reduce(0) { |mem, disk| mem + disk['units'] * disk['capacity'] }
   end
+
+  def live_emissions_data
+    self.reports.map do |report|
+      [report['created_at'], report['current']]
+    end
+  end
+
+  def live_emissions_time_range
+    times = self.reports.pluck(:created_at)
+    [convert_to_date(times.min), convert_to_date(times.max + 1.day)]
+  end
+
+  def convert_to_date(datetime)
+    datetime.strftime("%Y-%m-%d")
+  end
 end
