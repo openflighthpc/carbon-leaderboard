@@ -243,7 +243,7 @@ GPUS_RAW="$(lshw -c display 2>/dev/null |grep -E 'product|vendor' |sed -z 's/\n[
 ## Identify Nvidia GPUs
 if echo "$GPUS_RAW" |grep -qi nvidia ; then
     # If we have Nvidia GPUs then nvidia-smi should be present if CUDA is installed but check just in case
-    if command -v nvidia-smi ; then
+    if command -v nvidia-smi  &> /dev/null ; then
         NVID_GPU_IDS="$(nvidia-smi --query-gpu=gpu_bus_id --format=csv,noheader)"
         for gpu in $NVID_GPU_IDS ; do 
             model=$(nvidia-smi --query-gpu=name --format=csv,noheader --id=$gpu)
