@@ -14,8 +14,8 @@ td {
     <%= image_tag 'logo.svg' %>
     <div>
       <% if @device.cloud_provider %>
-        <h4><%= @device.instance_type %></h4>
-        <span><%= @device.cloud_provider %></span>
+        <h4><%= @device.cloud_provider %></h4>
+        <span><%= @device.instance_type %></span>
       <% else %>
         <h4>On Premise</h4>
       <% end %>
@@ -89,22 +89,5 @@ td {
   </tr>
 </table>
 
-<h2>Latest Entries</h2>
-
-<table style="width:100%" align="right">
-  <tr>
-    <th>Date</th>
-    <th>Time</th>
-    <th>Carbon Usage Per Hour</th>
-    <th>Percentage of maximum carbon usage</th>
-  </tr>
-  <% @device.reports.each do |report| %>
-    <tr>
-      <% time = report.created_at.to_time %>
-      <td><%= time.strftime("%d/%m/%Y") %></td>
-      <td><%= time.strftime("%l:%M%p UTC") %></td>
-      <td><%= report.current%></td>
-      <td><%= "#{(report.current / @device.max * 100).round(1)}%"%></td>
-    </tr>
-  <% end %>
-</table>
+<h3 class="my-5">Live emissions</h3>
+<%= line_chart @device.reports.map { |report| [report.created_at.to_time, report.current] } %>
