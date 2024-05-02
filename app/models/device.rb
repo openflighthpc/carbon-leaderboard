@@ -75,4 +75,12 @@ class Device < ApplicationRecord
   def two_digit_location
     ISO3166::Country.find_country_by_alpha3(self.location).alpha2
   end
+
+  def ram
+    (self.ram_units * self.ram_capacity_per_unit).to_i
+  end
+
+  def total_memory
+    self.disks.reduce(0) { |mem, disk| mem + disk['units'] * disk['capacity'] }
+  end
 end

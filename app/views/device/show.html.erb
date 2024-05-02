@@ -32,11 +32,11 @@ td {
     </div>
     <div>
       <strong>RAM</strong>
-      <span><%= (@device.ram_units * @device.ram_capacity_per_unit).to_i %>GB</span>
+      <span><%= @device.ram %>GB</span>
     </div>
     <div>
       <strong>Mem</strong>
-      <span><%= @device.disks.reduce(0) { |mem, disk| mem + disk['capacity'] } %>GB</span>
+      <span><%= @device.total_memory %>GB</span>
     </div>
   </div>
 </div>
