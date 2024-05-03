@@ -1,7 +1,23 @@
-<h1><%= "Profile page for #{username(@user&.id)}" %></h1>
+<h1 class="mb-5 pb-1"><%= @user.username %></h1>
 
-<p>
-<%= "This is the user profile page for #{username(@user&.id)}."%>
-</p>
+<% if @user_owns_profile %>
+  <p>
+    Here's your secret Auth token:
+  </p>
+  <p class="mb-5">
+    <%= @user.auth_token %>
+  </p>
+<% end %>
 
-<%= "Since this is your page, here's your secret Auth token: #{@user.auth_token}" if @user_owns_profile%>
+<% unless @devices.empty? %>
+  <h4 class="mb-4"><%= @user_owns_profile ? 'My' : "#{@user.username}'s" %> nodes</h4>
+
+  <% @devices.each do |device| %>
+    <p>
+      <%= link_to device.display_name, "/device/#{device.display_name}" %>
+    </p>
+  <% end %>
+<% end %>
+
+
+
