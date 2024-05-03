@@ -20,7 +20,7 @@ $(document).ready(async () => {
   //   }
   // ));
   const leaderboardResponse = await fetch(
-    '/leaderboard/raw-data',
+    '/leaderboard/raw-data/g_per_hour',
     {
       method: 'GET'
     }
