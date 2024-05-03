@@ -72,8 +72,16 @@ class Device < ApplicationRecord
     user&.username || "Anonymous"
   end
 
+  def country
+    @country ||= ISO3166::Country.find_country_by_alpha3(self.location)
+  end
+
   def two_digit_location
-    ISO3166::Country.find_country_by_alpha3(self.location).alpha2
+    country.alpha2
+  end
+
+  def full_country_name
+    country.iso_short_name
   end
 
   def ram

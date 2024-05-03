@@ -2,7 +2,7 @@
   <%= @device.display_name %>
   <span
     class="flag server-page fi fi-<%= @device.two_digit_location.downcase %> fis"
-    title="<%= ISO3166::Country.find_country_by_alpha3(@device.location).iso_short_name %>">
+    title="<%= @device.full_country_name %>">
   </span>
 </h1>
 <% if @device.user %>
