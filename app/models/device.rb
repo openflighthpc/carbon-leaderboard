@@ -84,6 +84,18 @@ class Device < ApplicationRecord
     self.disks.reduce(0) { |mem, disk| mem + disk['units'] * disk['capacity'] }
   end
 
+  def gpu_string
+    self.gpus.map do |gpu|
+      "#{gpu['units']} x #{gpu['name']} #{gpu['memory_capacity']}GB"
+    end.join("\n")
+  end
+
+  def disk_string
+    self.disks.map do |disk|
+      "#{disk['units']} x #{disk['capacity']}GB #{disk['type'].upcase}"
+    end.join("\n")
+  end
+
   def live_emissions_data
     self.reports.map do |report|
       [report['created_at'], report['current']]

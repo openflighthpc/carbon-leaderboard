@@ -28,13 +28,7 @@ td {
     <% unless @device.gpus.empty? %>
       <div class="flex-column-centred">
         <h5>GPU</h5>
-        <span class="text-center"><%=
-          disk_string = ""
-          @device.gpus.each do |gpu|
-            disk_string << "#{gpu['units']} x #{gpu['name']} #{gpu['memory_capacity']}GB\n"
-          end
-          simple_format(disk_string)
-        %></span>
+        <span class="text-center"><%= simple_format(@device.gpu_string) %></span>
       </div>
     <% end %>
     <div class="flex-column-centred">
@@ -43,13 +37,7 @@ td {
     </div>
     <div class="flex-column-centred">
       <h5>Storage</h5>
-      <span class="text-center"><%=
-        disk_string = ""
-        @device.disks.each do |disk|
-          disk_string << "#{disk['units']} x #{disk['capacity']}GB #{disk['type'].upcase}\n"
-        end
-        simple_format(disk_string)
-      %></span>
+      <span class="text-center"><%= simple_format(@device.disk_string) %></span>
     </div>
   </div>
 </div>
