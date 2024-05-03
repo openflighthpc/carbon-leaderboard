@@ -1,3 +1,7 @@
+.server-page.flag {
+    margin-left: 1rem;
+}
+
 .device-type-wrapper {
     display: flex;
     align-items: center;

@@ -1,13 +1,13 @@
-<h1 class="mb-5"><%= @device.display_name %></h1>
-
-<style>
-table, th, td {
-  border:1px solid black;
-}
-td {
-  text-align: center;
-}
-</style>
+<h1 class="mb-3">
+  <%= @device.display_name %>
+  <span
+    class="flag server-page fi fi-<%= @device.two_digit_location.downcase %> fis"
+    title="<%= ISO3166::Country.find_country_by_alpha3(@device.location).iso_short_name %>">
+  </span>
+</h1>
+<% if @device.user %>
+  <p class="big-text mb-5">Entered by: <%= @device.user.username %></p>
+<% end %>
 
 <div class="cl-card flex-column-centred">
   <div class="device-type-wrapper">
