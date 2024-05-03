@@ -14,7 +14,7 @@ class GroupController < ApplicationController
     .order(:max_per_core)
     response = {}.tap do |res|
       max_device = devices.last
-      res[:max_main] = max_device&.max_per_core&.round(3);
+      res[:max_main] = max_device&.max_per_core
       res[:header] = {}.tap do |h|
         h[:user] = 'Group'
         h[:platform] = 'Platform'
@@ -37,7 +37,7 @@ class GroupController < ApplicationController
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
-            new_dev[:main] = "#{dev.max_per_core.round(4)}g"
+            new_dev[:main] = "#{signif(dev.max_per_core, 3)}g"
             new_dev[:group_id] = dev.group
           end
         end

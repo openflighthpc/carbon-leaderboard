@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
     render json: { error: 'not_found' }
   end
 
+  # Round a float to a specified number of significant figures
+  def signif(val, digits)
+    val.zero? ? 0 : val.round(-(Math.log10(val).ceil - digits))
+  end
+
   # Authorization which does not allow nil tokens
   # Use this for things that CANNOT be done anonymously
   def authorize_request

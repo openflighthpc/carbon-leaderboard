@@ -10,7 +10,7 @@ class DeviceController < ApplicationController
     .order(:max_per_core)
     response = {}.tap do |res|
       max_device = devices.last
-      res[:max_main] = max_device&.max_per_core&.round(3);
+      res[:max_main] = max_device&.max_per_core
       res[:header] = {}.tap do |h|
         h[:user] = 'Name'
         h[:platform] = 'Platform'
@@ -33,7 +33,7 @@ class DeviceController < ApplicationController
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
-            new_dev[:main] = "#{dev.max_per_core.round(4)}g"
+            new_dev[:main] = "#{signif(dev.max_per_core, 3)}g"
           end
         end
       end
