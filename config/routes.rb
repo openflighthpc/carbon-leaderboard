@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   get "/leaderboard/grouped",            to: "group#index"
   post "/add-record",                    to: "report#add_record"
-  
+
+  get "/show-devices",                   to: "device#index"
   get "/leaderboard/raw-data/:unit",     to: "device#raw_data"
   get "/device/:device",                 to: "device#show"
   post "/add-tag/:device",               to: "device#add_tag"
