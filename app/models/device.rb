@@ -92,6 +92,15 @@ class Device < ApplicationRecord
     self.disks.reduce(0) { |mem, disk| mem + disk['units'] * disk['capacity'] }
   end
 
+  def pretty_platform
+    platform = self.platform.downcase
+    if Boavizta.type_exists?(self.instance_type, 'alces')
+      'Alces Cloud'
+    else
+      platform.titleize
+    end
+  end
+
   def platform_icon
     platform = self.platform.downcase
     if Boavizta.type_exists?(self.instance_type, 'alces')
