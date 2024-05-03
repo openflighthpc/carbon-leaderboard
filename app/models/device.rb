@@ -81,7 +81,7 @@ class Device < ApplicationRecord
   end
 
   def full_country_name
-    country.iso_short_name
+    country.iso_long_name
   end
 
   def ram
@@ -117,7 +117,13 @@ class Device < ApplicationRecord
 
   def live_emissions_tooltips
     self.reports.map do |report|
-      [report['created_at'].strftime("%d %b %Y"), "#{report['current']}kg/hr"]
+      [
+        "Reported at",
+        "#{report['created_at'].strftime("%H:%M %e %b %Y")}",
+        "",
+        "Equivalent CO2 emissions", 
+        "#{report['current']}kg/hr",
+      ]
     end
   end
 
