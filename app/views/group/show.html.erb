@@ -1,5 +1,5 @@
 <% dev = @group.first %>
-<h1>Group Information for <%= "#{dev.platform}-#{dev.instance_type || "Group#{dev.group}"}-#{dev.location}" %></h1>
+<h1>Group Information for <%= dev.pretty_group %></h1>
 
 <style>
 table, th, td {

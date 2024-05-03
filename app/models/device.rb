@@ -72,6 +72,14 @@ class Device < ApplicationRecord
     user&.username || "Anonymous"
   end
 
+  def pretty_group
+    if self.platform == 'OpenStack' && !self.instance_type.blank?
+      "Alces-Cloud-#{self.instance_type || "Group#{self.group}"}-#{self.location}"
+    else
+      "#{self.platform}-#{self.instance_type || "Group#{self.group}"}-#{self.location}"
+    end
+  end
+
   def country
     @country ||= ISO3166::Country.find_country_by_alpha3(self.location)
   end

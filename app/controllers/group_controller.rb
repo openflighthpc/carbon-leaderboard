@@ -33,7 +33,7 @@ class GroupController < ApplicationController
         dev_group.map do |dev|
           {}.tap do |new_dev|
             new_dev[:rank] = current_rank
-            new_dev[:user] = "#{dev.platform}-#{dev.instance_type || "Group#{dev.group}"}-#{dev.location}"
+            new_dev[:user] = dev.pretty_group
             new_dev[:platform] = dev.platform
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu

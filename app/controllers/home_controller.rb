@@ -8,7 +8,7 @@ class HomeController < ApplicationController
                      .first(3)
                      .map do |device|
       {
-        display_name: "#{device.platform}-#{device.instance_type || "Group#{device.group}"}-#{device.location}",
+        display_name: device.pretty_group,
         count: Device.where(:group => device.group).count,
         platform: device.platform,
         location: device.two_digit_location,
