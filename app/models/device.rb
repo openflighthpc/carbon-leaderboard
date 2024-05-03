@@ -123,7 +123,7 @@ class Device < ApplicationRecord
 
   def live_emissions_time_range
     times = self.reports.pluck(:created_at)
-    [convert_to_date(times.min), convert_to_date(times.max + 1.day)]
+    [convert_to_date([times.min, times.max - 7.days].max), convert_to_date(times.max + 1.day)]
   end
 
   def live_emissions_tooltips
