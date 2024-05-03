@@ -9,9 +9,9 @@
 
 <div class="cl-card flex-column-centred">
   <div class="device-type-wrapper">
-    <%= image_tag 'server.svg' %>
+    <%= image_tag "#{@device.platform_icon}.png" %>
     <div>
-      <h4><%= @device.platform %></h4>
+      <h4><%= @device.platform.capitalize %></h4>
       <% if @device.instance_type %>
         <span>instance-type<%= @device.instance_type %></span>
       <% end %>

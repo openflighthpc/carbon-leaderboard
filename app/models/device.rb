@@ -92,6 +92,17 @@ class Device < ApplicationRecord
     self.disks.reduce(0) { |mem, disk| mem + disk['units'] * disk['capacity'] }
   end
 
+  def platform_icon
+    platform = self.platform.downcase
+    if Boavizta.type_exists?(self.instance_type, 'alces')
+      'alces'
+    elsif %w(aws azure openstack).include?(platform)
+      platform
+    else
+      'server'
+    end
+  end
+
   def gpu_string
     self.gpus.map do |gpu|
       "#{gpu['units']} x #{gpu['name']} #{gpu['memory_capacity']}GB"
@@ -121,7 +132,7 @@ class Device < ApplicationRecord
         "Reported at",
         "#{report['created_at'].strftime("%H:%M %e %b %Y")}",
         "",
-        "Equivalent CO2 emissions", 
+        "Equivalent CO2 emissions",
         "#{report['current']}kg/hr",
       ]
     end

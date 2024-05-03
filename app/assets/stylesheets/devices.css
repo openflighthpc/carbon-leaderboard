@@ -11,6 +11,7 @@
 
 .device-type-wrapper img {
     max-width: 8rem;
+    max-height: 6rem;
 }
 
 .device-type-wrapper h4 {
