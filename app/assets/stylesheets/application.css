@@ -295,6 +295,10 @@ ul {
     list-style-type: circle;
 }
 
+.server-list-wrapper {
+    max-height: calc(450 * var(--fpx));
+    overflow-y: scroll;
+}
 .server-in-list {
     display: flex;
     justify-content: center;
