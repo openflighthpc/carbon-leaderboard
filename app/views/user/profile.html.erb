@@ -9,15 +9,13 @@
   </p>
 <% end %>
 
-<% unless @devices.empty? %>
-  <h4 class="mb-4"><%= @user_owns_profile ? 'My' : "#{@user.username}'s" %> nodes</h4>
-
+<h4 class="mb-4"><%= @user_owns_profile ? 'My' : "#{@user.username}'s" %> servers</h4>
+<% if @devices.empty? %>
+  <%= @user_owns_profile ? "You haven't" : "#{@user.username} hasn't" %> entered any servers yet.
+<% else %>
   <% @devices.each do |device| %>
     <p>
       <%= link_to device.display_name, "/device/#{device.display_name}" %>
     </p>
   <% end %>
 <% end %>
-
-
-
