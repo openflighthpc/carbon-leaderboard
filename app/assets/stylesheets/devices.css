@@ -12,3 +12,25 @@
 .device-specs-wrapper {
     gap: 2rem;
 }
+
+.device-specs-grid {
+    display: grid;
+    grid-template-areas:
+        "cpu ram"
+        "gpu storage";
+    gap: 4rem;
+    margin-inline: 2rem;
+}
+
+.device-specs-grid .cpu {
+    grid-area: cpu;
+}
+.device-specs-grid .gpu {
+    grid-area: gpu;
+}
+.device-specs-grid .ram {
+    grid-area: ram;
+}
+.device-specs-grid .storage {
+    grid-area: storage;
+}

@@ -9,7 +9,7 @@ td {
 }
 </style>
 
-<div class="cl-card flex-column-centred mb-4">
+<div class="cl-card flex-column-centred">
   <div class="device-type-wrapper">
     <%= image_tag 'logo.svg' %>
     <div>
@@ -19,23 +19,23 @@ td {
       <% end %>
     </div>
   </div>
-  <div class="device-specs-wrapper flex-column-centred">
-    <div class="flex-column-centred">
+  <div class="device-specs-wrapper <%= @device.gpus.empty? ? 'flex-column-centred' : 'device-specs-grid' %>">
+    <div class="flex-column-centred cpu">
       <h5>CPU</h5>
       <span><%= @device.cpus %> x <%= @device.cpu_name %></span>
       <span>(1 x <%= @device.cores_per_cpu %> cores)</span>
     </div>
     <% unless @device.gpus.empty? %>
-      <div class="flex-column-centred">
+      <div class="flex-column-centred gpu">
         <h5>GPU</h5>
         <span class="text-center"><%= simple_format(@device.gpu_string) %></span>
       </div>
     <% end %>
-    <div class="flex-column-centred">
+    <div class="flex-column-centred ram">
       <h5>RAM</h5>
       <span><%= @device.ram %>GB</span>
     </div>
-    <div class="flex-column-centred">
+    <div class="flex-column-centred storage">
       <h5>Storage</h5>
       <span class="text-center"><%= simple_format(@device.disk_string) %></span>
     </div>
@@ -43,7 +43,7 @@ td {
 </div>
 
 <div class="full-width-section blurred-frame flex-column-centred">
-  <h2>Live emissions</h2>
+  <h2>Emissions history</h2>
   <canvas id="live-emissions-chart" class="mb-5"></canvas>
 </div>
 
