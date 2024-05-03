@@ -133,7 +133,7 @@ class Device < ApplicationRecord
         "#{report['created_at'].strftime("%H:%M %e %b %Y")}",
         "",
         "Equivalent CO2 emissions",
-        "#{report['current']}kg/hr",
+        "#{report['current']}g/hr",
       ]
     end
   end

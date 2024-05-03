@@ -13,7 +13,7 @@
     <div>
       <h4><%= @device.platform.capitalize %></h4>
       <% if @device.instance_type %>
-        <span>instance-type<%= @device.instance_type %></span>
+        <span><%= @device.instance_type %></span>
       <% end %>
     </div>
   </div>
@@ -76,7 +76,7 @@
           beginAtZero: true,
           title: {
             display: true,
-            text: 'Equivalent CO2 emissions (kg/h)',
+            text: 'Equivalent CO2 emissions (g/h)',
             font: {
               size: 20,
             },
