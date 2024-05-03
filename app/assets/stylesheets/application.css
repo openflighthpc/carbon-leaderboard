@@ -294,7 +294,14 @@ ul {
     left: 2rem;
     list-style-type: circle;
 }
-        
-strong {
-    font-weight: 600;
+
+.server-in-list {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-wrap: nowrap;
+}
+.server-in-list:hover {
+    color: var(--color-main);
 }

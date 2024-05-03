@@ -45,9 +45,7 @@
   <div class="cl-card flex-column-centred">
     <h3 class="mb-4">Servers in this group</h3>
     <% @group.each do |device| %>
-      <p>
-        <%= link_to device.display_name, "/device/#{device.display_name}" %>
-      </p>
+        <%= link_to device.display_name, "/device/#{device.display_name}", class: "server-in-list blurred-frame white-outline full-width big-text" %>
     <% end %>
   </div>
 </div>
