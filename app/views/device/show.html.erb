@@ -11,11 +11,11 @@ td {
 
 <div class="cl-card flex-column-centred">
   <div class="device-type-wrapper">
-    <%= image_tag 'logo.svg' %>
+    <%= image_tag 'server.svg' %>
     <div>
       <h4><%= @device.platform %></h4>
       <% if @device.instance_type %>
-        <span><%= @device.instance_type %></span>
+        <span>instance-type<%= @device.instance_type %></span>
       <% end %>
     </div>
   </div>

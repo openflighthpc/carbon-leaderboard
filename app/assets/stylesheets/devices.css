@@ -1,12 +1,16 @@
 .device-type-wrapper {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     margin-bottom: 3rem;
 }
 
 .device-type-wrapper img {
-    max-width: 7rem;
+    max-width: 8rem;
+}
+
+.device-type-wrapper h4 {
+    margin-bottom: 0;
 }
 
 .device-specs-wrapper {
