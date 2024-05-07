@@ -1,17 +1,17 @@
 #welcome {
-    font-size: 6.3rem;
-    margin-top: 1rem;
+    font-size: calc(101 * var(--fpx));
+    margin-top: calc(16 * var(--fpx));
     line-height: normal;
     text-align: center;
 }
 
 #welcome-tagline {
     font-weight: 300;
-    font-size: 1.4rem;
-    line-height: 2.5rem;
-    max-width: 56rem;
+    font-size: calc(22 * var(--fpx));
+    line-height: calc(40 * var(--fpx));
+    max-width: calc(896 * var(--fpx));
     text-align: center;
-    margin-top: 2rem;
+    margin-top: calc(32 * var(--fpx));
 }
 
 .home-top-section {
