@@ -4,7 +4,6 @@ class ReportController < ApplicationController
   before_action :authorize_anonymous, :only=>[:add_record]
 
   def index
-    @grouped = params[:grouped]
   end
 
   def show
@@ -37,6 +36,6 @@ class ReportController < ApplicationController
       return
     end
 
-    render json: "Report saved successfully: Current carbon usage of #{report.current}kgCO2eq saved for #{@current_user ? @current_user.username : 'an anonymous user'}'s device '#{device.display_name}'"
+    render json: "Report saved successfully: Current carbon usage of #{report.current}gCO2eq saved for #{@current_user ? @current_user.username : 'an anonymous user'}'s device '#{device.display_name}'"
   end
 end

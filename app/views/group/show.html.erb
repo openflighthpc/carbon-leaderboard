@@ -1,0 +1,30 @@
+<% dev = @group.first %>
+<h1>Group Information for <%= dev.pretty_group %></h1>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+td {
+  text-align: center;
+}
+</style>
+<h4><%= @group.length %> device<%= 's' * [1, @group.length - 1].min %> in this group</h4>
+<table style="width:100%" align="right">
+  <tr>
+    <th>Device Name</th>
+    <th>Owner</th>
+  </tr>
+  <% @group.each do |device| %>
+    <tr>
+      <td>
+        <a href="/device/<%= device.display_name %>">
+          <%= device.display_name %>
+        </a>
+      </td>
+      <td><%= username(device.user_id) %></td>
+    </tr>
+  <% end %>
+</table>
+
+

@@ -50,7 +50,7 @@ class Boavizta
         req.params['duration'] = 1
       end
     end
-    JSON.parse(response.body).dig(*%w[impacts gwp use value])
+    JSON.parse(response.body).dig(*%w[impacts gwp use value]) * 1000
   end
 
   def self.provider(platform)

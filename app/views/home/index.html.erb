@@ -9,24 +9,24 @@
   <%= render 'counter', locals: { number: @num_devices, text: 'servers entered' } %>
 
   <div class="cl-card flex-column-centred">
-    <h3>Top most carbon efficient servers</h3>
+    <h3>Top most carbon efficient server types</h3>
     <p>Ranked by estimated equivalent CO<sub>2</sub> emissions per core at full load.</p>
-    <% if @devices.empty? %>
+    <% if @groups.empty? %>
       <p class="big-text mt-5">No server data has been entered yet</p>
     <% else %>
       <div class="home-leaderboard leaderboard-wrapper mt-4">
         <div class="leaderboard-content-wrapper">
-          <% @devices.each_with_index do |device, index| %>
-            <a href="/device/<%= device[:display_name] %>">
+          <% @groups.each_with_index do |group, index| %>
+            <a href="/group/<%= group[:group_index] %>">
               <div class="leaderboard-item-wrapper blurred-frame rank-<%= index + 1 %>">
                 <div class="leaderboard-item glare"></div>
                 <div class="leaderboard-item rank-column"><%= index + 1 %></div>
-                <div>
-                  <span class="big-text"><%= device[:display_name] %></span><br>
-                  <span><%= device[:user] %></span>
+                <div class="group-name">
+                  <span class="big-text"><%= group[:display_name] %></span><br>
+                  <span><%= "with #{group[:count]} server#{'s' * [1, group[:count]-1].min}" %></span>
                 </div>
                 <div></div>
-                <div><span class="flag fi fi-<%= device[:location].downcase %> fis"></span></div>
+                <div><span class="flag fi fi-<%= group[:location].downcase %> fis"></span></div>
               </div>
             </a>
           <% end %>
@@ -36,7 +36,7 @@
     <% end %>
   </div>
 
-  <%= render 'counter', locals: { number: @num_configs, text: 'different server configurations' } %>
+  <%= render 'counter', locals: { number: @num_groups, text: 'different server configurations' } %>
 </div>
 
 <script type="text/javascript" src="/assets/report/glare.js"></script>

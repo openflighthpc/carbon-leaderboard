@@ -20,32 +20,32 @@ $(document).ready(async () => {
   //   }
   // ));
   const leaderboardResponse = await fetch(
-    '/leaderboard/raw-data/g_per_hour',
+    '/leaderboard/grouped-data/g_per_hour',
     {
       method: 'GET'
     }
   );
-  const {max_main, header, devices} = await leaderboardResponse.json();
+  const {max_main, header, groups} = await leaderboardResponse.json();
   $('#leaderboard-bar-value-wrapper').text(header.main);
   delete header.main;
   const columns = Object.keys(header);
   for (const column of columns){
     $('#leaderboard-bar-header-wrapper').append(`<div class="leaderboard-header ${column.replace(/_/g, '-')}-column">${header[column]}</div>`);
   }
-  for (const device of devices) {
+  for (const group of groups) {
     let barHTML= '';
     for (const column of columns) {
-      barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${device[column]}</div>`;
+      barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${group[column]}</div>`;
     }
     $('.leaderboard-content-wrapper').append(`
-      <a href="/device/${device.user}">
-        <div class="leaderboard-item-wrapper full-leaderboard rank-${device.rank < 4 ? device.rank : 'other'}">
+      <a href="/group/${group.group_id}">
+        <div class="leaderboard-item-wrapper full-leaderboard rank-${group.rank < 4 ? group.rank : 'other'}">
           <div class="leaderboard-item glare"></div>
-          <div class="leaderboard-item rank-column">${device.rank}</div>
-          <div class="leaderboard-item bar-column" style="--flight-bar-length: ${device.main * 100/ max_main}%">
+          <div class="leaderboard-item rank-column">${group.rank}</div>
+          <div class="leaderboard-item bar-column" style="--flight-bar-length: ${group.main * 100/ max_main}%">
             <div class="leaderboard-item bar-data">${barHTML}</div>
           </div>
-          <div class="value-column">${device.main + device.unit}</div>
+          <div class="value-column">${group.main + group.unit}</div>
         </div>
       </a>
     `);

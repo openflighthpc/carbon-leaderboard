@@ -37,7 +37,7 @@
 .home-leaderboard .leaderboard-item-wrapper {
     height: 5.2rem;
     padding: 0.7rem;
-    grid-template-columns: calc(60 * var(--fpx)) calc(200 * var(--fpx)) 2.5rem 2.5rem;
+    grid-template-columns: calc(60 * var(--fpx)) calc(240 * var(--fpx)) 2.5rem 2.5rem;
     gap: 1rem;
     margin-bottom: 1.5rem;
     outline: var(--border-white);
@@ -48,6 +48,13 @@
 .home-leaderboard .leaderboard-item-wrapper:hover {
     -webkit-animation: mouse-in 72ms;
     outline: 1px solid transparent;
+}
+
+.home-leaderboard .group-name {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 @-webkit-keyframes mouse-out {

@@ -37,6 +37,7 @@
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
+  gap: 1rem;
   justify-content: start;
   align-items: center;
 }
@@ -47,6 +48,9 @@
 
 .user-column{
   width: calc(250 * var(--fpx));
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .owner-column{
@@ -204,6 +208,7 @@
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
+  gap: 1rem;
   justify-content: start;
   align-items: top;
 }
