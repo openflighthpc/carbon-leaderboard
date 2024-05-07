@@ -45,8 +45,8 @@
   </p>
   <p class="code-wrapper">
     <code class="code-block">
-      curl -s -L https://github.com/openflighthpc/carbon-leaderboard/raw/main/carbon-client/carbon | COMMAND='send'
-      ACCEPT_DEFAULTS='true' /bin/bash
+      bash -c "$(curl -L -s https://raw.githubusercontent.com/openflighthpc/carbon-leaderboard/main/carbon-client/carbon)"
+      carbon send
     </code>
   </p>
   <p>
