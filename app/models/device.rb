@@ -88,10 +88,6 @@ class Device < ApplicationRecord
     (self.ram_units * self.ram_capacity_per_unit).to_i
   end
 
-  def total_memory
-    self.disks.reduce(0) { |mem, disk| mem + disk['units'] * disk['capacity'] }
-  end
-
   def pretty_platform
     platform = self.platform.downcase
     if Boavizta.type_exists?(self.instance_type, 'alces')
