@@ -72,7 +72,78 @@ class Device < ApplicationRecord
     user&.username || "Anonymous"
   end
 
+  def country
+    @country ||= ISO3166::Country.find_country_by_alpha3(self.location)
+  end
+
   def two_digit_location
-    ISO3166::Country.find_country_by_alpha3(self.location).alpha2
+    country.alpha2
+  end
+
+  def full_country_name
+    country.iso_long_name
+  end
+
+  def ram
+    (self.ram_units * self.ram_capacity_per_unit).to_i
+  end
+
+  def pretty_platform
+    platform = self.platform.downcase
+    if Boavizta.type_exists?(self.instance_type, 'alces')
+      'Alces Cloud'
+    else
+      platform.titleize
+    end
+  end
+
+  def platform_icon
+    platform = self.platform.downcase
+    if Boavizta.type_exists?(self.instance_type, 'alces')
+      'alces'
+    elsif %w(aws azure openstack).include?(platform)
+      platform
+    else
+      'server'
+    end
+  end
+
+  def gpu_string
+    self.gpus.map do |gpu|
+      "#{gpu['units']} x #{gpu['name']} #{gpu['memory_capacity']}GB"
+    end.join("\n")
+  end
+
+  def disk_string
+    self.disks.map do |disk|
+      "#{disk['units']} x #{disk['capacity']}GB #{disk['type'].upcase}"
+    end.join("\n")
+  end
+
+  def live_emissions_data
+    self.reports.map do |report|
+      [report['created_at'], report['current']]
+    end
+  end
+
+  def live_emissions_time_range
+    times = self.reports.pluck(:created_at)
+    [convert_to_date([times.min, times.max - 7.days].max), convert_to_date(times.max + 1.day)]
+  end
+
+  def live_emissions_tooltips
+    self.reports.map do |report|
+      [
+        "Reported at",
+        "#{report['created_at'].strftime("%H:%M %e %b %Y")}",
+        "",
+        "Equivalent CO2 emissions",
+        "#{report['current']}g/hr",
+      ]
+    end
+  end
+
+  def convert_to_date(datetime)
+    datetime.strftime("%Y-%m-%d")
   end
 end

@@ -1,79 +1,191 @@
-<h1><%= "Info for device #{@device.display_name}" %> </h1>
+<h1 class="mb-3">
+  <%= @device.display_name %>
+  <span
+    class="flag server-page fi fi-<%= @device.two_digit_location.downcase %> fis"
+    title="<%= @device.display_name %> is located in <%= @device.full_country_name %>">
+  </span>
+</h1>
+<p class="big-text mb-5">Entered by: <%= @device.pretty_owner %></p>
 
-<style>
-table, th, td {
-  border:1px solid black;
-}
-td {
-  text-align: center;
-}
-</style>
+<div class="cl-card flex-column-centred">
+  <div class="device-type-wrapper">
+    <%= image_tag "#{@device.platform_icon}.png" %>
+    <div>
+      <h4><%= @device.pretty_platform %></h4>
+      <% if @device.instance_type %>
+        <span><%= @device.instance_type %></span>
+      <% end %>
+    </div>
+  </div>
+  <div class="device-specs-wrapper <%= @device.gpus.empty? ? 'flex-column-centred' : 'device-specs-grid' %>">
+    <div class="flex-column-centred cpu">
+      <h5>CPU</h5>
+      <span><%= @device.cpus %> x <%= @device.cpu_name %></span>
+      <span>(1 x <%= @device.cores_per_cpu %> cores)</span>
+    </div>
+    <% unless @device.gpus.empty? %>
+      <div class="flex-column-centred gpu">
+        <h5>GPU</h5>
+        <span class="text-center"><%= simple_format(@device.gpu_string) %></span>
+      </div>
+    <% end %>
+    <div class="flex-column-centred ram">
+      <h5>RAM</h5>
+      <span><%= @device.ram %>GB</span>
+    </div>
+    <div class="flex-column-centred storage">
+      <h5>Storage</h5>
+      <span class="text-center"><%= simple_format(@device.disk_string) %></span>
+    </div>
+  </div>
+</div>
 
-<h2>Specs</h2>
+<div class="full-width-section blurred-frame flex-column-centred">
+  <h2>Emissions history</h2>
+  <canvas id="live-emissions-chart" class="mb-5"></canvas>
+</div>
 
-<table style="width:100%" align="right">
-  <tr>
-    <th>Owner</th>
-    <th>CPU name</th>
-    <th>CPUs</th>
-    <th>Cores Per CPU</th>
-    <th>RAM Units</th>
-    <th>RAM Capacity Per Unit</th>
-    <th>Disks</th>
-    <th>GPUs</th>
-    <th>Carbon Usage (min)</th>
-    <th>Carbon Usage (half)</th>
-    <th>Carbon Usage (max)</th>
-    <th>Platform</th>
-    <th>Cloud Provider ID</th>
-    <th>Instance Type</th>
-    <th>Location</th>
-    <th>Tags</th>
-  </tr>
-  <tr>
-    <td><%= username(@device.user_id) %></td>
-    <td><%= @device.cpu_name %></td>
-    <td><%= @device.cpus %></td>
-    <td><%= @device.cores_per_cpu %></td>
-    <td><%= @device.ram_units %></td>
-    <td><%= @device.ram_capacity_per_unit %></td>
-    <td>
-      <%=
-      disk_string = ""
-      @device.disks.each do |disk|
-        disk_string << "#{disk['units']} x #{disk['capacity']}GB #{disk['type'].upcase}\n"
-      end
-      simple_format(disk_string)
-      %>
-    </td>
-    <td><%= @device.gpus %></td>
-    <td><%= @device.min %></td>
-    <td><%= @device.half %></td>
-    <td><%= @device.max %></td>
-    <td><%= @device.platform %></td>
-    <td><%= @device.cloud_provider %></td>
-    <td><%= @device.instance_type %></td>
-    <td><%= @device.location %></td>
-    <td><%= @device.tags.join(", ") %></td>
-  </tr>
-</table>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
+<script>
+  const allData = <%= raw(@device.live_emissions_data.to_json) %>;
+  const allTooltips = <%= raw(@device.live_emissions_tooltips.to_json) %>;
+  const timeRange = <%= raw(@device.live_emissions_time_range.to_json) %>;
+  const maxLoad = <%= raw(@device.max) %>;
+  const halfLoad = <%= raw(@device.half) %>;
+  const minLoad = <%= raw(@device.min) %>;
+  const alcesBlue = '#2693D7';
+  const borderColour = '#586674';
+  const gridColour = '#FFFFFF';
+  const loadLineColor = '#8f9faf';
 
-<h2>Latest Entries</h2>
+  const ctx = document.getElementById('live-emissions-chart');
+  let chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        data: allData,
+        borderWidth: 2,
+        tooltips: allTooltips,
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Equivalent CO2 emissions (g/h)',
+            font: {
+              size: 20,
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          ticks: {
+            font: {
+              size: 16,
+            },
+            maxTicksLimit: 8
+          },
+          grid: {
+            color: gridColour
+          },
+          border: {
+            color: borderColour
+          }
+        },
+        x: {
+          ticks: {
+            color: "#666",
+            font: {
+              size: 16,
+              weight: 'normal',
+            }
+          },
+          grid: {
+            color: gridColour
+          },
+          border: {
+            color: borderColour
+          },
+          type: 'time',
+          time: {
+            unit: 'day',
+            displayFormats: {
+              'day': 'd MMM yy',
+              'week': 'DD.MM',
+              'month': 'do MMM',
+              'year': 'MMMM',
+            },
+          },
+          min: timeRange[0],
+          max: timeRange[1],
+        }
+      },
+      elements: {
+        point: {
+          pointBorderColor: alcesBlue,
+          pointBorderWidth: 4,
+          pointBackgroundColor: '#ffffff',
+          pointRadius: 5,
+          pointHitRadius: 5
+        }
+      },
+      plugins: {
+        clip: false,
+        annotation: {
+          annotations: {
+            max: loadAnnotation(maxLoad, 'Max load'),
+            half: loadAnnotation(halfLoad, 'Half load'),
+            min: loadAnnotation(minLoad, 'Min load'),
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltip: {
+          displayColors: false,
+          bodyAlign: 'center',
+          yAlign: 'bottom',
+          bodyFont: {
+            size: 16
+          },
+          callbacks: {
+            title: function () {
+              return ""
+            },
+            label: function (context) {
+              return context.dataset.tooltips[context.dataIndex];
+            }
+          }
+        }
+      }
+    }
+  });
 
-<table style="width:100%" align="right">
-  <tr>
-    <th>Date</th>
-    <th>Time</th>
-    <th>Carbon Usage Per Hour</th>
-    <th>Percentage of maximum carbon usage</th>
-  </tr>
-  <% @device.reports.each do |report| %>
-    <tr>
-      <% time = report.created_at.to_time %>
-      <td><%= time.strftime("%d/%m/%Y") %></td>
-      <td><%= time.strftime("%l:%M%p UTC") %></td>
-      <td><%= report.current%></td>
-      <td><%= "#{(report.current / @device.max * 100).round(1)}%"%></td>
-    </tr>
-  <% end %>
-</table>
+  function loadAnnotation(val, label) {
+    return {
+      type: 'line',
+      yMin: val,
+      yMax: val,
+      borderColor: loadLineColor,
+      borderWidth: 2,
+      borderDash: [3, 3],
+      label: {
+        display: true,
+        content: label,
+        position: 'end',
+        backgroundColor: 'transparent',
+        color: borderColour,
+        font: {
+          size: 16,
+          weight: 'light',
+        },
+        yAdjust: -12,
+      }
+    }
+  }
+</script>
