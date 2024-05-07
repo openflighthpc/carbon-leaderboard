@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get "/leaderboard/grouped",      to: "report#index", defaults: { grouped: true }
   post "/add-record",              to: "report#add_record"
 
-  get "/show-devices",             to: "device#index"
   get "/leaderboard/raw-data",     to: "device#raw_data"
   get "/leaderboard/grouped-data", to: "device#grouped_data"
   get "/device/:device",           to: "device#show"

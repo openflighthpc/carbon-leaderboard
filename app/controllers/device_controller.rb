@@ -1,10 +1,6 @@
 class DeviceController < ApplicationController
   before_action :authorize_request, :only=>[:add_tag, :delete_tag]
 
-  def index
-    @devices = Device.all
-  end
-
   def show
     @device = Device.find_by(display_name: params[:device])
   end
