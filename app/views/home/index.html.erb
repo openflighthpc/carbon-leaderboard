@@ -21,7 +21,7 @@
               <div class="leaderboard-item-wrapper blurred-frame rank-<%= index + 1 %>">
                 <div class="leaderboard-item glare"></div>
                 <div class="leaderboard-item rank-column"><%= index + 1 %></div>
-                <div>
+                <div class="group-name">
                   <span class="big-text"><%= group[:display_name] %></span><br>
                   <span><%= "with #{group[:count]} server#{'s' * [1, group[:count]-1].min}" %></span>
                 </div>
