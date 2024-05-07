@@ -295,6 +295,9 @@ ul {
     list-style-type: circle;
 }
 
+.server-list-card {
+    min-width: 25rem;
+}
 .server-list-wrapper {
     max-height: calc(400 * var(--fpx));
     overflow-y: scroll;
