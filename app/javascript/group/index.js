@@ -45,7 +45,7 @@ $(document).ready(async () => {
           <div class="leaderboard-item bar-column" style="--flight-bar-length: ${group.main * 100/ max_main}%">
             <div class="leaderboard-item bar-data">${barHTML}</div>
           </div>
-          <div class="value-column">${group.main}</div>
+          <div class="value-column">${group.main + group.unit}</div>
         </div>
       </a>
     `);
