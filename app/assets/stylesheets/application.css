@@ -296,7 +296,7 @@ ul {
 }
 
 .server-list-wrapper {
-    max-height: calc(450 * var(--fpx));
+    max-height: calc(400 * var(--fpx));
     overflow-y: scroll;
 }
 .server-in-list {
