@@ -53,7 +53,7 @@ class GroupController < ApplicationController
             new_dev[:location] = dev.location
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
-            new_dev[:main] = 10
+            new_dev[:main] = signif(dev.max_per_core * (kg ? 8.76 : 1), 3)
             new_dev[:unit] = "#{kg ? 'k' : ''}g"
             new_dev[:group_id] = dev.group
           end
