@@ -141,11 +141,14 @@ a {
 .inline-link {
     display: inline;
     margin-right: -4px;
+}
+.text-link {
     color: var(--color-main);
 }
-.inline-link:hover {
+.text-link:hover {
     filter: brightness(0.8);
 }
+
 
 code {
     color: var(--color-text);
@@ -295,8 +298,13 @@ ul {
     list-style-type: circle;
 }
 
+strong {
+    font-weight: 600;
+}
+
 .server-list-card {
     min-width: 25rem;
+    max-width: 32rem;
 }
 .server-list-wrapper {
     max-height: calc(400 * var(--fpx));

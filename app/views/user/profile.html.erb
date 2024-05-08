@@ -16,7 +16,7 @@
   <% @groups.each do |group| %>
     <% group_devices = @devices.where(group: group) %>
     <% dev = group_devices.first %>
-    <a class="inline-link" href="/group/<%= dev.group %>">
+    <a class="inline-link text-link" href="/group/<%= dev.group %>">
       <h4 class="mb-3"><%= "#{dev.platform}-#{dev.instance_type || "Group#{dev.group}"}-#{dev.location}" %></h4>
     </a>
     <div class="server-list-wrapper med-card flex-column-centred mb-4">

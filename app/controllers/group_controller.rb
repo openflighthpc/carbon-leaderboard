@@ -6,6 +6,14 @@ class GroupController < ApplicationController
 
   def show
     @group = Device.where(group: params[:group_id])
+    @user_devices = @group.pluck(:user_id)
+                          .uniq
+                          .compact
+                          .map do |id|
+      [User.find(id).username, @group.where(user_id: id).pluck(:display_name)]
+    end
+    @anon_devices = @group.where(user_id: nil)
+                          .pluck(:display_name)
   end
 
   def raw_data
