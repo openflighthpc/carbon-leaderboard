@@ -9,38 +9,7 @@
 </h1>
 
 <div class="d-flex">
-  <div class="cl-card flex-column-centred mx-3">
-    <div class="device-type-wrapper">
-      <%= image_tag "logo.svg" %>
-      <div>
-        <h4><%= dev.platform.capitalize %></h4>
-        <% if dev.instance_type %>
-          <span>instance-type<%= dev.instance_type %></span>
-        <% end %>
-      </div>
-    </div>
-    <div class="device-specs-wrapper <%= dev.gpus.empty? ? 'flex-column-centred' : 'device-specs-grid' %>">
-      <div class="flex-column-centred cpu">
-        <h5>CPU</h5>
-        <span><%= dev.cpus %> x <%= dev.cpu_name %></span>
-        <span>(1 x <%= dev.cores_per_cpu %> cores)</span>
-      </div>
-      <% unless dev.gpus.empty? %>
-        <div class="flex-column-centred gpu">
-          <h5>GPU</h5>
-          <span class="text-center"><%= simple_format(dev.gpu_string) %></span>
-        </div>
-      <% end %>
-      <div class="flex-column-centred ram">
-        <h5>RAM</h5>
-        <span><%= dev.ram %>GB</span>
-      </div>
-      <div class="flex-column-centred storage">
-        <h5>Storage</h5>
-        <span class="text-center"><%= simple_format(dev.disk_string) %></span>
-      </div>
-    </div>
-  </div>
+  <%= render 'partials/specs_card', locals: { device: dev } %>
 
   <div class="cl-card flex-column-centred server-list-card">
     <h3 class="mb-4">In this group...</h3>
