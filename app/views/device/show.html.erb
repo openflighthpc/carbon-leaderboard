@@ -7,7 +7,27 @@
 </h1>
 <p class="big-text mb-5">Entered by: <%= @device.pretty_owner %></p>
 
-<%= render 'partials/specs_card', locals: { device: @device } %>
+<div class="d-flex mb-4">
+  <%= render 'partials/specs_card', locals: { device: @device } %>
+
+  <div class="cl-card flex-column-centred rankings-card text-center">
+    <h2 class="mb-4">Rankings</h2>
+    <p>
+      This server's specs and location match the
+      <a class="inline-link text-link text-nowrap" href="/group/<%= @device.group %>">
+        <strong><%= @device.pretty_group %></strong> &nbsp;
+      </a>
+      group, which is at rank
+    </p>
+    <p class="counter mb-4"><%= @device.rank %></p>
+    <p>on the OpenFlight Carbon Leaderboard.</p>
+    <%= link_to "View leaderboard",
+                leaderboard_grouped_path,
+                class: 'button glaring mt-auto'
+    %>
+  </div>
+</div>
+
 
 <div class="full-width-section blurred-frame flex-column-centred">
   <h2>Emissions history</h2>

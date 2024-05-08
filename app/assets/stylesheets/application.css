@@ -302,7 +302,7 @@ strong {
     font-weight: 600;
 }
 
-.server-list-card {
+.server-list-card, .rankings-card {
     min-width: 25rem;
     max-width: 32rem;
 }
