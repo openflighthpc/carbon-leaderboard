@@ -48,4 +48,3 @@ class GroupController < ApplicationController
     render json: response
   end
 end
-
