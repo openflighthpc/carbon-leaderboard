@@ -1,24 +1,4 @@
 $(document).ready(async () => {
-  // add report
-  // await fetch(new Request(
-  //   '/add-record',
-  //   {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       'device_id': crypto.randomUUID(),
-  //       'platform': 'Alces Cloud',
-  //       'cpus': 1,
-  //       'cores_per_cpu': 10,
-  //       'ram_units': 2,
-  //       'ram_capacity_per_unit': 16,
-  //       'min': 30,
-  //       'half': 40,
-  //       'max': 56,
-  //       'current': 32,
-  //       'location': 'US'
-  //     })
-  //   }
-  // ));
   const leaderboardResponse = await fetch(
     '/leaderboard/grouped-data/g_per_hour',
     {
@@ -35,7 +15,15 @@ $(document).ready(async () => {
   for (const group of groups) {
     let barHTML= '';
     for (const column of columns) {
-      barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${group[column]}</div>`;
+      if(column === 'location') {
+        barHTML += `
+        <div class="leaderboard-item ${column}-column">
+          <div class="fi-${group.flag.toLowerCase()} fis location-flag"></div>
+          ${group[column]}
+        </div>`;
+      } else {
+        barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${group[column]}</div>`;
+      }
     }
     $('.leaderboard-content-wrapper').append(`
       <a href="/group/${group.group_id}">
