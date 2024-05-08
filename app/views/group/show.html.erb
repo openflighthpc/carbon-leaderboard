@@ -16,16 +16,16 @@
     <p>Servers with these specs and location are at rank</p>
     <p class="counter mb-4"><%= dev.rank %></p>
     <p>on the OpenFlight Carbon Leaderboard.</p>
-    <%= link_to "View on leaderboard",
+    <%= link_to "View leaderboard",
                 leaderboard_grouped_path,
-                class: 'button glaring mt-auto',
-                method: :get
+                class: 'button glaring mt-auto'
     %>
   </div>
 </div>
 
 <div class="cl-card flex-column-centred server-list-card text-center mb-4">
-  <h4><%= @group.length %> servers have been entered with these specs and location</h4>
+  <% num_servers = @group.length %>
+  <h4><%= num_servers %> server<%= num_servers == 1 ? ' has' : 's have' %> been entered with these specs and location</h4>
   <div class="server-list-wrapper full-width">
     <% if @user_devices %>
       <% @user_devices.each do |user_group| %>
@@ -40,7 +40,7 @@
         <% end %>
       <% end %>
     <% end %>
-    <% if @anon_devices %>
+    <% unless @anon_devices.empty? %>
       <p class="big-text light-text mt-3 mb-2"><strong>Anonymous</strong></p>
       <% @anon_devices.each do |device_name| %>
         <%= link_to device_name,
