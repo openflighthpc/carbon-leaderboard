@@ -86,6 +86,10 @@
   background-repeat: no-repeat;
 }
 
+.ram-column{
+  width: calc(120 * var(--fpx));
+}
+
 .leaderboard-item.location-column{
   padding-left: calc(24 * var(--fpx));
   width: calc(120 * var(--fpx));
@@ -237,7 +241,6 @@
   grid-auto-flow: column;
   gap: 1rem;
   justify-content: start;
-  align-items: top;
 }
 .leaderboard-item-wrapper:not(.rank-other) .bar-data {
   line-height: calc(18 * var(--fpx));
@@ -252,6 +255,7 @@
   position: relative;
   max-width: 100%;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .leaderboard-item.owner-column {
