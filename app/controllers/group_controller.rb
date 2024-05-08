@@ -29,7 +29,7 @@ class GroupController < ApplicationController
     devices = Device.groups_ranked
     response = {}.tap do |res|
       max_device = devices.last
-      res[:max_main] = max_device&.max_per_core * (kg ? 8.76 : 1)
+      res[:max_main] = max_device&.max_per_core&. * (kg ? 8.76 : 1)
       res[:header] = {}.tap do |h|
         h[:user] = 'Group'
         h[:platform] = 'Platform'
