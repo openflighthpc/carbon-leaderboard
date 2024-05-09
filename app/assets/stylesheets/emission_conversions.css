@@ -1,0 +1,29 @@
+.emissions-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1.5rem;
+}
+
+.emission-wrapper {
+    padding: 2rem;
+}
+
+.emission-number {
+    font-weight: 600;
+    color: var(--color-main);
+    font-size: 2.2rem;
+}
+
+.driving-wrapper {
+    display: flex;
+    gap: 0.7rem;
+    font-size: 1.4rem;
+}
+.driving {
+    text-align: end;
+    flex-grow: 1;
+    line-height: 1.6rem;
+}
+.miles {
+    line-height: 2.2rem;
+}
