@@ -27,3 +27,9 @@
 .miles {
     line-height: 2.2rem;
 }
+.fa-solid {
+    color: var(--color-main);
+}
+.car-icon {
+    font-size: 6rem;
+}
