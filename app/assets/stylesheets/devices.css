@@ -43,3 +43,22 @@
 .device-specs-grid .storage {
     grid-area: storage;
 }
+
+.server-list-card, .rankings-card {
+    min-width: 25rem;
+    max-width: 32rem;
+}
+.server-list-wrapper {
+    max-height: calc(400 * var(--fpx));
+    overflow-y: scroll;
+}
+.server-in-list {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-wrap: nowrap;
+}
+.server-in-list:hover {
+    color: var(--color-main);
+}
