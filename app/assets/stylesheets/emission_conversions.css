@@ -6,6 +6,7 @@
 
 .emission-wrapper {
     padding: 2rem;
+    font-size: 1.4rem;
 }
 
 .emission-number {
@@ -21,7 +22,6 @@
 .driving-wrapper {
     display: flex;
     gap: 0.7rem;
-    font-size: 1.4rem;
 }
 .driving {
     text-align: end;
@@ -32,9 +32,6 @@
     line-height: 2.2rem;
 }
 
-.flight-wrapper {
-    font-size: 1.4rem;
-}
 .flight-wrapper .people span {
     line-height: 1rem;
 }
@@ -44,4 +41,23 @@
 }
 .plane-icon {
     transform: rotate(-45deg);
+}
+
+.burger-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.big-mac-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    line-height: 1.6rem;
+}
+.burger-wrapper .emission-number {
+    line-height: 2.4rem;
+}
+.burger-wrapper .mcplant {
+    text-align: center;
 }
