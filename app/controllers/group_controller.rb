@@ -48,9 +48,14 @@ class GroupController < ApplicationController
           {}.tap do |new_dev|
             new_dev[:rank] = current_rank
             new_dev[:user] = dev.pretty_group
-            new_dev[:platform] = dev.platform
-            new_dev[:flag] = dev.two_digit_location
-            new_dev[:location] = dev.location
+            new_dev[:platform] = {}.tap do |plat|
+              plat[:ico] = dev.platform_icon
+              plat[:text] = dev.platform
+            end
+            new_dev[:location] = {}.tap do |loc|
+              loc[:flag] = dev.two_digit_location.downcase
+              loc[:text] = dev.location
+            end
             new_dev[:core_number] = dev.cpus * dev.cores_per_cpu
             new_dev[:ram] = dev.ram_units * dev.ram_capacity_per_unit
             new_dev[:main] = 10

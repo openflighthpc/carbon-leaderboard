@@ -18,9 +18,12 @@ $(document).ready(async () => {
       if(column === 'location') {
         barHTML += `
         <div class="leaderboard-item ${column}-column">
-          <div class="fi-${group.flag.toLowerCase()} fis location-flag"></div>
-          ${group[column]}
+          <div class="fi-${group[column].flag} fis location-flag"></div>
+          ${group[column].text}
         </div>`;
+      } else if(column === 'platform') {
+        barHTML += `
+        <div class="leaderboard-item ${column}-column" style="--ico-url:url(/assets/ico/${group[column].ico}.png);--ico-url-hover:url(/assets/ico/${group[column].ico}_bright.png)"></div>`;
       } else {
         barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${group[column]}</div>`;
       }
