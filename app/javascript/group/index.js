@@ -23,7 +23,7 @@ $(document).ready(async () => {
         </div>`;
       } else if(column === 'platform') {
         barHTML += `
-        <div class="leaderboard-item ${column}-column" style="--ico-url:url(/assets/ico/${group[column].ico}.png);--ico-url-hover:url(/assets/ico/${group[column].ico}_bright.png)"></div>`;
+        <div class="leaderboard-item ${column}-column" style="--ico-url:url(/assets/ico/openstack.png);--ico-url-hover:url(/assets/ico/openstack_bright.png)"></div>`;
       } else {
         barHTML += `<div class="leaderboard-item ${column.replace(/_/g, '-')}-column">${group[column]}</div>`;
       }
