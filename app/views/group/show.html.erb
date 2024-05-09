@@ -40,7 +40,9 @@
         <span>miles</span>
       </div>
     </div>
-    <i class="fa-solid fa-car-side big-icon"></i>
+    <div class="driving-icon-wrapper">
+      <i class="fa-solid fa-car-side big-icon driving-icon"></i>
+    </div>
   </div>
   <div class="blurred-frame white-outline emission-wrapper">
     <div class="burger-wrapper">
@@ -53,7 +55,7 @@
         <span class="big-text">Big Macs...</span>
       </div>
     </div>
-    <span class="mcplant">
+    <span class="mcplant mt-2">
       ...or
       <span class="emission-number">
         <%= @emission_conversions[:mcplant] %>
@@ -63,18 +65,29 @@
     </div>
   </div>
   <div class="blurred-frame white-outline emission-wrapper">
-    <div class="flight-wrapper">
-      <div class="people-plane">
-        <div class="people mt-auto">
-          <span>...</span>
-          <span class="emission-number"><%= @emission_conversions[:flight] %></span>
-          <br>
-          <span>people</span>
+    <% if @emission_conversions[:flight] > 0 %>
+      <div class="flight-wrapper">
+        <div class="people-plane">
+          <div class="people mt-auto">
+            <span>...</span>
+            <span class="emission-number"><%= @emission_conversions[:flight] %></span>
+            <br>
+            <span>people</span>
+          </div>
+          <i class="fa-solid fa-plane big-icon plane-icon"></i>
         </div>
-        <i class="fa-solid fa-plane big-icon plane-icon"></i>
+        <span class="big-text">flying from <br>London to Hamburg</span>
       </div>
-      <span class="big-text">flying from <br>London to Hamburg</span>
-    </div>
+    <% else %>
+      <div class="netflix-wrapper">
+        <span class="big-text mb-2">...streaming Netflix for</span>
+        <i class="fa-solid fa-tv big-icon netflix-icon"></i>
+        <div class="mt-2">
+          <span class="emission-number"><%= @emission_conversions[:netflix] %></span>
+          <span>hours</span>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

@@ -13,6 +13,7 @@
     font-weight: 600;
     color: var(--color-main);
     font-size: 2.2rem;
+    line-height: 2.4rem;
 }
 .big-icon {
     font-size: 6rem;
@@ -29,10 +30,17 @@
 .driving {
     text-align: end;
     flex-grow: 1;
-    line-height: 1.6rem;
+    line-height: 2rem;
 }
 .miles {
     line-height: 2.2rem;
+}
+.driving-icon {
+    font-size: 7rem;
+}
+.driving-icon-wrapper {
+    position: absolute;
+    bottom: 1.5rem;
 }
 
 .flight-wrapper .people span {
@@ -46,10 +54,15 @@
     transform: rotate(-45deg);
 }
 
-.burger-wrapper {
+.netflix-icon {
+    font-size: 5.5rem;
+}
+
+.burger-wrapper, .netflix-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     height: 100%;
 }
 .big-mac-wrapper {
