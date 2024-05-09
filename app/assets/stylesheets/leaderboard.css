@@ -103,6 +103,11 @@
   text-align: center;
 }
 
+.value-unit {
+  vertical-align: bottom;
+  font-size: calc(36 * var(--fpx));
+}
+
 .full-leaderboard .leaderboard-content-wrapper {
   position: relative;
   padding-top: calc(6 * var(--fpx));
