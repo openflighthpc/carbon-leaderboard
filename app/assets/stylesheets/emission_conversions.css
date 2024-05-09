@@ -16,7 +16,10 @@
 }
 .big-icon {
     font-size: 6rem;
-    color: var(--color-main);
+    background-color: var(--color-main);
+    background: linear-gradient(to right, #15c78e, #00D12E);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .driving-wrapper {
