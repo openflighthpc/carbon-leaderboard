@@ -44,6 +44,11 @@
   align-items: center;
 }
 
+#leaderboard-bar-header-wrapper .leaderboard-header:not(:nth-child(1)),
+.leaderboard-item.bar-data .leaderboard-item:not(:nth-child(1)) {
+  text-align: center;
+}
+
 #leaderboard-bar-header-wrapper>* {
   position: relative;
   max-width: 100%;
@@ -67,11 +72,11 @@
 }
 
 .platform-column{
-  width: calc(96 * var(--fpx));
+  width: calc(84 * var(--fpx));
 }
 
 .location-column{
-  width: calc(96 * var(--fpx));
+  width: calc(84 * var(--fpx));
 }
 
 .leaderboard-item.location-column{
@@ -87,7 +92,7 @@
   height: calc(18 * var(--fpx));
   background-image: var(--ico-url);
   background-size: auto 100%;
-  background-position: left center;
+  background-position: center;
   background-repeat: no-repeat;
   transition: background-image 360ms ease-out;
 }
@@ -100,21 +105,21 @@
 .location-flag {
   position: absolute;
   top: 0;
-  left: 0;
+  left: calc(50% - 9 * var(--fpx));
   width: calc(18 * var(--fpx));
   height: calc(18 * var(--fpx));
   border-radius: 50%;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .ram-column{
-  width: calc(120 * var(--fpx));
+  width: calc(84 * var(--fpx));
 }
 
 .core-number-column{
-  width: calc(96 * var(--fpx));
+  width: calc(84 * var(--fpx));
 }
 
 .value-column {

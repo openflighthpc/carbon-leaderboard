@@ -19,7 +19,6 @@ $(document).ready(async () => {
         barHTML += `
         <div class="leaderboard-item ${column}-column">
           <div class="fi-${group[column].flag} fis location-flag"></div>
-          ${group[column].text}
         </div>`;
       } else if(column === 'platform') {
         barHTML += `
