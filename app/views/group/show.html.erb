@@ -35,7 +35,7 @@
     <div class="driving-wrapper">
       <span class="driving">...driving</span>
       <div class="miles">
-        <span class="emission-number"><%= @emission_conversions[:driving] %></span>
+        <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:driving], delimiter: ',') %></span>
         <br>
         <span>miles</span>
       </div>
@@ -50,7 +50,7 @@
       <i class="fa-solid fa-burger big-icon"></i>
       <div>
         <span class="big-text">...making</span><br>
-        <span class="emission-number"><%= @emission_conversions[:big_mac] %></span><br>
+        <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:big_mac], delimiter: ',') %></span><br>
         <span class="big-text">McDonalds</span><br>
         <span class="big-text">Big Macs...</span>
       </div>
@@ -58,7 +58,7 @@
     <span class="mcplant mt-2">
       ...or
       <span class="emission-number">
-        <%= @emission_conversions[:mcplant] %>
+        <%= number_with_delimiter(@emission_conversions[:mcplant], delimiter: ',') %>
       </span>
       McPlants
     </span>
@@ -70,7 +70,7 @@
         <div class="people-plane">
           <div class="people mt-auto">
             <span>...</span>
-            <span class="emission-number"><%= @emission_conversions[:flight] %></span>
+            <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:flight], delimiter: ',') %></span>
             <br>
             <span>people</span>
           </div>
@@ -83,7 +83,7 @@
         <span class="big-text mb-2">...streaming Netflix for</span>
         <i class="fa-solid fa-tv big-icon netflix-icon"></i>
         <div class="mt-2">
-          <span class="emission-number"><%= @emission_conversions[:netflix] %></span>
+          <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:netflix], delimiter: ',') %></span>
           <span>hours</span>
         </div>
       </div>
