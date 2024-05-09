@@ -13,6 +13,10 @@
     color: var(--color-main);
     font-size: 2.2rem;
 }
+.big-icon {
+    font-size: 6rem;
+    color: var(--color-main);
+}
 
 .driving-wrapper {
     display: flex;
@@ -27,9 +31,17 @@
 .miles {
     line-height: 2.2rem;
 }
-.fa-solid {
-    color: var(--color-main);
+
+.flight-wrapper {
+    font-size: 1.4rem;
 }
-.car-icon {
-    font-size: 6rem;
+.flight-wrapper .people span {
+    line-height: 1rem;
+}
+.people-plane {
+    display: flex;
+    gap: 1rem;
+}
+.plane-icon {
+    transform: rotate(-45deg);
 }
