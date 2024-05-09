@@ -6,6 +6,13 @@ class GroupController < ApplicationController
 
   def show
     @group = Device.where(group: params[:group_id])
+    @year_emissions = (@group.first.max * 8.76).round(2)
+    @emission_conversions = {}.tap do |ec|
+      ec[:driving] = (@year_emissions * EmissionConversion::DRIVE).floor
+      ec[:big_mac] = (@year_emissions * EmissionConversion::BIG_MAC).floor
+      ec[:mcplant] = (@year_emissions * EmissionConversion::MCPLANT).floor
+      ec[:flight] = (@year_emissions * EmissionConversion::FLIGHT).floor
+    end
     @user_devices = @group.pluck(:user_id)
                           .uniq
                           .compact

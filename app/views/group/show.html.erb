@@ -27,7 +27,7 @@
   <div class="text-center">
     <h2 class="mb-4">Emissions</h2>
     <p>Over one year, running at full load, servers in this group will emit</p>
-    <p class="emission-number">2.8kg</p>
+    <p class="emission-number"><%= @year_emissions %>kg</p>
     <p>equivalent CO<sub>2</sub>. That’s as much as...</p>
   </div>
 
@@ -35,7 +35,7 @@
     <div class="driving-wrapper">
       <span class="driving">...driving</span>
       <div class="miles">
-        <span class="emission-number">48</span>
+        <span class="emission-number"><%= @emission_conversions[:driving] %></span>
         <br>
         <span>miles</span>
       </div>
@@ -48,12 +48,18 @@
       <i class="fa-solid fa-burger big-icon"></i>
       <div>
         <span class="big-text">...making</span><br>
-        <span class="emission-number">100</span><br>
+        <span class="emission-number"><%= @emission_conversions[:big_mac] %></span><br>
         <span class="big-text">McDonalds</span><br>
         <span class="big-text">Big Macs...</span>
       </div>
     </div>
-    <span class="mcplant">...or <span class="emission-number">13</span> McPlants</span>
+    <span class="mcplant">
+      ...or
+      <span class="emission-number">
+        <%= @emission_conversions[:mcplant] %>
+      </span>
+      McPlants
+    </span>
     </div>
   </div>
   <div class="blurred-frame white-outline emission-wrapper">
@@ -61,7 +67,7 @@
       <div class="people-plane">
         <div class="people mt-auto">
           <span>...</span>
-          <span class="emission-number">4</span>
+          <span class="emission-number"><%= @emission_conversions[:flight] %></span>
           <br>
           <span>people</span>
         </div>

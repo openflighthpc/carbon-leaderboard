@@ -13,5 +13,3 @@ class EmissionConversion
   NETFLIX = 55.556      # Episodes streamed on Netflix (30mins each)
   EMAIL = 250           # Emails sent
 end
-
-
