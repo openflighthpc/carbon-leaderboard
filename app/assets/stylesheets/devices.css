@@ -44,6 +44,14 @@
     grid-area: storage;
 }
 
+.specs-rank-section {
+    display: flex;
+    gap: 1.5rem;
+}
+.specs-rank-section > div {
+    flex-grow: 1;
+}
+
 .server-list-card, .rankings-card {
     min-width: 25rem;
     max-width: 32rem;
