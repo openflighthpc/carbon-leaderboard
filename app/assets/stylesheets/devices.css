@@ -52,6 +52,17 @@
     flex-grow: 1;
 }
 
+.emissions-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1rem;
+}
+.emission-number {
+    font-weight: 600;
+    color: var(--color-main);
+    font-size: 2rem;
+}
+
 .server-list-card, .rankings-card {
     min-width: 25rem;
     max-width: 32rem;
