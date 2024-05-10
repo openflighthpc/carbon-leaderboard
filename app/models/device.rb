@@ -40,6 +40,12 @@ class Device < ApplicationRecord
     end
   end
 
+  def self.groups_ranked
+    Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
+          .group(:group)
+          .order(:max_per_core)
+  end
+
   def self.new_name
     colours = %w(Red Orange Yellow Green Blue Indigo Violet Pink Purple Grey)
     adjs = %w(Big Small Quick Slow Mad Calm Good Bad Brave Lucky)
@@ -50,6 +56,10 @@ class Device < ApplicationRecord
       name = "#{adjs[rand(10)]}#{colours[rand(10)]}#{animals[rand(10)]}#{rand(100)}"
     end
     name
+  end
+
+  def rank
+    Device.groups_ranked.map(&:group).find_index(self.group) + 1
   end
 
   def config_attributes

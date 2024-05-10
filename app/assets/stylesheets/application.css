@@ -141,11 +141,14 @@ a {
 .inline-link {
     display: inline;
     margin-right: -4px;
+}
+.text-link {
     color: var(--color-main);
 }
-.inline-link:hover {
+.text-link:hover {
     filter: brightness(0.8);
 }
+
 
 code {
     color: var(--color-text);
@@ -247,19 +250,21 @@ code {
 }
 
 .button:hover {
-    border: 0 solid #2794d800;
-    color: #fff;
-    background-color: #404040;
-    line-height: calc(2rem + 4px);
     transform: scale(1.1);
-    filter: drop-shadow(var(--fpx) var(--fpx) calc(3 * var(--fpx)) #404040);
-    user-select: none;
+    line-height: calc(2rem + 4px);
     transition:
             border 72ms ease-out,
             color 72ms ease-out,
             transform 72ms ease-out,
             filter 72ms ease-out,
             background-color 72ms ease-out;
+}
+.button:hover, .server-in-list:hover {
+    border: 0 solid #2794d800;
+    color: #fff;
+    background-color: #404040;
+    filter: drop-shadow(var(--fpx) var(--fpx) calc(3 * var(--fpx)) #404040);
+    user-select: none;
 }
 
 .button:active {
@@ -294,7 +299,7 @@ ul {
     left: 2rem;
     list-style-type: circle;
 }
-        
+
 strong {
     font-weight: 600;
 }

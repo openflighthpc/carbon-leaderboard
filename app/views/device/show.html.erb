@@ -7,38 +7,27 @@
 </h1>
 <p class="big-text mb-5">Entered by: <%= @device.pretty_owner %></p>
 
-<div class="cl-card flex-column-centred">
-  <div class="device-type-wrapper">
-    <%= image_tag "#{@device.platform_icon}.png" %>
-    <div>
-      <h4><%= @device.pretty_platform %></h4>
-      <% if @device.instance_type %>
-        <span><%= @device.instance_type %></span>
-      <% end %>
-    </div>
-  </div>
-  <div class="device-specs-wrapper <%= @device.gpus.empty? ? 'flex-column-centred' : 'device-specs-grid' %>">
-    <div class="flex-column-centred cpu">
-      <h5>CPU</h5>
-      <span><%= @device.cpus %> x <%= @device.cpu_name %></span>
-      <span>(1 x <%= @device.cores_per_cpu %> cores)</span>
-    </div>
-    <% unless @device.gpus.empty? %>
-      <div class="flex-column-centred gpu">
-        <h5>GPU</h5>
-        <span class="text-center"><%= simple_format(@device.gpu_string) %></span>
-      </div>
-    <% end %>
-    <div class="flex-column-centred ram">
-      <h5>RAM</h5>
-      <span><%= @device.ram %>GB</span>
-    </div>
-    <div class="flex-column-centred storage">
-      <h5>Storage</h5>
-      <span class="text-center"><%= simple_format(@device.disk_string) %></span>
-    </div>
+<div class="specs-rank-section mb-4">
+  <%= render 'partials/specs_card', locals: { device: @device } %>
+
+  <div class="cl-card flex-column-centred rankings-card text-center">
+    <h2 class="mb-4">Rankings</h2>
+    <p>
+      This server's specs and location match the
+      <a class="inline-link text-link text-nowrap" href="/group/<%= @device.group %>">
+        <strong><%= @device.pretty_group %></strong> &nbsp;
+      </a>
+      group, which is at rank
+    </p>
+    <p class="counter mb-4"><%= @device.rank %></p>
+    <p>on the OpenFlight Carbon Leaderboard.</p>
+    <%= link_to "View leaderboard",
+                leaderboard_grouped_path,
+                class: 'button glaring mt-auto'
+    %>
   </div>
 </div>
+
 
 <div class="full-width-section blurred-frame flex-column-centred">
   <h2>Emissions history</h2>

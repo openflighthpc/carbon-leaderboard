@@ -1,0 +1,89 @@
+.emissions-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 1.5rem;
+}
+
+.emission-wrapper {
+    padding: 2rem;
+    font-size: 1.4rem;
+}
+
+.emission-number {
+    font-weight: 600;
+    color: var(--color-main);
+    font-size: 2.2rem;
+    line-height: 2.4rem;
+}
+.big-icon {
+    font-size: 6rem;
+    background-color: var(--color-main);
+    background: linear-gradient(to right, #15c78e, #00D12E);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.driving-wrapper {
+    display: flex;
+    gap: 0.7rem;
+}
+.driving {
+    text-align: end;
+    flex-grow: 1;
+    line-height: 2rem;
+}
+.miles {
+    line-height: 2.2rem;
+}
+.driving-icon {
+    font-size: 7rem;
+}
+.driving-icon-wrapper {
+    position: absolute;
+    bottom: 1.5rem;
+}
+
+.flight-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.flight-wrapper .people span {
+    line-height: 1rem;
+}
+.people-plane {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: 1rem;
+}
+.plane-icon {
+    transform: rotate(-135deg);
+    font-size: 7rem;
+    position: absolute;
+    right: 2.5rem;
+}
+
+.netflix-icon {
+    font-size: 5.5rem;
+}
+
+.burger-wrapper, .netflix-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+.big-mac-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    line-height: 1.6rem;
+}
+.burger-wrapper .emission-number {
+    line-height: 2.4rem;
+}
+.burger-wrapper .mcplant {
+    text-align: center;
+}

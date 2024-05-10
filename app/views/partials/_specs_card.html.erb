@@ -1,0 +1,33 @@
+<% device = locals[:device] %>
+<div class="cl-card flex-column-centred mr-4">
+  <div class="device-type-wrapper">
+    <%= image_tag "#{device.platform_icon}.png" %>
+    <div>
+      <h2 class="mb-0"><%= device.pretty_platform %></h2>
+      <% if device.instance_type %>
+        <span><%= device.instance_type %></span>
+      <% end %>
+    </div>
+  </div>
+  <div class="device-specs-wrapper <%= device.gpus.empty? ? 'flex-column-centred' : 'device-specs-grid' %>">
+    <div class="flex-column-centred cpu">
+      <h5>CPU</h5>
+      <span><%= device.cpus %> x <%= device.cpu_name %></span>
+      <span>(1 x <%= device.cores_per_cpu %> cores)</span>
+    </div>
+    <% unless device.gpus.empty? %>
+      <div class="flex-column-centred gpu">
+        <h5>GPU</h5>
+        <span class="text-center"><%= simple_format(device.gpu_string) %></span>
+      </div>
+    <% end %>
+    <div class="flex-column-centred ram">
+      <h5>RAM</h5>
+      <span><%= device.ram %>GB</span>
+    </div>
+    <div class="flex-column-centred storage">
+      <h5>Storage</h5>
+      <span class="text-center"><%= simple_format(device.disk_string) %></span>
+    </div>
+  </div>
+</div>

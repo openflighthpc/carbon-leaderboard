@@ -1,7 +1,46 @@
-<h1><%= "Profile page for #{username(@user&.id)}" %></h1>
+<h1 class="mb-5 pb-1"><%= @user.username %></h1>
 
-<p>
-<%= "This is the user profile page for #{username(@user&.id)}."%>
-</p>
+<% if @user_owns_profile %>
+  <p>
+    Here's your secret Auth token:
+  </p>
+  <p class="mb-5">
+    <code class="code-block"><%= @user.auth_token %></code>
+  </p>
+<% end %>
 
-<%= "Since this is your page, here's your secret Auth token: #{@user.auth_token}" if @user_owns_profile%>
+<h2 class="mb-4"><%= @user_owns_profile ? 'My' : "#{@user.username}'s" %> servers</h2>
+<% if @devices.empty? %>
+  <%= @user_owns_profile ? "You haven't" : "#{@user.username} hasn't" %> entered any servers yet.
+<% else %>
+  <% @groups.each do |group_id| %>
+    <% group_devices = @devices.where(group: group_id) %>
+    <% dev = group_devices.first %>
+    <% rank = dev.rank %>
+    <div class="home-leaderboard leaderboard-wrapper mt-4">
+      <div class="leaderboard-content-wrapper">
+        <a href="/group/<%= group_id %>">
+          <div class="leaderboard-item-wrapper blurred-frame mb-3 <%= rank <= 3 ? "rank-#{rank}" : "solid-rank" %>">
+            <div class="leaderboard-item glare"></div>
+            <div class="leaderboard-item rank-column"><%= rank %></div>
+            <div class="group-name">
+              <span class="big-text"><%= dev.pretty_group %></span><br>
+              <span><%= "#{group_devices.length} server#{'s' if group_devices.length > 1}" %></span>
+            </div>
+            <div></div>
+            <div><span class="flag fi fi-<%= dev.two_digit_location.downcase %> fis"></span></div>
+          </div>
+
+        </a>
+      </div>
+    </div>
+    <div class="server-list-wrapper mb-4">
+      <% group_devices.each do |device| %>
+        <%= link_to device.display_name,
+                    "/device/#{device.display_name}",
+                    class: "server-in-list glaring"
+        %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

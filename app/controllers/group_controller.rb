@@ -6,13 +6,27 @@ class GroupController < ApplicationController
 
   def show
     @group = Device.where(group: params[:group_id])
+    @year_emissions = (@group.first.max * 8.76).round(2)
+    @emission_conversions = {}.tap do |ec|
+      ec[:driving] = (@year_emissions * EmissionConversion::DRIVE).floor
+      ec[:big_mac] = (@year_emissions * EmissionConversion::BIG_MAC).floor
+      ec[:mcplant] = (@year_emissions * EmissionConversion::MCPLANT).floor
+      ec[:flight] = (@year_emissions * EmissionConversion::FLIGHT).floor
+      ec[:netflix] = (@year_emissions * EmissionConversion::NETFLIX).floor
+    end
+    @user_devices = @group.pluck(:user_id)
+                          .uniq
+                          .compact
+                          .map do |id|
+      [User.find(id).username, @group.where(user_id: id).pluck(:display_name)]
+    end
+    @anon_devices = @group.where(user_id: nil)
+                          .pluck(:display_name)
   end
 
   def raw_data
     kg = params[:unit] == 'kg_per_year'
-    devices = Device.select('devices.*, max / (cpus * cores_per_cpu) AS max_per_core')
-    .group(:group)
-    .order(:max_per_core)
+    devices = Device.groups_ranked
     response = {}.tap do |res|
       max_device = devices.last
       res[:max_main] = max_device&.max_per_core * (kg ? 8.76 : 1)
@@ -26,8 +40,8 @@ class GroupController < ApplicationController
       end
       rank = 1
       res[:groups] = devices
-      .group_by(&:max_per_core)
-      .values.flat_map do |dev_group|
+                       .group_by(&:max_per_core)
+                       .values.flat_map do |dev_group|
         current_rank = rank
         rank += dev_group.size
         dev_group.map do |dev|
