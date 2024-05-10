@@ -2,16 +2,14 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
   root "home#index"
 
-  get "/leaderboard/grouped",            to: "group#index"
   post "/add-record",                    to: "report#add_record"
 
-  get "/show-devices",                   to: "device#index"
-  get "/leaderboard/raw-data/:unit",     to: "device#raw_data"
   get "/device/:device",                 to: "device#show"
   post "/add-tag/:device",               to: "device#add_tag"
   post "/delete-tag/:device",            to: "device#delete_tag"
 
   get "/group/:group_id",                to: "group#show"
+  get "/leaderboard/grouped",            to: "group#index"
   get "/leaderboard/grouped-data/:unit", to: "group#raw_data"
 
   get "/user/:username",                 to: "user#profile"
