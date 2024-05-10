@@ -186,6 +186,9 @@
 .leaderboard-item-wrapper.rank-3 .rank-column{
   background-color: #CD7F32;
 }
+.leaderboard-item-wrapper.solid-rank .rank-column{
+  background-color: var(--color-main);
+}
 .leaderboard-item-wrapper.rank-other .rank-column {
   height: calc(36 * var(--fpx));
   line-height: calc(36 * var(--fpx));
