@@ -7,7 +7,10 @@ class ReportController < ApplicationController
     data = JSON.parse(request.body.read)
     device = Device.find_by(uuid: data['device_id'])
 
-    unless device
+    if device
+      device.user_id = device.user_id || @current_user.id
+      device.save
+    else
       device = Device.create_from_json(data, @current_user) unless device
       if !device.errors.empty?
         render json: "Error(s) with payload data: #{device.errors.full_messages.join(', ')}"
