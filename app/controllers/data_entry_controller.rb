@@ -13,20 +13,21 @@ class DataEntryController < ApplicationController
                             .strip
                             .chomp(',')
       json = JSON.parse("[ #{data} ]")
-                 .last
-      device = Device.find_by(uuid: json['device_id'])
+      device = Device.find_by(uuid: json.last['device_id'])
       if device
         existing = true
       else
         existing = false
-        device = Device.create_from_json(json)
+        device = Device.create_from_json(json.last)
       end
       if device.errors.empty?
-        Report.create(device_id: device.uuid,
-                      current: Boavizta.carbon_for_load(device, json['current_load']),
-                      created_at: DateTime.parse(json['timestamp'])
-        )
-        refresh_page("Device #{device.display_name} successfully #{existing ? 'updated' : 'entered'}")
+        json.each do |payload|
+          Report.create(device_id: device.uuid,
+                        current: Boavizta.carbon_for_load(device, payload['current_load']),
+                        created_at: DateTime.parse(payload['timestamp'])
+          )
+        end
+        refresh_page("Device #{device.display_name} successfully #{existing ? 'updated' : 'entered'} with #{json.length} new entries")
       else
         refresh_page(device.errors.full_messages.join(', '))
       end

@@ -41,13 +41,26 @@ class Boavizta
         )
       end
     else
-      response = boavizta.get('/v1/cloud/instance') do |req|
+      response = boavizta.post('/v1/cloud/instance') do |req|
         req.headers[:content_type] = 'application/json'
-        req.params[:provider] = device.cloud_provider
-        req.params[:instance_type] = device.instance_type
         req.params[:verbose] = false
         req.params['criteria'] = 'gwp'
         req.params['duration'] = 1
+        req.body = JSON.pretty_generate(
+          {
+            "provider": device.cloud_provider,
+            "instance_type": device.instance_type,
+            "usage": {
+              "usage_location": device.location,
+              "time_workload": [
+                {
+                  "time_percentage": 100,
+                  "load_percentage": cpu_load
+                }
+              ]
+            }
+          }
+        )
       end
     end
     JSON.parse(response.body).dig(*%w[impacts gwp use value]) * 1000

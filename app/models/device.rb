@@ -129,9 +129,9 @@ class Device < ApplicationRecord
   end
 
   def live_emissions_data
-    self.reports.map do |report|
-      [report['created_at'], report['current']]
-    end
+    self.reports
+        .sort_by { |report| report.created_at }
+        .map { |report| [report.created_at, report.current] }
   end
 
   def live_emissions_time_range
