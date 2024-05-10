@@ -2,7 +2,7 @@
 
 class SetAlcesPlatformNames < ActiveRecord::Migration[7.1]
   def up
-    Device.find_each.each do |device|
+    Device.find_each do |device|
       device.platform = 'Alces Cloud' if device.platform=='OpenStack' && Boavizta.type_exists?(device.instance_type, 'alces')
       device.save
     end
