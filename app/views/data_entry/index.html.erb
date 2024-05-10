@@ -111,7 +111,7 @@
   show_card: { online: true, offline: true },
 } do %>
   <% content_for :buttons, :flush => true do %>
-    <%= link_to "View leaderboard", leaderboard_path, class: 'button glaring' %>
+    <%= link_to "View leaderboard", leaderboard_grouped_path, class: 'button glaring' %>
   <% end %>
 <% end %>
 

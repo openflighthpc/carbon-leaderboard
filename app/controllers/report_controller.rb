@@ -3,18 +3,6 @@ class ReportController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :authorize_anonymous, :only=>[:add_record]
 
-  def index
-  end
-
-  def show
-    @user = User.find_by(username: params[:name])
-    if @user
-      @reports = @user.reports
-    else
-      @reports = Report.where("user_id IS ?", nil)
-    end
-  end
-
   def add_record
     data = JSON.parse(request.body.read)
     device = Device.find_by(uuid: data['device_id'])
