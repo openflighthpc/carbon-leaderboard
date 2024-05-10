@@ -3,7 +3,7 @@
   <div class="device-type-wrapper">
     <%= image_tag "#{device.platform_icon}.png" %>
     <div>
-      <h2 class="mb-0"><%= device.pretty_platform %></h2>
+      <h2 class="mb-0"><%= device.platform.titleize %></h2>
       <% if device.instance_type %>
         <span><%= device.instance_type %></span>
       <% end %>
