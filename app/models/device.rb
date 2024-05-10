@@ -103,10 +103,6 @@ class Device < ApplicationRecord
     (self.ram_units * self.ram_capacity_per_unit).to_i
   end
 
-  def pretty_platform
-    self.platform
-  end
-
   def platform_icon
     platform = self.platform.downcase
     if platform == 'alces cloud'
