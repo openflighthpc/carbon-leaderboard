@@ -10,6 +10,6 @@ class EmissionConversion
   MCPLANT = 3.4483      # McPlants made
   DRIVE = 3.4872        # Miles driven in an average car
   COFFEES = 18.868      # Cups of coffee (with milk, boiling only the water needed)
-  NETFLIX = 55.556      # Episodes streamed on Netflix (30mins each)
+  NETFLIX = 27.778      # Hours of content streamed on Netflix
   EMAIL = 250           # Emails sent
 end

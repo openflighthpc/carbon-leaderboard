@@ -12,7 +12,7 @@ class GroupController < ApplicationController
       ec[:big_mac] = (@year_emissions * EmissionConversion::BIG_MAC).floor
       ec[:mcplant] = (@year_emissions * EmissionConversion::MCPLANT).floor
       ec[:flight] = (@year_emissions * EmissionConversion::FLIGHT).floor
-      ec[:netflix] = (@year_emissions / 2 * EmissionConversion::NETFLIX).floor
+      ec[:netflix] = (@year_emissions * EmissionConversion::NETFLIX).floor
     end
     @user_devices = @group.pluck(:user_id)
                           .uniq
