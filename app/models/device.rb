@@ -27,6 +27,7 @@ class Device < ApplicationRecord
                           tags: data['tags'] || []
       )
       if device.valid?
+        device.platform = 'Alces Cloud' if device.platform=='OpenStack' && Boavizta.type_exists?(data['instance_type'], 'alces')
         device.cloud_provider = Boavizta.provider(device.platform)
         device.instance_type = data['instance_type'] if Boavizta.type_exists?(data['instance_type'], device.cloud_provider)
         device.min = Boavizta.carbon_for_load(device, 0)
@@ -83,11 +84,7 @@ class Device < ApplicationRecord
   end
 
   def pretty_group
-    if self.platform == 'OpenStack' && !self.instance_type.blank?
-      "Alces-Cloud-#{self.instance_type || "Group#{self.group}"}-#{self.location}"
-    else
-      "#{self.platform}-#{self.instance_type || "Group#{self.group}"}-#{self.location}"
-    end
+    "#{self.platform.gsub(' ', '-')}-#{self.instance_type || "Group#{self.group}"}-#{self.location}"
   end
 
   def country
@@ -106,18 +103,9 @@ class Device < ApplicationRecord
     (self.ram_units * self.ram_capacity_per_unit).to_i
   end
 
-  def pretty_platform
-    platform = self.platform.downcase
-    if Boavizta.type_exists?(self.instance_type, 'alces')
-      'Alces Cloud'
-    else
-      platform.titleize
-    end
-  end
-
   def platform_icon
     platform = self.platform.downcase
-    if Boavizta.type_exists?(self.instance_type, 'alces')
+    if platform == 'alces cloud'
       'alces'
     elsif %w(aws azure openstack).include?(platform)
       platform

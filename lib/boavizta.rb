@@ -2,7 +2,7 @@ class Boavizta
   require 'faraday'
   BOAVIZTA_URL='https://api.boavizta.openflighthpc.org'
   PROVIDERS={'AWS' => 'aws',
-             'OpenStack' => 'alces'}
+             'Alces Cloud' => 'alces'}
 
   def self.boavizta
     @boavizta ||= Faraday.new(BOAVIZTA_URL)
