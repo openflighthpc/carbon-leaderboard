@@ -19,11 +19,11 @@
     <a class="inline-link text-link" href="/group/<%= dev.group %>">
       <h4 class="mb-3"><%= "#{dev.platform}-#{dev.instance_type || "Group#{dev.group}"}-#{dev.location}" %></h4>
     </a>
-    <div class="server-list-wrapper med-card flex-column-centred mb-4">
+    <div class="server-list-wrapper mb-4">
     <% group_devices.each do |device| %>
-      <%= link_to device.display_name,
-                  "/device/#{device.display_name}",
-                  class: "server-in-list blurred-frame white-outline med-card big-text mb-2"
+        <%= link_to device.display_name,
+                    "/device/#{device.display_name}",
+                    class: "server-in-list glaring"
       %>
     <% end %>
     </div>
