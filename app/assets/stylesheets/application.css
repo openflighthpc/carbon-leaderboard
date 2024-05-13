@@ -84,7 +84,7 @@ body {
 
 #main {
     margin-top: var(--navbar-height);
-    padding-inline: 18rem;
+    padding-inline: 15vw;
     color: var(--color-text);
 }
 

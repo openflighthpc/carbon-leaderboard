@@ -23,71 +23,76 @@
   </div>
 </div>
 
-<div class="cl-card full-width emissions-wrapper mb-4">
-  <div class="text-center">
-    <h2 class="mb-4">Emissions</h2>
-    <p>Over one year, running at full load, servers in this group will emit</p>
-    <p class="emission-number"><%= @year_emissions %>kg</p>
-    <p>equivalent CO<sub>2</sub>. That’s as much as...</p>
-  </div>
-
-  <div class="blurred-frame white-outline emission-wrapper">
-    <div class="driving-wrapper">
-      <span class="driving">...driving</span>
-      <div class="miles">
-        <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:driving], delimiter: ',') %></span>
-        <br>
-        <span>mile<%= 's' unless @emission_conversions[:driving] == 1 %></span>
-      </div>
+<div class="cl-card full-width emissions-card mb-4">
+  <div class="emissions-wrapper">
+    <div class="text-center">
+      <h2 class="mb-4">Emissions</h2>
+      <p>Over one year, running at full load, servers in this group will emit</p>
+      <p class="emission-number"><%= @year_emissions %>kg</p>
+      <p>equivalent CO<sub>2</sub>. That’s as much as...</p>
     </div>
-    <div class="driving-icon-wrapper">
-      <i class="fa-solid fa-car-side big-icon driving-icon"></i>
-    </div>
-  </div>
-  <div class="blurred-frame white-outline emission-wrapper">
-    <div class="burger-wrapper">
-      <div class="big-mac-wrapper">
-        <i class="fa-solid fa-burger big-icon"></i>
-        <div>
-          <span class="big-text">...making</span><br>
-          <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:big_mac], delimiter: ',') %></span><br>
-          <span class="big-text">McDonalds</span><br>
-          <span class="big-text">Big Mac<%= 's' unless @emission_conversions[:big_mac] == 1 %>...</span>
+    <div class="blurred-frame white-outline emission-wrapper">
+      <div class="driving-wrapper">
+        <span class="driving">...driving</span>
+        <div class="miles">
+          <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:driving], delimiter: ',') %></span>
+          <br>
+          <span>mile<%= 's' unless @emission_conversions[:driving] == 1 %></span>
         </div>
       </div>
-      <span class="mcplant mt-2">
+      <div class="driving-icon-wrapper">
+        <i class="fa-solid fa-car-side big-icon driving-icon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="emissions-wrapper">
+    <div class="blurred-frame white-outline emission-wrapper">
+      <div class="burger-wrapper">
+        <div class="big-mac-wrapper">
+          <i class="fa-solid fa-burger big-icon"></i>
+          <div>
+            <span class="big-text">...making</span><br>
+            <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:big_mac], delimiter: ',') %></span><br>
+            <span class="big-text">McDonalds</span><br>
+            <span class="big-text">Big Mac<%= 's' unless @emission_conversions[:big_mac] == 1 %>...</span>
+          </div>
+        </div>
+        <span class="mcplant mt-2">
       ...or
       <span class="emission-number">
         <%= number_with_delimiter(@emission_conversions[:mcplant], delimiter: ',') %>
       </span>
       McPlant<%= 's' unless @emission_conversions[:mcplant] == 1 %>
     </span>
+      </div>
     </div>
-  </div>
-  <div class="blurred-frame white-outline emission-wrapper">
-    <% if @emission_conversions[:flight] > 0 %>
-      <div class="flight-wrapper">
-        <div class="people-plane">
-          <div class="people mt-auto">
-            <span>...</span>
-            <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:flight], delimiter: ',') %></span>
-            <br>
-            <span><%= @emission_conversions[:flight] == 1 ? 'person' : 'people' %></span>
+    <div class="blurred-frame white-outline emission-wrapper">
+      <% if @emission_conversions[:flight] > 0 %>
+        <div class="flight-wrapper">
+          <div class="people-plane">
+            <div class="people mt-auto">
+              <span>...</span>
+              <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:flight], delimiter: ',') %></span>
+              <br>
+              <span><%= @emission_conversions[:flight] == 1 ? 'person' : 'people' %></span>
+            </div>
+            <div>
+              <i class="fa-solid fa-plane big-icon plane-icon"></i>
+            </div>
           </div>
-          <i class="fa-solid fa-plane big-icon plane-icon"></i>
+          <span class="big-text mt-2">flying from <br>London to Hamburg</span>
         </div>
-        <span class="big-text mt-2">flying from <br>London to Hamburg</span>
-      </div>
-    <% else %>
-      <div class="netflix-wrapper">
-        <span class="big-text mb-2">...streaming Netflix for</span>
-        <i class="fa-solid fa-tv big-icon netflix-icon"></i>
-        <div class="mt-2">
-          <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:netflix], delimiter: ',') %></span>
-          <span>hour<%= 's' unless @emission_conversions[:netflix] == 1 %></span>
+      <% else %>
+        <div class="netflix-wrapper">
+          <span class="big-text mb-2">...streaming Netflix for</span>
+          <i class="fa-solid fa-tv big-icon netflix-icon"></i>
+          <div class="mt-2">
+            <span class="emission-number"><%= number_with_delimiter(@emission_conversions[:netflix], delimiter: ',') %></span>
+            <span>hour<%= 's' unless @emission_conversions[:netflix] == 1 %></span>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
 
