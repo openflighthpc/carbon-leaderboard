@@ -58,12 +58,12 @@
           </div>
         </div>
         <span class="mcplant mt-2">
-      ...or
-      <span class="emission-number">
-        <%= number_with_delimiter(@emission_conversions[:mcplant], delimiter: ',') %>
-      </span>
-      McPlant<%= 's' unless @emission_conversions[:mcplant] == 1 %>
-    </span>
+          ...or
+          <span class="emission-number">
+            <%= number_with_delimiter(@emission_conversions[:mcplant], delimiter: ',') %>
+          </span>
+          McPlant<%= 's' unless @emission_conversions[:mcplant] == 1 %>
+        </span>
       </div>
     </div>
     <div class="blurred-frame white-outline emission-wrapper">
