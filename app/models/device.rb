@@ -59,8 +59,13 @@ class Device < ApplicationRecord
     name
   end
 
+  def max_per_core
+    self.max / (self.cpus * self.cores_per_cpu)
+  end
+
   def rank
-    Device.groups_ranked.map(&:group).find_index(self.group) + 1
+    Device.groups_ranked
+          .count { |group| group.max_per_core < self.max_per_core } + 1
   end
 
   def config_attributes
