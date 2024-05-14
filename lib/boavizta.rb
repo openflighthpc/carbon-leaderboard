@@ -63,7 +63,7 @@ class Boavizta
         )
       end
     end
-    JSON.parse(response.body).dig(*%w[impacts gwp use value]) * 1000
+    JSON.parse(response.body).dig(*%w[impacts gwp use value])&. * 1000
   end
 
   def self.provider(platform)
