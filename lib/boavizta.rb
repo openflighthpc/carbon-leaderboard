@@ -76,4 +76,9 @@ class Boavizta
     end
     JSON.parse(response.body).include?(type)
   end
+
+  def self.location_exists?(location)
+    response = boavizta.get('/v1/utils/country_code')
+    JSON.parse(response.body).values.include?(location)
+  end
 end

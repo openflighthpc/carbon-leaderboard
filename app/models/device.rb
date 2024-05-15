@@ -9,6 +9,8 @@ class Device < ApplicationRecord
 
   validates :uuid, :cpus, :cores_per_cpu, :ram_units, :ram_capacity_per_unit, :platform,
             :location, :cpu_name, presence: { message: "is required" }
+  validates :cpus, :cores_per_cpu, :ram_units, :ram_capacity_per_unit, comparison: { greater_than_or_equal_to: 0}
+  validate :check_location
 
   def self.create_from_json(data, user = nil)
     begin
@@ -38,6 +40,12 @@ class Device < ApplicationRecord
       end
     ensure
       return device
+    end
+  end
+
+  def check_location
+    if !Boavizta.location_exists?(location)
+      errors.add(:location, "'#{location}' is not a 3 letter country code as per the ISO 3166-1 alpha-3 standard.")
     end
   end
 
