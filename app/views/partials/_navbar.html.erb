@@ -32,7 +32,7 @@
         %>
         <div class="dropdown-wrapper d-flex justify-content-center">
           <ul class="dropdown-list blurred-frame white-outline">
-            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-dropdown-link last-item px-2 glaring" %>
+            <%= button_to "Sign out", destroy_user_session_path(return_to: request.original_url), method: :delete, class: "nav-dropdown-link last-item px-2 glaring" %>
           </ul>
         </div>
       </div>
