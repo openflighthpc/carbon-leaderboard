@@ -3,6 +3,7 @@
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
+    <%= f.hidden_field :return_to, value: params[:return_to] %>
 
     <div class="field grid-field">
       <%= f.label :email %>

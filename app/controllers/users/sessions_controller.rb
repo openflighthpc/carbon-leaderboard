@@ -15,10 +15,18 @@ class Users::SessionsController < Devise::SessionsController
     current_user.save
   end
 
+  def after_sign_in_path_for(_resource)
+    params[:user][:return_to]
+  end
+
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+  end
+
+  def after_sign_out_path_for(_resource)
+    params[:return_to]
+  end
 
   # protected
 
