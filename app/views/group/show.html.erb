@@ -4,7 +4,7 @@
   <%= dev.pretty_group %>
   <span
     class="flag server-page fi fi-<%= dev.two_digit_location.downcase %> fis"
-    title="<%= dev.pretty_group %> is located in <%= dev.full_country_name %>">
+    title="<%= dev.pretty_group %> is located <%= dev.two_digit_location == 'WO' ? 'on' : 'in' %> <%= dev.full_country_name %>">
   </span>
 </h1>
 
