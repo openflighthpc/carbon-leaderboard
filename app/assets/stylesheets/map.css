@@ -1,0 +1,9 @@
+#map-wrapper {
+    height: 30rem;
+    box-sizing: content-box;
+}
+
+#map-card {
+    padding-top: 1rem;
+    border: solid 1px var(--color-main);
+}
