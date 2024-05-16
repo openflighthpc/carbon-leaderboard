@@ -303,3 +303,8 @@ ul {
 strong {
     font-weight: 600;
 }
+
+.fi.fi-wo, .fis.fi-wo {
+    background-image: url('IFOPE.png');
+    background-size: auto 110%;
+}

@@ -97,11 +97,11 @@ class Device < ApplicationRecord
   end
 
   def two_digit_location
-    country.alpha2
+    country&.alpha2 || "WO"
   end
 
   def full_country_name
-    country.iso_long_name
+    country&.iso_long_name || "Planet Earth"
   end
 
   def ram

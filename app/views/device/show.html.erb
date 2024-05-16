@@ -2,7 +2,7 @@
   <%= @device.display_name %>
   <span
     class="flag server-page fi fi-<%= @device.two_digit_location.downcase %> fis"
-    title="<%= @device.display_name %> is located in <%= @device.full_country_name %>">
+    title="<%= @device.display_name %> is located <%= @device.two_digit_location == 'WO' ? 'on' : 'in' %> <%= @device.full_country_name %>">
   </span>
 </h1>
 <p class="big-text mb-5">Entered by: <%= @device.pretty_owner %></p>
