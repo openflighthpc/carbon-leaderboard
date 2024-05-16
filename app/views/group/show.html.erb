@@ -96,10 +96,9 @@
   </div>
 </div>
 
-<div id="map-card" class="cl-card flex-column-centred full-width mb-4">
-  <h2 class="mb-4">Where are the servers?</h2>
-  <div id="map-wrapper" class="full-width"></div>
-</div>
+<% if dev.country %>
+  <%= render 'partials/world_map', locals: { device: dev } %>
+<% end %>
 
 <div class="cl-card flex-column-centred server-list-card text-center mb-4">
   <% num_servers = @group.length %>
@@ -130,39 +129,3 @@
     <% end %>
   </div>
 </div>
-
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-<script>
-  const root = am5.Root.new("map-wrapper");
-  const chart = root.container.children.push(
-    am5map.MapChart.new(root, {
-      panX: "rotateX",
-      projection: am5map.geoNaturalEarth1()
-    })
-  );
-  const polygonSeries = chart.series.push(
-    am5map.MapPolygonSeries.new(root, {
-      geoJSON: am5geodata_worldLow
-    })
-  );
-  const pointSeries = chart.series.push(
-    am5map.MapPointSeries.new(root, {
-    })
-  );
-  pointSeries.bullets.push(function() {
-    return am5.Bullet.new(root, {
-      sprite: am5.Circle.new(root, {
-        radius: 5,
-        fill: am5.color(0xff0000)
-      })
-    });
-  });
-  pointSeries.data.setAll([{
-    geometry: {
-      type: "Point",
-      coordinates: [<%= dev.country.longitude %>, <%= dev.country.latitude %>]
-    }
-  }])
-</script>
