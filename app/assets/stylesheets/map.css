@@ -1,9 +1,8 @@
-#map-wrapper {
-    height: 30rem;
-    box-sizing: content-box;
+#map-card {
+    border: solid 1px var(--color-main);
 }
 
-#map-card {
-    padding-top: 1rem;
-    border: solid 1px var(--color-main);
+#map-wrapper {
+    height: 40rem;
+    box-sizing: content-box;
 }
