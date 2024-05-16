@@ -12,7 +12,7 @@
   const chart = root.container.children.push(
     am5map.MapChart.new(root, {
       panX: "rotateX",
-      projection: am5map.geoNaturalEarth1()
+      projection: am5map.geoEqualEarth()
     })
   );
   const polygonSeries = chart.series.push(
