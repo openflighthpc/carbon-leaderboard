@@ -25,10 +25,10 @@
     am5map.MapPointSeries.new(root, {})
   );
   pointSeries.bullets.push(function () {
-    var container = am5.Container.new(root, {});
-    var color = am5.color(0x404040);
-    var radius = 20;
-    var pole = container.children.push(am5.Line.new(root, {
+    const container = am5.Container.new(root, {});
+    const color = am5.color(0x404040);
+    const radius = 20;
+    const pole = container.children.push(am5.Line.new(root, {
       stroke: color,
       height: -radius,
       strokeWidth: 3,
@@ -40,7 +40,7 @@
         ]
       })
     }));
-    var label = container.children.push(am5.Label.new(root, {
+    const label = container.children.push(am5.Label.new(root, {
       centerX: am5.p50,
       centerY: am5.p50,
       dy: -radius * 2 + 1,
