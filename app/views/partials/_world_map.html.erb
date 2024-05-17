@@ -51,11 +51,22 @@
          title="<%= dev.pretty_group %> is located in <%= dev.full_country_name %>"
          style="font-size: ${radius * 1.6}px; height: ${radius * 1.6}px;">
        </span>`);
-
+    label.events.on("click", function(ev) {});
+    label.setAll({
+      oversizedBehavior: "truncate",
+      maxWidth: 100
+    });
+    label.setup = function(target) {
+      target.set("background", am5.Rectangle.new(root, {
+        fill: am5.color(0x000000),
+        fillOpacity: 0
+      }));
+    };
     return am5.Bullet.new(root, {
       sprite: container
     });
   });
+
   pointSeries.data.setAll([{
     geometry: {
       type: "Point",
