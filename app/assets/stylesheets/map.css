@@ -6,3 +6,8 @@
     height: 40rem;
     box-sizing: content-box;
 }
+
+.map.flag {
+    outline: solid 4px var(--color-text);
+    display: inline-block;
+}

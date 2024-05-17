@@ -28,14 +28,9 @@
     var container = am5.Container.new(root, {});
     var color = am5.color(0x404040);
     var radius = 20;
-    var circle = container.children.push(am5.Circle.new(root, {
-      radius: radius,
-      fill: color,
-      dy: -radius * 2
-    }))
     var pole = container.children.push(am5.Line.new(root, {
       stroke: color,
-      height: -20,
+      height: -22,
       strokeWidth: 3,
       strokeGradient: am5.LinearGradient.new(root, {
         stops: [
@@ -49,13 +44,12 @@
       centerX: am5.p50,
       centerY: am5.p50,
       dy: -radius * 2 + 1,
-      dx: 1,
     }))
     label.set('html',
       `<span
          class="flag map fi fi-<%= dev.two_digit_location.downcase %> fis"
          title="<%= dev.pretty_group %> is located in <%= dev.full_country_name %>"
-         style="font-size: ${radius * 1.6}px;">
+         style="font-size: ${radius * 1.6}px; height: ${radius * 1.6}px;">
        </span>`);
 
     return am5.Bullet.new(root, {
