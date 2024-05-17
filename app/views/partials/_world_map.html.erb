@@ -1,4 +1,5 @@
-<% dev = locals[:data] %>
+<% locations = locals[:data] %>
+<% dev = locals[:data].first %>
 <% counts = locals[:counts] %>
 
 <div id="map-card" class="cl-card flex-column-centred full-width mb-4">
@@ -69,10 +70,14 @@
     });
   });
 
-  pointSeries.data.setAll([{
-    geometry: {
-      type: "Point",
-      coordinates: [<%= dev[:longitude] %>, <%= dev[:latitude] %>]
+  pointSeries.data.setAll([
+    <% locations.each do |dev| %>
+    {
+      geometry: {
+        type: "Point",
+        coordinates: [<%= dev[:longitude] %>, <%= dev[:latitude] %>]
+      }
     },
-  }]);
+    <% end %>
+  ]);
 </script>

@@ -39,6 +39,6 @@
   <%= render 'counter', locals: { number: @num_groups, text: 'different server configurations' } %>
 </div>
 
-<%= render 'partials/world_map', locals: { data: @locations.first, counts: @location_counts } %>
+<%= render 'partials/world_map', locals: { data: @locations, counts: @location_counts } %>
 
 <script type="text/javascript" src="/assets/report/glare.js"></script>
