@@ -30,7 +30,7 @@
     var radius = 20;
     var pole = container.children.push(am5.Line.new(root, {
       stroke: color,
-      height: -22,
+      height: -radius,
       strokeWidth: 3,
       strokeGradient: am5.LinearGradient.new(root, {
         stops: [
@@ -60,6 +60,6 @@
     geometry: {
       type: "Point",
       coordinates: [<%= dev.country.longitude %>, <%= dev.country.latitude %>]
-    }
+    },
   }]);
 </script>
