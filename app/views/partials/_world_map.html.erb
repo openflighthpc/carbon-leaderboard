@@ -1,5 +1,4 @@
 <% locations = locals[:data] %>
-<% dev = locals[:data].first %>
 <% counts = locals[:counts] %>
 
 <div id="map-card" class="cl-card flex-column-centred full-width mb-4">
@@ -27,7 +26,9 @@
   const pointSeries = chart.series.push(
     am5map.MapPointSeries.new(root, {})
   );
-  pointSeries.bullets.push(function () {
+  pointSeries.bullets.push(function (root, series, dataItem) {
+    const tooltipData = dataItem.dataContext.tooltipData;
+
     const container = am5.Container.new(root, {});
     const color = am5.color(0x404040);
     const radius = 20;
@@ -50,11 +51,11 @@
     }))
     label.set('html',
       `<span
-         class="flag map fi fi-<%= dev[:two_digit_location].downcase %> fis"
-         title="<%= counts[dev[:three_digit_location]] %> located in <%= dev[:country_name] %>"
+         class="flag map fi fi-{tooltipData.flagCode} fis"
+         title="{tooltipData.count} located in {tooltipData.country}"
          style="font-size: ${radius * 1.6}px; height: ${radius * 1.6}px;">
        </span>`);
-    label.events.on("click", function(ev) {});
+    label.events.on("click", function(ev) { console.log(value) });
     label.setAll({
       oversizedBehavior: "truncate",
       maxWidth: 100
@@ -75,8 +76,13 @@
     {
       geometry: {
         type: "Point",
-        coordinates: [<%= dev[:longitude] %>, <%= dev[:latitude] %>]
-      }
+        coordinates: [<%= dev[:longitude] %>, <%= dev[:latitude] %>],
+      },
+      tooltipData: {
+        count: <%= counts[dev[:three_digit_location]] %>,
+        flagCode: '<%= dev[:two_digit_location].downcase %>',
+        country: '<%= dev[:country_name] %>',
+      },
     },
     <% end %>
   ]);
