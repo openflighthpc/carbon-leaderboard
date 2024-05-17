@@ -1,4 +1,6 @@
-<% dev = locals[:device] %>
+<% dev = locals[:data] %>
+<% counts = locals[:counts] %>
+
 <div id="map-card" class="cl-card flex-column-centred full-width mb-4">
   <h2 class="mb-4">Location</h2>
   <div id="map-wrapper" class="full-width"></div>
@@ -47,8 +49,8 @@
     }))
     label.set('html',
       `<span
-         class="flag map fi fi-<%= dev.two_digit_location.downcase %> fis"
-         title="<%= dev.pretty_group %> is located in <%= dev.full_country_name %>"
+         class="flag map fi fi-<%= dev[:two_digit_location].downcase %> fis"
+         title="<%= counts[dev[:three_digit_location]] %> located in <%= dev[:country_name] %>"
          style="font-size: ${radius * 1.6}px; height: ${radius * 1.6}px;">
        </span>`);
     label.events.on("click", function(ev) {});
@@ -70,7 +72,7 @@
   pointSeries.data.setAll([{
     geometry: {
       type: "Point",
-      coordinates: [<%= dev.country.longitude %>, <%= dev.country.latitude %>]
+      coordinates: [<%= dev[:longitude] %>, <%= dev[:latitude] %>]
     },
   }]);
 </script>

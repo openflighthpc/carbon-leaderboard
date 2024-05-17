@@ -59,6 +59,15 @@ class Device < ApplicationRecord
     name
   end
 
+  def self.locations
+    @locations ||= Device.group(:location)
+
+  end
+
+  def self.location_counts
+    @location_counts ||= self.locations.count
+  end
+
   def max_per_core
     self.max / (self.cpus * self.cores_per_cpu)
   end
@@ -156,5 +165,15 @@ class Device < ApplicationRecord
 
   def convert_to_date(datetime)
     datetime.strftime("%Y-%m-%d")
+  end
+
+  def map_location_data
+    {
+      three_digit_location: self.location,
+      two_digit_location: two_digit_location,
+      country_name: country.common_name,
+      longitude: country.longitude,
+      latitude: country.latitude,
+    }
   end
 end

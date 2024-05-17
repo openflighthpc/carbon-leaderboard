@@ -1,4 +1,5 @@
 <% dev = @group.first %>
+<% num_servers = @group.length %>
 
 <h1 class="mb-5">
   <%= dev.pretty_group %>
@@ -97,11 +98,10 @@
 </div>
 
 <% if dev.country %>
-  <%= render 'partials/world_map', locals: { device: dev } %>
+  <%= render 'partials/world_map', locals: { data: dev.map_location_data, counts: { dev.location => num_servers } } %>
 <% end %>
 
 <div class="cl-card flex-column-centred server-list-card text-center mb-4">
-  <% num_servers = @group.length %>
   <h4><%= num_servers %> server<%= num_servers == 1 ? ' has' : 's have' %> been entered with these specs and
     location</h4>
   <div class="server-list-wrapper">
