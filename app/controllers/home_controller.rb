@@ -18,8 +18,10 @@ class HomeController < ApplicationController
     @num_devices = Device.all.length
     @num_groups = Device.select(:group).distinct.length
 
-    @locations = Device.locations.filter { |device| !device.country.nil? }
-                                 .map { |device| device.map_location_data }
+    @locations = Device.locations
+                       .filter { |location| !location.country.nil? }
+                       .map { |location| location.map_location_data }
+                       .sort_by { |location| -location[:latitude] }
     @location_counts = Device.locations.count
   end
 end

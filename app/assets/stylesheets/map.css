@@ -8,7 +8,7 @@
 }
 
 .map.flag {
-    outline: solid 7px var(--color-text);
+    outline: solid 6px var(--color-text);
     outline-offset: -1px;
     outline-style: double;
     display: inline-block;
