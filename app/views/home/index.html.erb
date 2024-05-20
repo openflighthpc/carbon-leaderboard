@@ -1,6 +1,7 @@
 <h1 id="welcome">How green are your HPC/AI resources?</h1>
 <p id="welcome-tagline">
-  Working towards greener HPC/AI by improving understanding of the carbon impact of HPC/AI solutions. Get and compare your carbon impact estimates in the leaderboard today!
+  Working towards greener HPC/AI by improving understanding of the carbon impact of HPC/AI solutions. Get and compare
+  your carbon impact estimates in the leaderboard today!
 </p>
 
 <%= button_to "Enter your server data", data_entry_path, class: 'button glaring big-text my-5', method: :get %>
@@ -23,7 +24,7 @@
                 <div class="leaderboard-item rank-column"><%= index + 1 %></div>
                 <div class="group-name">
                   <span class="big-text"><%= group[:display_name] %></span><br>
-                  <span><%= "with #{group[:count]} server#{'s' * [1, group[:count]-1].min}" %></span>
+                  <span><%= "with #{group[:count]} server#{'s' * [1, group[:count] - 1].min}" %></span>
                 </div>
                 <div></div>
                 <div><span class="flag fi fi-<%= group[:location].downcase %> fis"></span></div>
@@ -39,6 +40,9 @@
   <%= render 'counter', locals: { number: @num_groups, text: 'different server configurations' } %>
 </div>
 
-<%= render 'partials/world_map', locals: { data: @locations, counts: @location_counts } %>
+<div class="full-width-section blurred-frame flex-column-centred pb-5">
+  <h2 class="mb-5">Where are the servers?</h2>
+  <%= render 'partials/world_map', locals: { data: @locations, counts: @location_counts } %>
+</div>
 
 <script type="text/javascript" src="/assets/report/glare.js"></script>

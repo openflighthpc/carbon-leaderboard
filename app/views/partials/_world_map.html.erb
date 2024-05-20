@@ -1,10 +1,7 @@
 <% locations = locals[:data] %>
 <% counts = locals[:counts] %>
 
-<div id="map-card" class="cl-card flex-column-centred full-width mb-4">
-  <h2 class="mb-4">Location</h2>
-  <div id="map-wrapper" class="full-width"></div>
-</div>
+<div id="map-wrapper" class="full-width"></div>
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
@@ -29,7 +26,9 @@
   pointSeries.bullets.push(function (root, series, dataItem) {
     const tooltipData = dataItem.dataContext.tooltipData;
 
-    const container = am5.Container.new(root, {});
+    const container = am5.Container.new(root, {
+      paddingTop: 5
+    });
     const color = am5.color(0x404040);
     const radius = 20;
     const pole = container.children.push(am5.Line.new(root, {
